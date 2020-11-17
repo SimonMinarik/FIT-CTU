@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Movie recommender</title>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+{% endblock %}
+
+{% block body %}
+<div>
+    <form action="/" method="POST" style="text-align: center">
+        <button type="submit" name="recommender" value="recommender">Movie Recommender</button>
+    </form>
+    <h2 style="text-align: center">Number of neighbours:</h2>
+    <form action="/admin" method="POST" style="text-align: center">
+        <input type="text" name="neighbours" id="neighbours" placeholder="{{neighbours}}">
+        <input type="submit" value="Change">
+    </form>
+    <script>
+        var users = {{users|tojson}}
+        var movies = {{movies|tojson}}
+        var selected_user = {{selected_user|tojson}}
+        document.write("<center><h3>Ratings of user:</h3>")
+        document.write("<form action=\"/change_user\" method=\"POST\" style=\"text-align: center\">\n" +
+                    "<select name=\"myselect\" id=\"myselect\" onchange=\"this.form.submit()\">")
+                for (user in users) {
+                    if (user === selected_user["username"]) {
+                        document.write("<option value=\" " + user +" \" selected>" + user + "</option>")
+                    } else {
+                        document.write("<option value=\" " + user +" \">" + user + "</option>")
+                    }
+                }
+                document.write("</select></form>")
+        document.write("</center>")
+    </script>
+    <table id="example" class="display" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <script>
+            var x = 0
+            document.write("<tr>")
+            document.write("<th>User: " +
+                + selected_user["username"] + "</th><th>")
+            for (rating in selected_user["ratings"]) {
+                document.write("<div style=\"text-align:center\">" + movies[rating].title + "  ")
+                document.write("<form action=\"/change_rating_admin/" + selected_user["username"] + "/" + rating + "\" method=\"POST\" style=\"text-align: center\">\n" +
+                    "<select name=\"myselect\" id=\"myselect\" onchange=\"this.form.submit()\">")
+                for (j = 0.0; j < 5.5; j += 0.5) {
+                    if (j == selected_user["ratings"][rating]) {
+                        document.write("<option value=\" " + j +" \" selected>" + j + "</option>")
+                    } else {
+                        document.write("<option value=\" " + j +" \">" + j + "</option>")
+                    }
+                }
+                document.write("<option value=\"Delete\">Delete</option></select></form>")
+                document.write("</div>")
+            }
+            document.write("</th>")
+            document.write("</tr>")
+        </script>
+        </tbody>
+    </table>
+    <script>
+    $(document).ready(function() {
+    $('#example').DataTable( {
+        "pagingType": "full_numbers",
+        "ordering": false,
+        "searching": false,
+        pageLength: 1,
+        "bLengthChange": false,
+        "bInfo" : false
+    } );
+} );
+</script>
+</div>
+{% endblock %}

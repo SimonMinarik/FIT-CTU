@@ -1,0 +1,2932 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n## Apache Spark - DataFrame/DataSet API - základní syntax a práce s daty\n\n### Spark 2.3.4\n* DataFrame: https://spark.apache.org/docs/2.3.4/sql-programming-guide.html\n* RDD:\n    * https://spark.apache.org/docs/2.3.4/rdd-programming-guide.html\n    * příklady: https://wikis.nyu.edu/display/NYUHPC/Big+Data+Tutorial+3%3A+Introduction+to+Spark\n\n### Scala\n* guide: https://www.analyticsvidhya.com/blog/2017/01/scala/\n\n### datové zdroje:\n* http://opendata.praha.eu/\n   * chytry svoz odpadu - historie zaplnitelnosti: http://opendata.praha.eu/dataset/chytry-svoz-odpadu-historicka-data-zaplnenosti\n   * chytry svoz odpadu  - svozy kontejnerů na tříděný odpad: http://opendata.praha.eu/dataset/chytry-svoz-odpadu-svozy-kontejneru-na-trideny-odpad\n   \n### hodí se\n* `df.printSchema()` - vypíše názvy a typy sloupců\n* `df.show(X)`- zobrazí X počet řádků z datasetu, nezáleží na pořadí, nevyvolává action trigger\n* `df.show(false)`- nezkracuje data v zobrazených sloupcích\n\n|| Zeppelin creates and injects sc (SparkContext) and sqlContext (HiveContext or SqlContext)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.862",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eApache Spark - DataFrame/DataSet API - základní syntax a práce s daty\u003c/h2\u003e\n\u003ch3\u003eSpark 2.3.4\u003c/h3\u003e\n\u003cul\u003e\n  \u003cli\u003eDataFrame: \u003ca href\u003d\"https://spark.apache.org/docs/2.3.4/sql-programming-guide.html\"\u003ehttps://spark.apache.org/docs/2.3.4/sql-programming-guide.html\u003c/a\u003e\u003c/li\u003e\n  \u003cli\u003eRDD:\n    \u003cul\u003e\n      \u003cli\u003e\u003ca href\u003d\"https://spark.apache.org/docs/2.3.4/rdd-programming-guide.html\"\u003ehttps://spark.apache.org/docs/2.3.4/rdd-programming-guide.html\u003c/a\u003e\u003c/li\u003e\n      \u003cli\u003epříklady: \u003ca href\u003d\"https://wikis.nyu.edu/display/NYUHPC/Big+Data+Tutorial+3%3A+Introduction+to+Spark\"\u003ehttps://wikis.nyu.edu/display/NYUHPC/Big+Data+Tutorial+3%3A+Introduction+to+Spark\u003c/a\u003e\u003c/li\u003e\n    \u003c/ul\u003e\n  \u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3\u003eScala\u003c/h3\u003e\n\u003cul\u003e\n  \u003cli\u003eguide: \u003ca href\u003d\"https://www.analyticsvidhya.com/blog/2017/01/scala/\"\u003ehttps://www.analyticsvidhya.com/blog/2017/01/scala/\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3\u003edatové zdroje:\u003c/h3\u003e\n\u003cul\u003e\n  \u003cli\u003e\u003ca href\u003d\"http://opendata.praha.eu/\"\u003ehttp://opendata.praha.eu/\u003c/a\u003e\u003c/li\u003e\n  \u003cli\u003echytry svoz odpadu - historie zaplnitelnosti: \u003ca href\u003d\"http://opendata.praha.eu/dataset/chytry-svoz-odpadu-historicka-data-zaplnenosti\"\u003ehttp://opendata.praha.eu/dataset/chytry-svoz-odpadu-historicka-data-zaplnenosti\u003c/a\u003e\u003c/li\u003e\n  \u003cli\u003echytry svoz odpadu - svozy kontejnerů na tříděný odpad: \u003ca href\u003d\"http://opendata.praha.eu/dataset/chytry-svoz-odpadu-svozy-kontejneru-na-trideny-odpad\"\u003ehttp://opendata.praha.eu/dataset/chytry-svoz-odpadu-svozy-kontejneru-na-trideny-odpad\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3\u003ehodí se\u003c/h3\u003e\n\u003cul\u003e\n  \u003cli\u003e\u003ccode\u003edf.printSchema()\u003c/code\u003e - vypíše názvy a typy sloupců\u003c/li\u003e\n  \u003cli\u003e\u003ccode\u003edf.show(X)\u003c/code\u003e- zobrazí X počet řádků z datasetu, nezáleží na pořadí, nevyvolává action trigger\u003c/li\u003e\n  \u003cli\u003e\u003ccode\u003edf.show(false)\u003c/code\u003e- nezkracuje data v zobrazených sloupcích\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e|| Zeppelin creates and injects sc (SparkContext) and sqlContext (HiveContext or SqlContext)\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225857_379111419",
+      "id": "20191028-093724_2122815264",
+      "dateCreated": "2020-11-10 09:40:25.858",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## READ\n* **read** (csv, parquet, avro, textfile, ...)\n* **toDF** (RDD parralelize)\n* IOUtils",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:41:28.910",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eREAD\u003c/h2\u003e\n\u003cul\u003e\n  \u003cli\u003e\u003cstrong\u003eread\u003c/strong\u003e (csv, parquet, avro, textfile, \u0026hellip;)\u003c/li\u003e\n  \u003cli\u003e\u003cstrong\u003etoDF\u003c/strong\u003e (RDD parralelize)\u003c/li\u003e\n  \u003cli\u003eIOUtils\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225868_2131356115",
+      "id": "20191028-114904_943505836",
+      "dateCreated": "2020-11-10 09:40:25.868",
+      "dateStarted": "2020-11-10 09:41:28.939",
+      "dateFinished": "2020-11-10 09:41:35.060",
+      "status": "ABORT",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//z kolekce\nval pole \u003d List(\"1\", \"2\", \"3\")\nval dataframe \u003d pole.toDF()\ndataframe.show()\ndataframe.printSchema()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:09:26.213",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+\n|value|\n+-----+\n|    1|\n|    2|\n|    3|\n+-----+\n\nroot\n |-- value: string (nullable \u003d true)\n\npole: List[String] \u003d List(1, 2, 3)\ndataframe: org.apache.spark.sql.DataFrame \u003d [value: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001390216_955166469",
+      "id": "20201110-094310_2120655226",
+      "dateCreated": "2020-11-10 09:43:10.217",
+      "dateStarted": "2020-11-10 13:09:27.060",
+      "dateFinished": "2020-11-10 13:10:12.859",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// ze souboru\nval szn2019q4 \u003d spark.read.format(\"csv\")\n  .option(\"sep\", \";\")\n  .option(\"inferSchema\", \"true\")\n  .option(\"header\", \"true\")\n  .load(\"detekce-svozu-nadob-2019-q4.csv\")\n\nszn2019q4.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 09:13:49.223",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|      id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|15270292|       30046|               50|      20|0003/ 014C00513|2019-10-01 05:00:41|           100|          1|       false|\n|15270477|       30327|               30|      20|0001/ 002C01582|2019-10-01 05:01:47|            38|          1|       false|\n|15270800|       30064|               30|      20|0003/ 035C00551|2019-10-01 05:12:45|            44|         16|       false|\n|15270879|       30116|               30|      20|0003/ 084C00644|2019-10-01 05:12:49|           100|         10|       false|\n|15271061|       29927|               30|      20|0006/ 262C00242|2019-10-01 05:19:44|           100|          0|       false|\n|15271066|       30034|               30|      20|0003/ 012C00493|2019-10-01 05:20:36|           100|          0|       false|\n|15271124|       30060|               50|      20|0003/ 030C00542|2019-10-01 05:25:38|           100|          7|       false|\n|15271202|       30040|               30|      20|0003/ 013C00502|2019-10-01 05:39:07|           100|         10|       false|\n|15271205|       30109|               30|      20|0003/ 076C00634|2019-10-01 05:39:08|            89|          4|       false|\n|15271776|       30071|               30|      20|0003/ 036C00563|2019-10-01 06:01:40|            97|          3|       false|\n|15271819|       29867|               50|      20|0001/ 032C00012|2019-10-01 06:01:45|           100|         10|       false|\n|15272682|       29878|               50|      20|0006/ 001C00181|2019-10-01 06:12:59|            94|          3|       false|\n|15275519|       29913|               50|      20|0001/ 027C00052|2019-10-01 10:01:29|            89|         37|       false|\n|15275527|       29956|               50|      20|0001/ 003C00111|2019-10-01 10:01:32|            93|         35|       false|\n|15275594|       29952|               40|      20|0001/ 022C00091|2019-10-01 10:01:41|            56|          9|       false|\n|15275619|       30069|               30|      20|0003/ 036C00561|2019-10-01 10:01:45|            91|          3|       false|\n|15275622|       30093|               30|      20|0003/ 041C00604|2019-10-01 10:01:46|            95|         29|       false|\n|15275658|       30107|               30|      20|0003/ 076C00632|2019-10-01 10:01:54|            71|          7|       false|\n|15275921|       30068|               30|      20|0003/ 035C00555|2019-10-01 10:13:33|            55|          0|       false|\n|15275936|       29903|               30|      20|0005/ 003C00134|2019-10-01 10:13:35|            98|          7|       false|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\nonly showing top 20 rows\n\nszn2019q4: org.apache.spark.sql.DataFrame \u003d [id: int, container_id: int ... 7 more fields]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d0",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d1",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d2"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225869_440150284",
+      "id": "20191030-211222_1563982174",
+      "dateCreated": "2020-11-10 09:40:25.869",
+      "dateStarted": "2020-11-12 09:13:49.486",
+      "dateFinished": "2020-11-12 09:14:47.782",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// sql api\nval sqlDF \u003d spark.sql(\"SELECT * FROM csv.`detekce-svozu-nadob-2019-q4.csv`\")\nsqlDF.show(3, false)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:14:51.358",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------------------------------------------------------------------------------------------------------------------+\n|_c0                                                                                                                  |\n+---------------------------------------------------------------------------------------------------------------------+\n|\"id\";\"container_id\";\"pick_minfilllevel\";\"decrease\";\"code\";\"pick_at_utc\";\"percent_before\";\"percent_now\";\"event_driven\"|\n|\"15270292\";\"30046\";\"50\";\"20\";\"0003/ 014C00513\";\"2019-10-01T05:00:41.000Z\";\"100\";\"1\";\"false\"                          |\n|\"15270477\";\"30327\";\"30\";\"20\";\"0001/ 002C01582\";\"2019-10-01T05:01:47.000Z\";\"38\";\"1\";\"false\"                           |\n+---------------------------------------------------------------------------------------------------------------------+\nonly showing top 3 rows\n\nsqlDF: org.apache.spark.sql.DataFrame \u003d [_c0: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225870_-1523710678",
+      "id": "20191030-211235_2135952511",
+      "dateCreated": "2020-11-10 09:40:25.870",
+      "dateStarted": "2020-11-10 13:14:51.555",
+      "dateFinished": "2020-11-10 13:14:52.987",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// do objektu\nimport spark.implicits._\nval df \u003d Seq((1, \"james\"), (2, \"tony\")).toDF(\"id\", \"name\")\n\ncase class Student(id: Int, name: String)\n\nval dfObj \u003d df.as[Student]\ndfObj.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:15:17.203",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---+-----+\n| id| name|\n+---+-----+\n|  1|james|\n|  2| tony|\n+---+-----+\n\nimport spark.implicits._\ndf: org.apache.spark.sql.DataFrame \u003d [id: int, name: string]\ndefined class Student\ndfObj: org.apache.spark.sql.Dataset[Student] \u003d [id: int, name: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225870_-156918649",
+      "id": "20201026-111516_1515762308",
+      "dateCreated": "2020-11-10 09:40:25.870",
+      "dateStarted": "2020-11-10 13:15:17.361",
+      "dateFinished": "2020-11-10 13:15:23.776",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## NARROW transformace\n\nTransformace, které nevyvolávají shuffle (přenos dat po síti), lazy evaulation.\n\n* select\n* map(withColumn)\n* distinct\n* drop\n* filter\n* union",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.871",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eNARROW transformace\u003c/h2\u003e\n\u003cp\u003eTransformace, které nevyvolávají shuffle (přenos dat po síti), lazy evaulation.\u003c/p\u003e\n\u003cul\u003e\n  \u003cli\u003eselect\u003c/li\u003e\n  \u003cli\u003emap(withColumn)\u003c/li\u003e\n  \u003cli\u003edistinct\u003c/li\u003e\n  \u003cli\u003edrop\u003c/li\u003e\n  \u003cli\u003efilter\u003c/li\u003e\n  \u003cli\u003eunion\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225870_-579100564",
+      "id": "20191028-111633_1032845225",
+      "dateCreated": "2020-11-10 09:40:25.870",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// distinct: jaké můžou být minfilllevely?\nszn2019q4.show(3)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:18:21.648",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|      id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|15270292|       30046|               50|      20|0003/ 014C00513|2019-10-01 05:00:41|           100|          1|       false|\n|15270477|       30327|               30|      20|0001/ 002C01582|2019-10-01 05:01:47|            38|          1|       false|\n|15270800|       30064|               30|      20|0003/ 035C00551|2019-10-01 05:12:45|            44|         16|       false|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\nonly showing top 3 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225871_-20669751",
+      "id": "20191030-211851_1062687587",
+      "dateCreated": "2020-11-10 09:40:25.871",
+      "dateStarted": "2020-11-10 13:18:21.798",
+      "dateFinished": "2020-11-10 13:18:22.498",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// withColumn - přidá sloupec, (jméno sloupce, transformační funkce)\nval zaplnenost \u003d szn2019q4.withColumn(\"zaplnenost\", when($\"percent_before\" \u003e 50, \"hodne\").otherwise(\"malo\") )\nzaplnenost.show(3)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:18:27.947",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+----------+\n|      id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|zaplnenost|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+----------+\n|15270292|       30046|               50|      20|0003/ 014C00513|2019-10-01 05:00:41|           100|          1|       false|     hodne|\n|15270477|       30327|               30|      20|0001/ 002C01582|2019-10-01 05:01:47|            38|          1|       false|      malo|\n|15270800|       30064|               30|      20|0003/ 035C00551|2019-10-01 05:12:45|            44|         16|       false|      malo|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+----------+\nonly showing top 3 rows\n\nzaplnenost: org.apache.spark.sql.DataFrame \u003d [id: int, container_id: int ... 8 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225871_-522648804",
+      "id": "20191030-211900_694541464",
+      "dateCreated": "2020-11-10 09:40:25.871",
+      "dateStarted": "2020-11-10 13:18:28.012",
+      "dateFinished": "2020-11-10 13:18:28.865",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// select: projekce\nval zp1 \u003d zaplnenost.select($\"container_id\", $\"zaplnenost\")\nzp1.show(3)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:19:22.506",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+----------+\n|container_id|zaplnenost|\n+------------+----------+\n|       30046|     hodne|\n|       30327|      malo|\n|       30064|      malo|\n+------------+----------+\nonly showing top 3 rows\n\nzp1: org.apache.spark.sql.DataFrame \u003d [container_id: int, zaplnenost: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225872_-1642162640",
+      "id": "20191030-211906_475996892",
+      "dateCreated": "2020-11-10 09:40:25.872",
+      "dateStarted": "2020-11-10 13:19:22.602",
+      "dateFinished": "2020-11-10 13:19:23.997",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// select: projekce + transformace\nszn2019q4.select($\"container_id\", $\"pick_minfilllevel\", $\"pick_minfilllevel\" + 20).show(3)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:20:02.025",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-----------------+------------------------+\n|container_id|pick_minfilllevel|(pick_minfilllevel + 20)|\n+------------+-----------------+------------------------+\n|       30046|               50|                      70|\n|       30327|               30|                      50|\n|       30064|               30|                      50|\n+------------+-----------------+------------------------+\nonly showing top 3 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225872_884597411",
+      "id": "20191030-211912_606010960",
+      "dateCreated": "2020-11-10 09:40:25.872",
+      "dateStarted": "2020-11-10 13:20:02.108",
+      "dateFinished": "2020-11-10 13:20:03.518",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// filter: ktere kontejnery byly vyneseny skoro nebo zcela plne\nval vyneseny \u003d szn2019q4.filter($\"percent_before\" \u003e 95)\nvyneseny.show(2)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:20:54.592",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|      id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|15270292|       30046|               50|      20|0003/ 014C00513|2019-10-01 05:00:41|           100|          1|       false|\n|15270879|       30116|               30|      20|0003/ 084C00644|2019-10-01 05:12:49|           100|         10|       false|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\nonly showing top 2 rows\n\nvyneseny: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [id: int, container_id: int ... 7 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225873_-1482699778",
+      "id": "20191030-211916_87406017",
+      "dateCreated": "2020-11-10 09:40:25.873",
+      "dateStarted": "2020-11-10 13:20:54.686",
+      "dateFinished": "2020-11-10 13:20:55.730",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\ntest syntaxe",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.874",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003etest syntaxe\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225873_-138328977",
+      "id": "20191030-211945_1969347252",
+      "dateCreated": "2020-11-10 09:40:25.874",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// co je správně?\n// val testsyntax \u003d szn2019q4.filter(\"percent_now\" \u003e 50)\n// val testsyntax \u003d szn2019q4.filter(szn2019q4(\"percent_now\") \u003e 20)\nval testsyntax \u003d szn2019q4.filter($\"percent_now\" \u003e 20)\ntestsyntax.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:23:28.621",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|      id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|15275519|       29913|               50|      20|0001/ 027C00052|2019-10-01 10:01:29|            89|         37|       false|\n|15275527|       29956|               50|      20|0001/ 003C00111|2019-10-01 10:01:32|            93|         35|       false|\n|15275622|       30093|               30|      20|0003/ 041C00604|2019-10-01 10:01:46|            95|         29|       false|\n|15275997|       30167|               50|      30|0008/ 080C01396|2019-10-01 10:13:39|            68|         29|       false|\n|15290294|       29792|               30|      20|0010/ 263C00433|2019-10-02 05:00:37|           100|         26|       false|\n|15290876|       29831|               30|      20|0010/ 265C00452|2019-10-02 05:16:29|            98|         23|       false|\n|15290917|       29804|               30|      20|0010/ 268C00463|2019-10-02 05:16:32|           100|         23|       false|\n|15295466|       30364|               40|      30|0016/ 042C01481|2019-10-02 10:01:31|            89|         38|       false|\n|15295502|       30335|               30|      20|0001/ 021C01562|2019-10-02 10:01:40|            99|         28|       false|\n|15295515|       30365|               30|      20|0016/ 042C01482|2019-10-02 10:01:41|            73|         22|       false|\n|15295531|       30004|               50|      20|0009/ 158C00363|2019-10-02 10:01:42|            78|         30|       false|\n|15295882|       29875|               50|      20|0006/ 012C00172|2019-10-02 10:17:17|            80|         24|       false|\n|15295915|       29827|               50|      20|0009/ 003C00264|2019-10-02 10:17:19|           100|         42|       false|\n|15299134|       29949|               50|      20|0005/ 025C00153|2019-10-02 13:17:48|            82|         22|       false|\n|15304993|       30027|               30|      20|0003/ 010C00481|2019-10-02 18:18:35|            78|         21|       false|\n|15310757|       30064|               30|      20|0003/ 035C00551|2019-10-03 05:20:16|            90|         27|       false|\n|15310793|       30086|               30|      20|0003/ 040C00592|2019-10-03 05:20:18|            95|         27|       false|\n|15315299|       29960|               30|      20|0001/ 020C00121|2019-10-03 10:01:34|           100|         23|       false|\n|15315911|       30175|               30|      20|0008/ 276C01414|2019-10-03 10:32:35|            58|         26|       false|\n|15315971|       30077|               30|      20|0003/ 037C00572|2019-10-03 10:47:26|           100|         28|       false|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225874_-114829683",
+      "id": "20191030-212008_196517327",
+      "dateCreated": "2020-11-10 09:40:25.874",
+      "dateStarted": "2020-11-10 13:23:16.551",
+      "dateFinished": "2020-11-10 13:23:17.372",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Explode vs split",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.874",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eExplode vs split\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225874_-461256636",
+      "id": "20191030-212032_1663539844",
+      "dateCreated": "2020-11-10 09:40:25.874",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// explode\nval df_exp1 \u003d List(List(\"jedna\",\"dva\",\"tri\"), List(\"ctyri\",\"pet\",\"sest\")).toDF()\nval df_exp2 \u003d df_exp1.withColumn(\"exploded\", explode($\"value\"))\n//df_exp2.show()\n\n// split\nval df_split1 \u003d List(\"jedna;dva;tri\").toDF()\nval df_split2_2 \u003d df_split1.withColumn(\"_tmp\", split($\"value\", \";\"))\nval df_split2 \u003d df_split1.withColumn(\"_tmp\", split($\"value\", \";\")).select(\n  $\"_tmp\".getItem(0).as(\"col1\"),\n  $\"_tmp\".getItem(1).as(\"col2\"),\n  $\"_tmp\".getItem(2).as(\"col3\")\n)\ndf_split2.show()\ndf_split2_2.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:28:23.872",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+----+----+\n| col1|col2|col3|\n+-----+----+----+\n|jedna| dva| tri|\n+-----+----+----+\n\n+-------------+-----------------+\n|        value|             _tmp|\n+-------------+-----------------+\n|jedna;dva;tri|[jedna, dva, tri]|\n+-------------+-----------------+\n\ndf_exp1: org.apache.spark.sql.DataFrame \u003d [value: array\u003cstring\u003e]\ndf_exp2: org.apache.spark.sql.DataFrame \u003d [value: array\u003cstring\u003e, exploded: string]\ndf_split1: org.apache.spark.sql.DataFrame \u003d [value: string]\ndf_split2_2: org.apache.spark.sql.DataFrame \u003d [value: string, _tmp: array\u003cstring\u003e]\ndf_split2: org.apache.spark.sql.DataFrame \u003d [col1: string, col2: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225874_-2124231897",
+      "id": "20191028-125434_1254572877",
+      "dateCreated": "2020-11-10 09:40:25.874",
+      "dateStarted": "2020-11-10 13:28:23.960",
+      "dateFinished": "2020-11-10 13:28:25.429",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nPříklad Chytrý odpad Prahy pokračování II.",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.875",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003ePříklad Chytrý odpad Prahy pokračování II.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225875_188102949",
+      "id": "20191030-213415_638034405",
+      "dateCreated": "2020-11-10 09:40:25.875",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// nacteni datasetu szn2018122019Q3\nval szn2018122019Q3 \u003d spark.read.format(\"csv\")\n  .option(\"sep\", \";\")\n  .option(\"inferSchema\", \"true\")\n  .option(\"header\", \"true\")\n  .load(\"detekce-svozu-nadob-201812-2019Q3.csv\")\n  \n  import org.apache.spark.sql.types.BooleanType\n  val szn2018122019Q3_3 \u003d szn2018122019Q3.withColumn(\"event_driven_tmp\", $\"event_driven\".cast(BooleanType)).drop(\"event_driven\").withColumnRenamed(\"event_driven_tmp\", \"event_driven\")\n  \n \n// UNION\nval szn \u003d szn2019q4.union(szn2018122019Q3_3)\nszn.show()\n\n// UNION 2",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 09:14:11.553",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|      id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|15270292|       30046|               50|      20|0003/ 014C00513|2019-10-01 05:00:41|           100|          1|       false|\n|15270477|       30327|               30|      20|0001/ 002C01582|2019-10-01 05:01:47|            38|          1|       false|\n|15270800|       30064|               30|      20|0003/ 035C00551|2019-10-01 05:12:45|            44|         16|       false|\n|15270879|       30116|               30|      20|0003/ 084C00644|2019-10-01 05:12:49|           100|         10|       false|\n|15271061|       29927|               30|      20|0006/ 262C00242|2019-10-01 05:19:44|           100|          0|       false|\n|15271066|       30034|               30|      20|0003/ 012C00493|2019-10-01 05:20:36|           100|          0|       false|\n|15271124|       30060|               50|      20|0003/ 030C00542|2019-10-01 05:25:38|           100|          7|       false|\n|15271202|       30040|               30|      20|0003/ 013C00502|2019-10-01 05:39:07|           100|         10|       false|\n|15271205|       30109|               30|      20|0003/ 076C00634|2019-10-01 05:39:08|            89|          4|       false|\n|15271776|       30071|               30|      20|0003/ 036C00563|2019-10-01 06:01:40|            97|          3|       false|\n|15271819|       29867|               50|      20|0001/ 032C00012|2019-10-01 06:01:45|           100|         10|       false|\n|15272682|       29878|               50|      20|0006/ 001C00181|2019-10-01 06:12:59|            94|          3|       false|\n|15275519|       29913|               50|      20|0001/ 027C00052|2019-10-01 10:01:29|            89|         37|       false|\n|15275527|       29956|               50|      20|0001/ 003C00111|2019-10-01 10:01:32|            93|         35|       false|\n|15275594|       29952|               40|      20|0001/ 022C00091|2019-10-01 10:01:41|            56|          9|       false|\n|15275619|       30069|               30|      20|0003/ 036C00561|2019-10-01 10:01:45|            91|          3|       false|\n|15275622|       30093|               30|      20|0003/ 041C00604|2019-10-01 10:01:46|            95|         29|       false|\n|15275658|       30107|               30|      20|0003/ 076C00632|2019-10-01 10:01:54|            71|          7|       false|\n|15275921|       30068|               30|      20|0003/ 035C00555|2019-10-01 10:13:33|            55|          0|       false|\n|15275936|       29903|               30|      20|0005/ 003C00134|2019-10-01 10:13:35|            98|          7|       false|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\nonly showing top 20 rows\n\nszn2018122019Q3: org.apache.spark.sql.DataFrame \u003d [id: int, container_id: int ... 7 more fields]\nimport org.apache.spark.sql.types.BooleanType\nszn2018122019Q3_3: org.apache.spark.sql.DataFrame \u003d [id: int, container_id: int ... 7 more fields]\nszn: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [id: int, container_id: int ... 7 more fields]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d3",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d4",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d5"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225875_1219821891",
+      "id": "20191028-095432_287439436",
+      "dateCreated": "2020-11-10 09:40:25.875",
+      "dateStarted": "2020-11-12 09:14:12.271",
+      "dateFinished": "2020-11-12 09:14:54.220",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "szn2019q4.show(3)\nszn2018122019Q3.show(3)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 09:15:16.224",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {}
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|      id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|15270292|       30046|               50|      20|0003/ 014C00513|2019-10-01 05:00:41|           100|          1|       false|\n|15270477|       30327|               30|      20|0001/ 002C01582|2019-10-01 05:01:47|            38|          1|       false|\n|15270800|       30064|               30|      20|0003/ 035C00551|2019-10-01 05:12:45|            44|         16|       false|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\nonly showing top 3 rows\n\n+-------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|     id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|\n+-------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|5252000|       29806|               30|      20|0018/ 050C00471|2018-12-01 05:06:27|            76|          6|       false|\n|5278394|       29808|               30|      20|0018/ 050C00473|2018-12-03 09:08:48|            95|          2|       false|\n|5280954|       29789|               30|      20|0006/ 264C00204|2018-12-03 13:09:24|            89|         13|       false|\n+-------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\nonly showing top 3 rows\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d6",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d7"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605172370271_637224423",
+      "id": "20201112-091250_1703230790",
+      "dateCreated": "2020-11-12 09:12:50.293",
+      "dateStarted": "2020-11-12 09:15:16.504",
+      "dateFinished": "2020-11-12 09:15:18.430",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## AKCE\n* take\n* collect\n* save",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.877",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eAKCE\u003c/h2\u003e\n\u003cul\u003e\n  \u003cli\u003etake\u003c/li\u003e\n  \u003cli\u003ecollect\u003c/li\u003e\n  \u003cli\u003esave\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225877_1575057616",
+      "id": "20191028-111952_432182074",
+      "dateCreated": "2020-11-10 09:40:25.877",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// take\n// val t \u003d szn.take(5)\n// print(t)\n\n// collect\n\nszn.collect()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:37:34.075",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res43: Array[org.apache.spark.sql.Row] \u003d Array([15270292,30046,50,20,0003/ 014C00513,2019-10-01 05:00:41.0,100,1,false], [15270477,30327,30,20,0001/ 002C01582,2019-10-01 05:01:47.0,38,1,false], [15270800,30064,30,20,0003/ 035C00551,2019-10-01 05:12:45.0,44,16,false], [15270879,30116,30,20,0003/ 084C00644,2019-10-01 05:12:49.0,100,10,false], [15271061,29927,30,20,0006/ 262C00242,2019-10-01 05:19:44.0,100,0,false], [15271066,30034,30,20,0003/ 012C00493,2019-10-01 05:20:36.0,100,0,false], [15271124,30060,50,20,0003/ 030C00542,2019-10-01 05:25:38.0,100,7,false], [15271202,30040,30,20,0003/ 013C00502,2019-10-01 05:39:07.0,100,10,false], [15271205,30109,30,20,0003/ 076C00634,2019-10-01 05:39:08.0,89,4,false], [15271776,30071,30,20,0003/ 036C00563,2019-10-01 06:01:40.0,97,3,false], [15271819,2..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225877_1731134221",
+      "id": "20191028-112010_1454345083",
+      "dateCreated": "2020-11-10 09:40:25.877",
+      "dateStarted": "2020-11-10 13:37:34.146",
+      "dateFinished": "2020-11-10 13:37:36.065",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### save, write",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.878",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch4\u003esave, write\u003c/h4\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225878_-801981190",
+      "id": "20191030-214323_1316235795",
+      "dateCreated": "2020-11-10 09:40:25.878",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// save, write\nszn2019q4.select(\"container_id\", \"code\").write.format(\"csv\").option(\"sep\", \",\").option(\"header\", \"true\").save(\"contid\")",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:39:54.855",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225878_-1967942848",
+      "id": "20191030-093430_928791391",
+      "dateCreated": "2020-11-10 09:40:25.878",
+      "dateStarted": "2020-11-10 13:39:55.064",
+      "dateFinished": "2020-11-10 13:39:56.745",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### parition, repartition, coalesce",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.879",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch4\u003eparition, repartition, coalesce\u003c/h4\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225878_-208016936",
+      "id": "20191030-214558_1163619330",
+      "dateCreated": "2020-11-10 09:40:25.878",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// repartition, coalesce\nval x \u003d (1 to 10).toList\nval numbersDf \u003d x.toDF(\"number\")\n\nnumbersDf.write.csv(\"number-simple\")\n\n// obodobně\nnumbersDf.coalesce(1).write.csv(\"n-col\")\n\nnumbersDf.repartition(6).write.csv(\"n-rep\")",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:44:04.913",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "x: List[Int] \u003d List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)\nnumbersDf: org.apache.spark.sql.DataFrame \u003d [number: int]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225879_1173539213",
+      "id": "20191030-095931_1072339765",
+      "dateCreated": "2020-11-10 09:40:25.879",
+      "dateStarted": "2020-11-10 13:44:05.001",
+      "dateFinished": "2020-11-10 13:44:08.549",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Akce COUNT",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.879",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eAkce COUNT\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225879_-1654478190",
+      "id": "20191030-091622_1882214640",
+      "dateCreated": "2020-11-10 09:40:25.879",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// kolik?\n// szn2019q4\n// szn2018122019Q3_3\n//szn\n\nval szn2019q4_count \u003d szn2019q4.count()\nval szn20182019q3_count \u003d szn2018122019Q3_3.count()\nval szn_count \u003d szn.count().longValue()\n\nprint(\"Počet záznamů: kvartál 4 - 2019 : \" + szn2019q4_count + \", 2018-2019 q3: \" + szn20182019q3_count + \", dohromady tedy: \" +  szn_count)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:45:55.492",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Počet záznamů: kvartál 4 - 2019 : 1002, 2018-2019 q3: 22987, dohromady tedy: 23989szn2019q4_count: Long \u003d 1002\nszn20182019q3_count: Long \u003d 22987\nszn_count: Long \u003d 23989\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225880_-1348455376",
+      "id": "20191030-142151_1810364974",
+      "dateCreated": "2020-11-10 09:40:25.880",
+      "dateStarted": "2020-11-10 13:45:55.601",
+      "dateFinished": "2020-11-10 13:45:56.949",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## transformace distinct, aggregační fce",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.880",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003etransformace distinct, aggregační fce\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225880_302839186",
+      "id": "20191030-142121_923055742",
+      "dateCreated": "2020-11-10 09:40:25.880",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// informace o datsetu:\nszn.show(5)\n\n// kolik mám záznamů?\nszn.count()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:46:49.580",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|      id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|15270292|       30046|               50|      20|0003/ 014C00513|2019-10-01 05:00:41|           100|          1|       false|\n|15270477|       30327|               30|      20|0001/ 002C01582|2019-10-01 05:01:47|            38|          1|       false|\n|15270800|       30064|               30|      20|0003/ 035C00551|2019-10-01 05:12:45|            44|         16|       false|\n|15270879|       30116|               30|      20|0003/ 084C00644|2019-10-01 05:12:49|           100|         10|       false|\n|15271061|       29927|               30|      20|0006/ 262C00242|2019-10-01 05:19:44|           100|          0|       false|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\nonly showing top 5 rows\n\nres48: Long \u003d 23989\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225881_-1316178460",
+      "id": "20191028-103959_1146384647",
+      "dateCreated": "2020-11-10 09:40:25.881",
+      "dateStarted": "2020-11-10 13:46:49.671",
+      "dateFinished": "2020-11-10 13:46:51.248",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "szn.select(\"pick_minfilllevel\").distinct().show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:47:23.034",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------------+\n|pick_minfilllevel|\n+-----------------+\n|               40|\n|               35|\n|               50|\n|               30|\n+-----------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605016027594_-1757716544",
+      "id": "20201110-134707_1430828573",
+      "dateCreated": "2020-11-10 13:47:07.594",
+      "dateStarted": "2020-11-10 13:47:23.126",
+      "dateFinished": "2020-11-10 13:47:27.049",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// select + min,max avg\nszn.select(min($\"percent_now\"), max($\"percent_now\"), avg($\"percent_now\")).show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:49:01.192",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------------+----------------+------------------+\n|min(percent_now)|max(percent_now)|  avg(percent_now)|\n+----------------+----------------+------------------+\n|               0|              50|11.085414148151235|\n+----------------+----------------+------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225881_1617678823",
+      "id": "20201026-142502_875776403",
+      "dateCreated": "2020-11-10 09:40:25.881",
+      "dateStarted": "2020-11-10 13:49:01.315",
+      "dateFinished": "2020-11-10 13:49:02.677",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// kolik unikátních odpadových kontejnerů máme\nszn.select(\"container_id\").distinct().count()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:48:08.211",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res50: Long \u003d 420\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225881_1175009214",
+      "id": "20191030-215651_294708759",
+      "dateCreated": "2020-11-10 09:40:25.881",
+      "dateStarted": "2020-11-10 13:48:08.282",
+      "dateFinished": "2020-11-10 13:48:11.524",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// jaká je nevyšší/nejnižší zaplněnost\nszn.select(min($\"percent_now\"), max($\"percent_now\")).show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:50:25.026",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------------+----------------+\n|min(percent_now)|max(percent_now)|\n+----------------+----------------+\n|               0|              50|\n+----------------+----------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225882_1209601852",
+      "id": "20191030-215657_1439772859",
+      "dateCreated": "2020-11-10 09:40:25.882",
+      "dateStarted": "2020-11-10 13:50:25.134",
+      "dateFinished": "2020-11-10 13:50:26.575",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// jaká je průměrná zaplněnost před a po (percent_before, percent_now)\nszn.select(avg($\"percent_before\"), avg($\"percent_now\")).show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:50:56.252",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------------------+------------------+\n|avg(percent_before)|  avg(percent_now)|\n+-------------------+------------------+\n|  83.05823502438618|11.085414148151235|\n+-------------------+------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225882_-203794229",
+      "id": "20191030-215702_585800810",
+      "dateCreated": "2020-11-10 09:40:25.882",
+      "dateStarted": "2020-11-10 13:50:56.317",
+      "dateFinished": "2020-11-10 13:50:58.381",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// jaké mám různé id konetjnerů\nszn.select(\"container_id\").distinct().show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:51:29.330",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+\n|container_id|\n+------------+\n|       29993|\n|       29894|\n|       29834|\n|       29827|\n|       29950|\n|       30330|\n|       29942|\n|       30333|\n|       29960|\n|       30128|\n|       29893|\n|       30004|\n|       30085|\n|       29974|\n|       30087|\n|       29891|\n|       30148|\n|       29791|\n|       30120|\n|       30141|\n+------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225883_-1779363681",
+      "id": "20191030-215707_1796162930",
+      "dateCreated": "2020-11-10 09:40:25.883",
+      "dateStarted": "2020-11-10 13:51:29.418",
+      "dateFinished": "2020-11-10 13:51:30.763",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// kolik je kontejnerů\nszn.select(\"container_id\").distinct().count()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:51:51.328",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res55: Long \u003d 420\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225883_-1325097360",
+      "id": "20191030-215713_698650380",
+      "dateCreated": "2020-11-10 09:40:25.883",
+      "dateStarted": "2020-11-10 13:51:51.401",
+      "dateFinished": "2020-11-10 13:51:54.760",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// co to je min fill level, jakých hodnot nabývají\nszn.select(\"pick_minfilllevel\").distinct().show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:52:12.098",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------------+\n|pick_minfilllevel|\n+-----------------+\n|               40|\n|               35|\n|               50|\n|               30|\n+-----------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225884_1513643013",
+      "id": "20191030-215724_683130023",
+      "dateCreated": "2020-11-10 09:40:25.884",
+      "dateStarted": "2020-11-10 13:52:12.199",
+      "dateFinished": "2020-11-10 13:52:15.022",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// jaké jsou různé kódové označení a kolik jich je\nszn.select(\"code\").distinct().show()\nszn.select(\"code\").distinct().count()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:52:30.109",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------------+\n|           code|\n+---------------+\n|0006/ 263C00234|\n|0003/ 024C00532|\n|0001/ 016C01532|\n|0001/ 038C00043|\n|0008/ 034C01384|\n|0010/ 265C00453|\n|0016/ 038C01422|\n|0001/ 035C01593|\n|0006/ 260C00165|\n|0009/ 157C00354|\n|0001/ 039C00021|\n|0005/ 025C00152|\n|0003/ 036C00561|\n|0009/ 157C00352|\n|0008/ 042C01356|\n|0003/ 012C00493|\n|0008/ 276C01414|\n|0003/ 084C00646|\n|0008/ 072C01336|\n|0008/ 034C01382|\n+---------------+\nonly showing top 20 rows\n\nres57: Long \u003d 429\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225884_-1556876632",
+      "id": "20191030-215730_193591923",
+      "dateCreated": "2020-11-10 09:40:25.884",
+      "dateStarted": "2020-11-10 13:52:30.187",
+      "dateFinished": "2020-11-10 13:52:34.497",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// může být položka sloupce event_driven null?\nszn.select(\"event_driven\").distinct().show()\n// szn.filter($\"event_driven\" \u003d\u003d null).show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:54:00.106",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+\n|event_driven|\n+------------+\n|        null|\n|       false|\n+------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225884_1350437773",
+      "id": "20191030-215735_600846014",
+      "dateCreated": "2020-11-10 09:40:25.884",
+      "dateStarted": "2020-11-10 13:54:00.213",
+      "dateFinished": "2020-11-10 13:54:02.712",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## groupBy, groupBy + aggregace",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.885",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003egroupBy, groupBy + aggregace\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225884_1753042259",
+      "id": "20191028-114108_1299416038",
+      "dateCreated": "2020-11-10 09:40:25.885",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.sql.functions._\nszn.show(2)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:12:51.083",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|      id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|15270292|       30046|               50|      20|0003/ 014C00513|2019-10-01 05:00:41|           100|          1|       false|\n|15270477|       30327|               30|      20|0001/ 002C01582|2019-10-01 05:01:47|            38|          1|       false|\n+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\nonly showing top 2 rows\n\nimport org.apache.spark.sql.functions._\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605016525759_-1768439358",
+      "id": "20201110-135525_980148473",
+      "dateCreated": "2020-11-10 13:55:25.759",
+      "dateStarted": "2020-11-10 14:12:51.089",
+      "dateFinished": "2020-11-10 14:12:51.907",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// kolikrát byl který kontejner vysypán v únoru 2019?\nval vysypan \u003d szn.select($\"container_id\", $\"pick_at_utc\")\nval vysypan2 \u003d vysypan.filter($\"pick_at_utc\".contains(\"2019-02\"))\nval vysypan3 \u003d vysypan2.groupBy($\"container_id\").count\nvysypan3.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:07:16.298",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-----+\n|container_id|count|\n+------------+-----+\n|       29894|   12|\n|       29993|    2|\n|       29950|   14|\n|       29827|   10|\n|       30330|   22|\n+------------+-----+\nonly showing top 5 rows\n\nvysypan: org.apache.spark.sql.DataFrame \u003d [container_id: int, pick_at_utc: timestamp]\nvysypan2: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [container_id: int, pick_at_utc: timestamp]\nvysypan3: org.apache.spark.sql.DataFrame \u003d [container_id: int, count: bigint]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225885_2067198265",
+      "id": "20191028-110645_1932819943",
+      "dateCreated": "2020-11-10 09:40:25.885",
+      "dateStarted": "2020-11-10 14:07:16.364",
+      "dateFinished": "2020-11-10 14:07:17.811",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "szn.select($\"container_id\", $\"pick_at_utc\").filter($\"pick_at_utc\".contains(\"2019-02\")).groupBy($\"container_id\").count.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 13:58:14.534",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-----+\n|container_id|count|\n+------------+-----+\n|       29894|   12|\n|       29993|    2|\n|       29950|   14|\n|       29827|   10|\n|       30330|   22|\n+------------+-----+\nonly showing top 5 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605016659235_534066310",
+      "id": "20201110-135739_1784869512",
+      "dateCreated": "2020-11-10 13:57:39.235",
+      "dateStarted": "2020-11-10 13:58:14.589",
+      "dateFinished": "2020-11-10 13:58:15.932",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// kdy byl kontejner vysypán\nval vysypan_datum \u003d vysypan.withColumn(\"date\", substring($\"pick_at_utc\", 0, 10))\n.withColumn(\"year\", substring($\"pick_at_utc\", 0, 4))\n.withColumn(\"month\", substring($\"pick_at_utc\", 6, 2))\n\nvysypan_datum.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:08:00.324",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-------------------+----------+----+-----+\n|container_id|        pick_at_utc|      date|year|month|\n+------------+-------------------+----------+----+-----+\n|       30046|2019-10-01 05:00:41|2019-10-01|2019|   10|\n|       30327|2019-10-01 05:01:47|2019-10-01|2019|   10|\n|       30064|2019-10-01 05:12:45|2019-10-01|2019|   10|\n|       30116|2019-10-01 05:12:49|2019-10-01|2019|   10|\n|       29927|2019-10-01 05:19:44|2019-10-01|2019|   10|\n|       30034|2019-10-01 05:20:36|2019-10-01|2019|   10|\n|       30060|2019-10-01 05:25:38|2019-10-01|2019|   10|\n|       30040|2019-10-01 05:39:07|2019-10-01|2019|   10|\n|       30109|2019-10-01 05:39:08|2019-10-01|2019|   10|\n|       30071|2019-10-01 06:01:40|2019-10-01|2019|   10|\n|       29867|2019-10-01 06:01:45|2019-10-01|2019|   10|\n|       29878|2019-10-01 06:12:59|2019-10-01|2019|   10|\n|       29913|2019-10-01 10:01:29|2019-10-01|2019|   10|\n|       29956|2019-10-01 10:01:32|2019-10-01|2019|   10|\n|       29952|2019-10-01 10:01:41|2019-10-01|2019|   10|\n|       30069|2019-10-01 10:01:45|2019-10-01|2019|   10|\n|       30093|2019-10-01 10:01:46|2019-10-01|2019|   10|\n|       30107|2019-10-01 10:01:54|2019-10-01|2019|   10|\n|       30068|2019-10-01 10:13:33|2019-10-01|2019|   10|\n|       29903|2019-10-01 10:13:35|2019-10-01|2019|   10|\n+------------+-------------------+----------+----+-----+\nonly showing top 20 rows\n\nvysypan_datum: org.apache.spark.sql.DataFrame \u003d [container_id: int, pick_at_utc: timestamp ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225889_2085286073",
+      "id": "20191030-215748_1399899243",
+      "dateCreated": "2020-11-10 09:40:25.889",
+      "dateStarted": "2020-11-10 14:08:00.384",
+      "dateFinished": "2020-11-10 14:08:01.293",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// groupby + aggregace\n\n// jaký je průmerný počet vysypání kontejnerů v jednotlivých letech\nval vysypan_new \u003d szn.select($\"container_id\", $\"pick_at_utc\")\nvysypan_new.withColumn(\"year\", substring($\"pick_at_utc\", 0, 4)).groupBy($\"year\").count.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:13:04.231",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+-----+\n|year|count|\n+----+-----+\n|2019|23415|\n|2018|  574|\n+----+-----+\n\nvysypan_new: org.apache.spark.sql.DataFrame \u003d [container_id: int, pick_at_utc: timestamp]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225889_-2100587906",
+      "id": "20191028-123800_1146633843",
+      "dateCreated": "2020-11-10 09:40:25.889",
+      "dateStarted": "2020-11-10 14:13:04.315",
+      "dateFinished": "2020-11-10 14:13:06.912",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// kolik existuje záznamů pro každý container?\nvysypan.groupBy($\"container_id\").count.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:08:27.908",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-----+\n|container_id|count|\n+------------+-----+\n|       29993|   50|\n|       29894|   77|\n|       29834|    4|\n|       29827|  101|\n|       29950|  102|\n+------------+-----+\nonly showing top 5 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225889_495318292",
+      "id": "20191030-215753_606454683",
+      "dateCreated": "2020-11-10 09:40:25.889",
+      "dateStarted": "2020-11-10 14:08:27.979",
+      "dateFinished": "2020-11-10 14:08:28.827",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Agregace",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.890",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eAgregace\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225890_849456484",
+      "id": "20201026-152729_1697490933",
+      "dateCreated": "2020-11-10 09:40:25.890",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "vysypan_datum.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:15:05.502",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-------------------+----------+----+-----+\n|container_id|        pick_at_utc|      date|year|month|\n+------------+-------------------+----------+----+-----+\n|       30046|2019-10-01 05:00:41|2019-10-01|2019|   10|\n|       30327|2019-10-01 05:01:47|2019-10-01|2019|   10|\n|       30064|2019-10-01 05:12:45|2019-10-01|2019|   10|\n|       30116|2019-10-01 05:12:49|2019-10-01|2019|   10|\n|       29927|2019-10-01 05:19:44|2019-10-01|2019|   10|\n+------------+-------------------+----------+----+-----+\nonly showing top 5 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605017699036_1810138340",
+      "id": "20201110-141459_269585989",
+      "dateCreated": "2020-11-10 14:14:59.036",
+      "dateStarted": "2020-11-10 14:15:05.605",
+      "dateFinished": "2020-11-10 14:15:06.427",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// agregegace - agg\nimport org.apache.spark.sql.functions\nval agg1 \u003d vysypan_datum.groupBy(\"year\", \"month\").agg(functions.count(\"date\").as(\"celkem\")).sort(\"year\", \"month\")\nagg1.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:16:10.994",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+-----+------+\n|year|month|celkem|\n+----+-----+------+\n|2018|   12|   574|\n|2019|   01|  1686|\n|2019|   02|  2234|\n|2019|   03|  2599|\n|2019|   04|  2600|\n+----+-----+------+\nonly showing top 5 rows\n\nimport org.apache.spark.sql.functions\nagg1: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [year: string, month: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225890_1369689496",
+      "id": "20201026-151604_54540515",
+      "dateCreated": "2020-11-10 09:40:25.890",
+      "dateStarted": "2020-11-10 14:16:11.077",
+      "dateFinished": "2020-11-10 14:16:15.650",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "agg1.groupBy(\"year\").agg(\n    functions.max(\"celkem\").as(\"nejvice v mesici\"),\n    functions.min(\"celkem\").as(\"nejmene v mesici\")).sort(\"year\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:17:31.069",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+----------------+----------------+\n|year|nejvice v mesici|nejmene v mesici|\n+----+----------------+----------------+\n|2018|             574|             574|\n|2019|            3193|            1002|\n+----+----------------+----------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605017806953_-2022665906",
+      "id": "20201110-141646_1967279136",
+      "dateCreated": "2020-11-10 14:16:46.953",
+      "dateStarted": "2020-11-10 14:17:31.148",
+      "dateFinished": "2020-11-10 14:17:41.114",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### JOINY",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.890",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eJOINY\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225890_1536542606",
+      "id": "20191028-133352_2120525987",
+      "dateCreated": "2020-11-10 09:40:25.890",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import spark.implicits._\n\nval left \u003d Seq((1, \"A1\"), (2, \"A2\"), (3, \"A3\"), (4, \"A4\")).toDF(\"id\", \"value\")\nval right \u003d Seq((3, \"A3\"), (4, \"A4\"), (4, \"A4_1\"), (5, \"A5\"), (6, \"A6\")).toDF(\"id\", \"value\")\n\nprintln(\"LEFT\")\nleft.orderBy(\"id\").show()\n\nprintln(\"RIGHT\")\nright.orderBy(\"id\").show()\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:18:38.173",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "LEFT\n+---+-----+\n| id|value|\n+---+-----+\n|  1|   A1|\n|  2|   A2|\n|  3|   A3|\n|  4|   A4|\n+---+-----+\n\nRIGHT\n+---+-----+\n| id|value|\n+---+-----+\n|  3|   A3|\n|  4| A4_1|\n|  4|   A4|\n|  5|   A5|\n|  6|   A6|\n+---+-----+\n\nimport spark.implicits._\nleft: org.apache.spark.sql.DataFrame \u003d [id: int, value: string]\nright: org.apache.spark.sql.DataFrame \u003d [id: int, value: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225891_-519893572",
+      "id": "20201026-155300_746402384",
+      "dateCreated": "2020-11-10 09:40:25.891",
+      "dateStarted": "2020-11-10 14:18:38.262",
+      "dateFinished": "2020-11-10 14:18:43.854",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// inner\nprint(\"inner\")\nleft.join(right, usingColumns \u003d Seq(\"id\"), joinType \u003d \"inner\").orderBy(\"id\").show()\n// outer\nprint(\"outer\")\nleft.join(right, usingColumns \u003d Seq(\"id\"), joinType \u003d \"outer\").orderBy(\"id\").show()\n// full\nprint(\"full\")\nleft.join(right, usingColumns \u003d Seq(\"id\"), joinType \u003d \"full\").orderBy(\"id\").show()\n// left\nprint(\"left\")\nleft.join(right, usingColumns \u003d Seq(\"id\"), joinType \u003d \"left\").orderBy(\"id\").show()\n// right\nprint(\"right\")\nleft.join(right, usingColumns \u003d Seq(\"id\"), joinType \u003d \"right\").orderBy(\"id\").show()\n// left_outer\nprint(\"left_outer\")\nleft.join(right, usingColumns \u003d Seq(\"id\"), joinType \u003d \"left_outer\").orderBy(\"id\").show()\n// right_outer\nprint(\"right_outer\")\nleft.join(right, usingColumns \u003d Seq(\"id\"), joinType \u003d \"right_outer\").orderBy(\"id\").show()\n// left_semi\nprint(\"left_semi\")\nleft.join(right, usingColumns \u003d Seq(\"id\"), joinType \u003d \"left_semi\").orderBy(\"id\").show()\n// left_anti\nprint(\"left_anti\")\nleft.join(right, usingColumns \u003d Seq(\"id\"), joinType \u003d \"left_anti\").orderBy(\"id\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:19:14.024",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "inner+---+-----+-----+\n| id|value|value|\n+---+-----+-----+\n|  3|   A3|   A3|\n|  4|   A4| A4_1|\n|  4|   A4|   A4|\n+---+-----+-----+\n\nouter+---+-----+-----+\n| id|value|value|\n+---+-----+-----+\n|  1|   A1| null|\n|  2|   A2| null|\n|  3|   A3|   A3|\n|  4|   A4|   A4|\n|  4|   A4| A4_1|\n|  5| null|   A5|\n|  6| null|   A6|\n+---+-----+-----+\n\nfull+---+-----+-----+\n| id|value|value|\n+---+-----+-----+\n|  1|   A1| null|\n|  2|   A2| null|\n|  3|   A3|   A3|\n|  4|   A4|   A4|\n|  4|   A4| A4_1|\n|  5| null|   A5|\n|  6| null|   A6|\n+---+-----+-----+\n\nleft+---+-----+-----+\n| id|value|value|\n+---+-----+-----+\n|  1|   A1| null|\n|  2|   A2| null|\n|  3|   A3|   A3|\n|  4|   A4| A4_1|\n|  4|   A4|   A4|\n+---+-----+-----+\n\nright+---+-----+-----+\n| id|value|value|\n+---+-----+-----+\n|  3|   A3|   A3|\n|  4|   A4| A4_1|\n|  4|   A4|   A4|\n|  5| null|   A5|\n|  6| null|   A6|\n+---+-----+-----+\n\nleft_outer+---+-----+-----+\n| id|value|value|\n+---+-----+-----+\n|  1|   A1| null|\n|  2|   A2| null|\n|  3|   A3|   A3|\n|  4|   A4| A4_1|\n|  4|   A4|   A4|\n+---+-----+-----+\n\nright_outer+---+-----+-----+\n| id|value|value|\n+---+-----+-----+\n|  3|   A3|   A3|\n|  4|   A4| A4_1|\n|  4|   A4|   A4|\n|  5| null|   A5|\n|  6| null|   A6|\n+---+-----+-----+\n\nleft_semi+---+-----+\n| id|value|\n+---+-----+\n|  3|   A3|\n|  4|   A4|\n+---+-----+\n\nleft_anti+---+-----+\n| id|value|\n+---+-----+\n|  1|   A1|\n|  2|   A2|\n+---+-----+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225891_-702455467",
+      "id": "20201026-155314_14351224",
+      "dateCreated": "2020-11-10 09:40:25.891",
+      "dateStarted": "2020-11-10 14:19:14.103",
+      "dateFinished": "2020-11-10 14:19:25.278",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### pokračování příkladu Chytrý odpad Prahy\ndata: http://opendata.praha.eu/dataset/chytry-svoz-odpadu-historicka-data-zaplnenosti",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.892",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003epokračování příkladu Chytrý odpad Prahy\u003c/h3\u003e\n\u003cp\u003edata: \u003ca href\u003d\"http://opendata.praha.eu/dataset/chytry-svoz-odpadu-historicka-data-zaplnenosti\"\u003ehttp://opendata.praha.eu/dataset/chytry-svoz-odpadu-historicka-data-zaplnenosti\u003c/a\u003e\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225892_231774112",
+      "id": "20191030-115134_226116120",
+      "dateCreated": "2020-11-10 09:40:25.892",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// načíst a spojit data\nval hist2019q4 \u003d spark.read.format(\"csv\")\n  .option(\"sep\", \";\")\n  .option(\"inferSchema\", \"true\")\n  .option(\"header\", \"true\")\n  .load(\"historie-zaplnenosti-nadob-2019-q4.csv\")\n\nhist2019q4.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:21:17.146",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+-----------------+------------------+--------+-----------+--------------+-------------------+--------------------+---------+\n|      id|container_id|             code|percent_calculated|upturned|temperature|battery_status|    measured_at_utc|      prediction_utc|firealarm|\n+--------+------------+-----------------+------------------+--------+-----------+--------------+-------------------+--------------------+---------+\n|15681053|       30039|  0003/ 013C00501|                90|       0|         12|           3.6|2019-10-21 07:18:56|                null|        0|\n|15681051|       30007|  0009/ 159C00371|                87|       0|         13|           3.6|2019-10-21 07:18:01|                null|        0|\n|15681045|       30291|  0001/ 012C00656|                 0|       0|         11|           3.6|2019-10-21 07:17:12|2019-10-29T11:17:...|        0|\n|15681024|       29820|  0006/ 263C00233|               100|       0|         11|           3.6|2019-10-21 07:15:33|                null|        0|\n|15680993|       30038|  0003/ 012C00497|                18|       0|         14|           3.6|2019-10-21 07:14:21|2019-11-07T16:42:...|        0|\n|15680974|       29898|  0001/ 038C00043|                58|       0|         12|           3.7|2019-10-21 07:13:04|2019-10-25T20:38:...|        0|\n|15680966|       30021|  0009/ 161C00395|                57|       0|         15|           3.6|2019-10-21 07:12:38|2019-10-30T20:19:...|        0|\n|15680956|       30290|  0001/ 012C00655|                 0|       0|         13|           3.6|2019-10-21 07:12:25|2019-11-08T16:12:...|        0|\n|15680955|       30090|  0003/ 041C00601|                 9|       0|         11|           3.6|2019-10-21 07:12:17|2019-11-20T21:02:...|        0|\n|15680934|       30008|  0009/ 159C00372|                54|       0|         14|           3.6|2019-10-21 07:11:20|2019-10-29T02:38:...|        0|\n|15680902|       30011|  0009/ 159C00375|                92|       0|         11|           3.6|2019-10-21 07:09:51|                null|        0|\n|15680900|       29899|  0001/ 038C00044|               100|       0|         16|           3.6|2019-10-21 07:09:35|                null|        0|\n|15680893|       29897|  0001/ 038C00042|                21|       0|         15|           3.6|2019-10-21 07:09:05|2019-10-23T12:27:...|        0|\n|15680866|       29975|  0009/ 152C00294|                32|       0|         13|           3.6|2019-10-21 07:07:21|2019-11-13T07:53:...|        0|\n|15680789|      115989|0006/ 262B_C00243|                36|       1|         16|           3.6|2019-10-21 07:04:22|2019-10-23T20:04:...|        0|\n|15680725|       30407|  0001/ 004C01602|                 0|       0|         10|          3.65|2019-10-21 07:01:53|2019-10-23T19:09:...|        0|\n|15680721|       30082|  0003/ 039C00583|                 4|       0|         11|           3.6|2019-10-21 07:01:51|2019-11-04T08:04:...|        0|\n|15680713|       30407|  0001/ 004C01602|                 0|       0|         10|          3.65|2019-10-21 07:01:42|2019-10-23T19:09:...|        0|\n|15680680|      115988|0006/ 262B_C00244|                97|       1|         14|           3.6|2019-10-21 07:01:08|                null|        0|\n|15680645|       30140|  0008/ 042C01351|                99|       0|         12|          3.79|2019-10-21 07:00:28|                null|        0|\n+--------+------------+-----------------+------------------+--------+-----------+--------------+-------------------+--------------------+---------+\nonly showing top 20 rows\n\nhist2019q4: org.apache.spark.sql.DataFrame \u003d [id: int, container_id: int ... 8 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225892_-1135164554",
+      "id": "20191030-115847_185262742",
+      "dateCreated": "2020-11-10 09:40:25.892",
+      "dateStarted": "2020-11-10 14:21:17.614",
+      "dateFinished": "2020-11-10 14:21:21.669",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val shjoin \u003d hist2019q4.join(szn2019q4,szn2019q4(\"container_id\") \u003d\u003d\u003d hist2019q4(\"container_id\"), \"inner\" )\nshjoin.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:25:02.373",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+---------------+------------------+--------+-----------+--------------+-------------------+--------------+---------+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|      id|container_id|           code|percent_calculated|upturned|temperature|battery_status|    measured_at_utc|prediction_utc|firealarm|      id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|\n+--------+------------+---------------+------------------+--------+-----------+--------------+-------------------+--------------+---------+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|15681053|       30039|0003/ 013C00501|                90|       0|         12|           3.6|2019-10-21 07:18:56|          null|        0|15623272|       30039|               30|      20|0003/ 013C00501|2019-10-18 10:18:57|           100|          5|       false|\n|15681053|       30039|0003/ 013C00501|                90|       0|         12|           3.6|2019-10-21 07:18:56|          null|        0|15566788|       30039|               30|      20|0003/ 013C00501|2019-10-15 13:18:58|           100|          9|       false|\n|15681053|       30039|0003/ 013C00501|                90|       0|         12|           3.6|2019-10-21 07:18:56|          null|        0|15482285|       30039|               30|      20|0003/ 013C00501|2019-10-11 07:18:57|            63|         17|       false|\n|15681053|       30039|0003/ 013C00501|                90|       0|         12|           3.6|2019-10-21 07:18:56|          null|        0|15421466|       30039|               30|      20|0003/ 013C00501|2019-10-08 10:18:57|           100|          6|       false|\n|15681053|       30039|0003/ 013C00501|                90|       0|         12|           3.6|2019-10-21 07:18:56|          null|        0|15342700|       30039|               30|      20|0003/ 013C00501|2019-10-04 10:18:59|            93|          8|       false|\n+--------+------------+---------------+------------------+--------+-----------+--------------+-------------------+--------------+---------+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\nonly showing top 5 rows\n\nshjoin: org.apache.spark.sql.DataFrame \u003d [id: int, container_id: int ... 17 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605018088862_-830956811",
+      "id": "20201110-142128_2135326815",
+      "dateCreated": "2020-11-10 14:21:28.862",
+      "dateStarted": "2020-11-10 14:25:02.455",
+      "dateFinished": "2020-11-10 14:25:03.954",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val shjoin2 \u003d hist2019q4.join(szn2019q4,szn2019q4(\"container_id\") \u003d\u003d\u003d hist2019q4(\"container_id\"), \"inner\" ).drop(\"container_id\")\nshjoin.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:25:31.773",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+---------------+------------------+--------+-----------+--------------+-------------------+--------------+---------+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|      id|container_id|           code|percent_calculated|upturned|temperature|battery_status|    measured_at_utc|prediction_utc|firealarm|      id|container_id|pick_minfilllevel|decrease|           code|        pick_at_utc|percent_before|percent_now|event_driven|\n+--------+------------+---------------+------------------+--------+-----------+--------------+-------------------+--------------+---------+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\n|15681053|       30039|0003/ 013C00501|                90|       0|         12|           3.6|2019-10-21 07:18:56|          null|        0|15623272|       30039|               30|      20|0003/ 013C00501|2019-10-18 10:18:57|           100|          5|       false|\n|15681053|       30039|0003/ 013C00501|                90|       0|         12|           3.6|2019-10-21 07:18:56|          null|        0|15566788|       30039|               30|      20|0003/ 013C00501|2019-10-15 13:18:58|           100|          9|       false|\n|15681053|       30039|0003/ 013C00501|                90|       0|         12|           3.6|2019-10-21 07:18:56|          null|        0|15482285|       30039|               30|      20|0003/ 013C00501|2019-10-11 07:18:57|            63|         17|       false|\n|15681053|       30039|0003/ 013C00501|                90|       0|         12|           3.6|2019-10-21 07:18:56|          null|        0|15421466|       30039|               30|      20|0003/ 013C00501|2019-10-08 10:18:57|           100|          6|       false|\n|15681053|       30039|0003/ 013C00501|                90|       0|         12|           3.6|2019-10-21 07:18:56|          null|        0|15342700|       30039|               30|      20|0003/ 013C00501|2019-10-04 10:18:59|            93|          8|       false|\n+--------+------------+---------------+------------------+--------+-----------+--------------+-------------------+--------------+---------+--------+------------+-----------------+--------+---------------+-------------------+--------------+-----------+------------+\nonly showing top 5 rows\n\nshjoin2: org.apache.spark.sql.DataFrame \u003d [id: int, code: string ... 15 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605018315384_130328579",
+      "id": "20201110-142515_381753405",
+      "dateCreated": "2020-11-10 14:25:15.384",
+      "dateStarted": "2020-11-10 14:25:31.864",
+      "dateFinished": "2020-11-10 14:25:33.248",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val hist2019q4_2 \u003d hist2019q4.withColumn(\"event_date\", substring($\"measured_at_utc\",0,10))\nval szn2019q4_2 \u003d szn2019q4.withColumn(\"event_date\", substring($\"pick_at_utc\",0,10))\n\nval shjoin3 \u003d hist2019q4_2.join(szn2019q4_2,szn2019q4_2(\"container_id\") \u003d\u003d\u003d hist2019q4_2(\"container_id\") \u0026\u0026 szn2019q4_2(\"event_date\") \u003d\u003d\u003d hist2019q4_2(\"event_date\") , \"outer\").drop(szn2019q4_2(\"container_id\")).drop(szn2019q4_2(\"event_date\"))\n\nshjoin3.show(3)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:26:36.522",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+------------+---------------+------------------+--------+-----------+--------------+-------------------+--------------------+---------+----------+----+-----------------+--------+----+-----------+--------------+-----------+------------+\n|      id|container_id|           code|percent_calculated|upturned|temperature|battery_status|    measured_at_utc|      prediction_utc|firealarm|event_date|  id|pick_minfilllevel|decrease|code|pick_at_utc|percent_before|percent_now|event_driven|\n+--------+------------+---------------+------------------+--------+-----------+--------------+-------------------+--------------------+---------+----------+----+-----------------+--------+----+-----------+--------------+-----------+------------+\n|15512725|       29787|0006/ 264C00202|                48|       0|         17|           3.6|2019-10-12 18:03:32|2019-11-07T21:06:...|        0|2019-10-12|null|             null|    null|null|       null|          null|       null|        null|\n|15509378|       29787|0006/ 264C00202|                48|       0|         19|           3.6|2019-10-12 15:03:03|2019-11-07T21:06:...|        0|2019-10-12|null|             null|    null|null|       null|          null|       null|        null|\n|15507265|       29787|0006/ 264C00202|                49|       0|         19|           3.6|2019-10-12 13:02:50|2019-11-07T21:06:...|        0|2019-10-12|null|             null|    null|null|       null|          null|       null|        null|\n+--------+------------+---------------+------------------+--------+-----------+--------------+-------------------+--------------------+---------+----------+----+-----------------+--------+----+-----------+--------------+-----------+------------+\nonly showing top 3 rows\n\nhist2019q4_2: org.apache.spark.sql.DataFrame \u003d [id: int, container_id: int ... 9 more fields]\nszn2019q4_2: org.apache.spark.sql.DataFrame \u003d [id: int, container_id: int ... 8 more fields]\nshjoin3: org.apache.spark.sql.DataFrame \u003d [id: int, container_id: int ... 17 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605018359932_1038582838",
+      "id": "20201110-142559_457977268",
+      "dateCreated": "2020-11-10 14:25:59.932",
+      "dateStarted": "2020-11-10 14:26:36.615",
+      "dateFinished": "2020-11-10 14:26:42.461",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nbroadcast join",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.893",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003ebroadcast join\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225893_-1591295294",
+      "id": "20201028-204207_233041339",
+      "dateCreated": "2020-11-10 09:40:25.893",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// broadcast join\nleft.join(broadcast(right), \"id\").show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:31:21.396",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---+-----+-----+\n| id|value|value|\n+---+-----+-----+\n|  3|   A3|   A3|\n|  4|   A4| A4_1|\n|  4|   A4|   A4|\n+---+-----+-----+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225894_-45408398",
+      "id": "20201026-161843_1170067164",
+      "dateCreated": "2020-11-10 09:40:25.894",
+      "dateStarted": "2020-11-10 14:31:21.509",
+      "dateFinished": "2020-11-10 14:31:22.755",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### UDF\n#### User Defined Function\nSpark API má spoustu \"předpřipravených\" funkcí, pokud ale chceme nějakou speciální transformaci, tak musíme napsat vlastní udf.\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.894",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eUDF\u003c/h3\u003e\n\u003ch4\u003eUser Defined Function\u003c/h4\u003e\n\u003cp\u003eSpark API má spoustu \u0026ldquo;předpřipravených\u0026rdquo; funkcí, pokud ale chceme nějakou speciální transformaci, tak musíme napsat vlastní udf.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225894_195689049",
+      "id": "20191028-140217_133811049",
+      "dateCreated": "2020-11-10 09:40:25.894",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val nadoba30039 \u003d shjoin3.filter($\"container_id\" \u003d\u003d\u003d 30039).select(\"event_date\",\"container_id\",\"percent_calculated\",\"temperature\",\"battery_status\",\"measured_at_utc\",\"pick_at_utc\",\"percent_before\",\"percent_now\")\nnadoba30039.show(2)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:34:33.859",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------+------------+------------------+-----------+--------------+-------------------+-----------+--------------+-----------+\n|event_date|container_id|percent_calculated|temperature|battery_status|    measured_at_utc|pick_at_utc|percent_before|percent_now|\n+----------+------------+------------------+-----------+--------------+-------------------+-----------+--------------+-----------+\n|2019-10-21|       30039|                90|         12|           3.6|2019-10-21 07:18:56|       null|          null|       null|\n|2019-10-21|       30039|                98|         12|           3.6|2019-10-21 04:18:56|       null|          null|       null|\n+----------+------------+------------------+-----------+--------------+-------------------+-----------+--------------+-----------+\nonly showing top 2 rows\n\nnadoba30039: org.apache.spark.sql.DataFrame \u003d [event_date: string, container_id: int ... 7 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225894_-1908501608",
+      "id": "20201026-163311_1722671428",
+      "dateCreated": "2020-11-10 09:40:25.894",
+      "dateStarted": "2020-11-10 14:34:33.926",
+      "dateFinished": "2020-11-10 14:34:34.961",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// jak vypadá UDF, jak se píše\nimport org.apache.spark.sql.functions.udf\n\nval measured \u003d udf( (eventDate:String, temperature:String) \u003d\u003e {\n    if(eventDate!\u003dnull) \"namerena teplota \" + temperature else \"nemereno\"\n}\n    )\n\n// udf pro měření zaplněnosti\nval picked \u003d udf((eventDate: String, percentNow: String) \u003d\u003e {\n    if(eventDate!\u003dnull) \"vysypano pri zaplnenosti \" + percentNow + \"%\" else \"nevysypano\"\n})\n\n// udf, která mi říká jestli se obě události staly v jeden den\nval bothEvents \u003d udf((picked: String, measured: String) \u003d\u003e {\n    if(picked!\u003dnull \u0026\u0026 measured!\u003dnull) true else false\n})",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:36:44.613",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.functions.udf\nmeasured: org.apache.spark.sql.expressions.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction2\u003e,StringType,Some(List(StringType, StringType)))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225895_1036417581",
+      "id": "20191030-115902_1039665396",
+      "dateCreated": "2020-11-10 09:40:25.895",
+      "dateStarted": "2020-11-10 14:35:53.192",
+      "dateFinished": "2020-11-10 14:35:54.524",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val nadoba30039_2 \u003d nadoba30039.withColumn(\"info_m\", measured($\"measured_at_utc\",$\"temperature\")).withColumn(\"info_p\", picked($\"pick_at_utc\",$\"percent_before\")).withColumn(\"both_events\", bothEvents($\"pick_at_utc\",$\"measured_at_utc\"))\n\nnadoba30039_2.show(3, false)\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:37:11.583",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------+------------+------------------+-----------+--------------+-------------------+-----------+--------------+-----------+---------------------+----------+-----------+\n|event_date|container_id|percent_calculated|temperature|battery_status|measured_at_utc    |pick_at_utc|percent_before|percent_now|info_m               |info_p    |both_events|\n+----------+------------+------------------+-----------+--------------+-------------------+-----------+--------------+-----------+---------------------+----------+-----------+\n|2019-10-21|30039       |90                |12         |3.6           |2019-10-21 07:18:56|null       |null          |null       |namerena teplota 12°C|nevysypano|false      |\n|2019-10-21|30039       |98                |12         |3.6           |2019-10-21 04:18:56|null       |null          |null       |namerena teplota 12°C|nevysypano|false      |\n|2019-10-20|30039       |92                |14         |3.6           |2019-10-20 17:18:58|null       |null          |null       |namerena teplota 14°C|nevysypano|false      |\n+----------+------------+------------------+-----------+--------------+-------------------+-----------+--------------+-----------+---------------------+----------+-----------+\nonly showing top 3 rows\n\nnadoba30039_2: org.apache.spark.sql.DataFrame \u003d [event_date: string, container_id: int ... 10 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605019017726_-1688979256",
+      "id": "20201110-143657_247863306",
+      "dateCreated": "2020-11-10 14:36:57.726",
+      "dateStarted": "2020-11-10 14:37:11.677",
+      "dateFinished": "2020-11-10 14:37:13.648",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// moje informace navic",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.895",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225895_-13631213",
+      "id": "20201026-170724_1309382213",
+      "dateCreated": "2020-11-10 09:40:25.895",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// zjistit informace o kontejneru 30039\n\n// napište si vlastní udf na:\n\n// 1) ke každé události přiřaďte název měsíce (leden, únor,...)\nval month \u003d udf( (eventDate:String) \u003d\u003e {\n    print(eventDate)\n    if(eventDate!\u003dnull) if(eventDate \u003d\u003d \"10\") \"oktober\" else\n                        if(eventDate \u003d\u003d \"11\") \"november\" else\n                        if(eventDate \u003d\u003d \"12\") \"december\" else\n                        if(eventDate \u003d\u003d \"1\") \"januar\" else\n                        if(eventDate \u003d\u003d \"2\") \"februar\" else\n                        if(eventDate \u003d\u003d \"3\") \"marec\" else\n                        if(eventDate \u003d\u003d \"4\") \"april\" else\n                        if(eventDate \u003d\u003d \"5\") \"maj\" else\n                        if(eventDate \u003d\u003d \"6\") \"jun\" else\n                        if(eventDate \u003d\u003d \"7\") \"jul\" else\n                        if(eventDate \u003d\u003d \"8\") \"august\" else\n                        if(eventDate \u003d\u003d \"9\") \"september\" else null\n                        else null\n})\n\nval nadoba30039_3 \u003d nadoba30039.withColumn(\"mesic\", month(substring($\"measured_at_utc\", 6, 2)))\nnadoba30039_3.show(3)\n// 2) k události měření teploty připište ok, not_ok podle toho jestli byla teplota pod/nad 10°C\nval oknotok \u003d udf ( (temperature:Int) \u003d\u003e {\n    if(temperature \u003e 10) \"ok\" else \"not_ok\"\n})\nval nadoba30039_4 \u003d nadoba30039.withColumn(\"ok\", oknotok($\"temperature\"))\nnadoba30039_4.show(100)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:53:07.728",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------+------------+------------------+-----------+--------------+-------------------+-----------+--------------+-----------+-------+\n|event_date|container_id|percent_calculated|temperature|battery_status|    measured_at_utc|pick_at_utc|percent_before|percent_now|  mesic|\n+----------+------------+------------------+-----------+--------------+-------------------+-----------+--------------+-----------+-------+\n|2019-10-21|       30039|                90|         12|           3.6|2019-10-21 07:18:56|       null|          null|       null|oktober|\n|2019-10-21|       30039|                98|         12|           3.6|2019-10-21 04:18:56|       null|          null|       null|oktober|\n|2019-10-20|       30039|                92|         14|           3.6|2019-10-20 17:18:58|       null|          null|       null|oktober|\n+----------+------------+------------------+-----------+--------------+-------------------+-----------+--------------+-----------+-------+\nonly showing top 3 rows\n\n+----------+------------+------------------+-----------+--------------+-------------------+-------------------+--------------+-----------+------+\n|event_date|container_id|percent_calculated|temperature|battery_status|    measured_at_utc|        pick_at_utc|percent_before|percent_now|    ok|\n+----------+------------+------------------+-----------+--------------+-------------------+-------------------+--------------+-----------+------+\n|2019-10-21|       30039|                90|         12|           3.6|2019-10-21 07:18:56|               null|          null|       null|    ok|\n|2019-10-21|       30039|                98|         12|           3.6|2019-10-21 04:18:56|               null|          null|       null|    ok|\n|2019-10-20|       30039|                92|         14|           3.6|2019-10-20 17:18:58|               null|          null|       null|    ok|\n|2019-10-20|       30039|                91|         14|           3.6|2019-10-20 15:18:59|               null|          null|       null|    ok|\n|2019-10-20|       30039|                69|         14|           3.6|2019-10-20 13:18:58|               null|          null|       null|    ok|\n|2019-10-20|       30039|                69|         12|           3.6|2019-10-20 10:18:58|               null|          null|       null|    ok|\n|2019-10-20|       30039|                67|         11|           3.6|2019-10-20 07:19:02|               null|          null|       null|    ok|\n|2019-10-20|       30039|                66|         11|           3.6|2019-10-20 04:18:56|               null|          null|       null|    ok|\n|2019-10-19|       30039|                62|         14|           3.6|2019-10-19 17:18:59|               null|          null|       null|    ok|\n|2019-10-19|       30039|                52|         14|           3.6|2019-10-19 15:18:58|               null|          null|       null|    ok|\n|2019-10-19|       30039|                46|         14|           3.6|2019-10-19 13:18:58|               null|          null|       null|    ok|\n|2019-10-19|       30039|                29|         12|           3.6|2019-10-19 10:18:57|               null|          null|       null|    ok|\n|2019-10-19|       30039|                26|         11|           3.6|2019-10-19 07:18:56|               null|          null|       null|    ok|\n|2019-10-19|       30039|                24|         11|           3.6|2019-10-19 04:18:56|               null|          null|       null|    ok|\n|2019-10-18|       30039|                15|         15|           3.6|2019-10-18 17:18:59|2019-10-18 10:18:57|           100|          5|    ok|\n|2019-10-18|       30039|                13|         15|           3.6|2019-10-18 15:18:59|2019-10-18 10:18:57|           100|          5|    ok|\n|2019-10-18|       30039|                12|         14|           3.6|2019-10-18 13:18:58|2019-10-18 10:18:57|           100|          5|    ok|\n|2019-10-18|       30039|                 5|         12|           3.6|2019-10-18 10:18:57|2019-10-18 10:18:57|           100|          5|    ok|\n|2019-10-18|       30039|               100|         11|           3.6|2019-10-18 07:18:57|2019-10-18 10:18:57|           100|          5|    ok|\n|2019-10-18|       30039|               100|         11|           3.6|2019-10-18 04:18:56|2019-10-18 10:18:57|           100|          5|    ok|\n|2019-10-17|       30039|                99|         15|           3.6|2019-10-17 17:18:59|               null|          null|       null|    ok|\n|2019-10-17|       30039|                99|         16|           3.6|2019-10-17 15:18:59|               null|          null|       null|    ok|\n|2019-10-17|       30039|                93|         15|           3.6|2019-10-17 13:19:00|               null|          null|       null|    ok|\n|2019-10-17|       30039|                93|         11|           3.6|2019-10-17 10:18:57|               null|          null|       null|    ok|\n|2019-10-17|       30039|                92|          9|           3.6|2019-10-17 07:18:59|               null|          null|       null|not_ok|\n|2019-10-17|       30039|                92|          9|           3.6|2019-10-17 04:18:57|               null|          null|       null|not_ok|\n|2019-10-16|       30039|                91|         13|           3.6|2019-10-16 17:18:59|               null|          null|       null|    ok|\n|2019-10-16|       30039|                91|         14|           3.6|2019-10-16 15:18:58|               null|          null|       null|    ok|\n|2019-10-16|       30039|                81|         13|           3.6|2019-10-16 13:18:58|               null|          null|       null|    ok|\n|2019-10-16|       30039|                66|         12|           3.6|2019-10-16 10:18:57|               null|          null|       null|    ok|\n|2019-10-16|       30039|                51|         13|           3.6|2019-10-16 07:19:07|               null|          null|       null|    ok|\n|2019-10-16|       30039|                40|         12|           3.6|2019-10-16 04:18:56|               null|          null|       null|    ok|\n|2019-10-15|       30039|                38|         14|           3.6|2019-10-15 17:18:59|2019-10-15 13:18:58|           100|          9|    ok|\n|2019-10-15|       30039|                24|         15|           3.6|2019-10-15 15:18:58|2019-10-15 13:18:58|           100|          9|    ok|\n|2019-10-15|       30039|                 9|         15|           3.6|2019-10-15 13:18:58|2019-10-15 13:18:58|           100|          9|    ok|\n|2019-10-15|       30039|               100|         13|           3.6|2019-10-15 10:22:21|2019-10-15 13:18:58|           100|          9|    ok|\n|2019-10-15|       30039|               100|         14|           3.6|2019-10-15 07:18:57|2019-10-15 13:18:58|           100|          9|    ok|\n|2019-10-15|       30039|               100|         13|           3.6|2019-10-15 04:18:56|2019-10-15 13:18:58|           100|          9|    ok|\n|2019-10-14|       30039|               100|         16|           3.6|2019-10-14 17:18:59|               null|          null|       null|    ok|\n|2019-10-14|       30039|               100|         16|           3.6|2019-10-14 15:18:58|               null|          null|       null|    ok|\n|2019-10-14|       30039|               100|         15|           3.6|2019-10-14 13:18:58|               null|          null|       null|    ok|\n|2019-10-14|       30039|               100|         13|           3.6|2019-10-14 10:18:57|               null|          null|       null|    ok|\n|2019-10-14|       30039|               100|         12|           3.6|2019-10-14 07:19:00|               null|          null|       null|    ok|\n|2019-10-14|       30039|               100|         12|           3.6|2019-10-14 04:18:56|               null|          null|       null|    ok|\n|2019-10-13|       30039|               100|         17|           3.6|2019-10-13 17:18:59|               null|          null|       null|    ok|\n|2019-10-13|       30039|               100|         18|           3.6|2019-10-13 15:18:58|               null|          null|       null|    ok|\n|2019-10-13|       30039|               100|         17|           3.7|2019-10-13 13:18:58|               null|          null|       null|    ok|\n|2019-10-13|       30039|               100|         14|           3.6|2019-10-13 10:18:57|               null|          null|       null|    ok|\n|2019-10-13|       30039|                94|         12|           3.6|2019-10-13 07:18:57|               null|          null|       null|    ok|\n|2019-10-13|       30039|                94|         12|           3.6|2019-10-13 04:18:56|               null|          null|       null|    ok|\n|2019-10-12|       30039|                79|         16|           3.6|2019-10-12 17:18:59|               null|          null|       null|    ok|\n|2019-10-12|       30039|                77|         17|           3.6|2019-10-12 15:18:58|               null|          null|       null|    ok|\n|2019-10-12|       30039|                74|         15|           3.6|2019-10-12 13:19:03|               null|          null|       null|    ok|\n|2019-10-12|       30039|                40|         12|           3.6|2019-10-12 10:18:58|               null|          null|       null|    ok|\n|2019-10-12|       30039|                40|         10|           3.6|2019-10-12 07:18:57|               null|          null|       null|not_ok|\n|2019-10-12|       30039|                39|         10|           3.6|2019-10-12 04:18:59|               null|          null|       null|not_ok|\n|2019-10-11|       30039|                39|         13|           3.6|2019-10-11 17:18:59|2019-10-11 07:18:57|            63|         17|    ok|\n|2019-10-11|       30039|                36|         13|           3.6|2019-10-11 15:18:58|2019-10-11 07:18:57|            63|         17|    ok|\n|2019-10-11|       30039|                33|         13|           3.6|2019-10-11 13:18:58|2019-10-11 07:18:57|            63|         17|    ok|\n|2019-10-11|       30039|                24|         11|           3.6|2019-10-11 10:18:57|2019-10-11 07:18:57|            63|         17|    ok|\n|2019-10-11|       30039|                17|         10|           3.6|2019-10-11 07:18:57|2019-10-11 07:18:57|            63|         17|not_ok|\n|2019-10-11|       30039|                63|          9|           3.6|2019-10-11 04:18:57|2019-10-11 07:18:57|            63|         17|not_ok|\n|2019-10-10|       30039|                63|         11|           3.6|2019-10-10 17:18:59|               null|          null|       null|    ok|\n|2019-10-10|       30039|                63|         12|           3.6|2019-10-10 15:18:59|               null|          null|       null|    ok|\n|2019-10-10|       30039|                67|         11|           3.6|2019-10-10 13:19:00|               null|          null|       null|    ok|\n|2019-10-10|       30039|                67|         10|           3.6|2019-10-10 10:18:57|               null|          null|       null|not_ok|\n|2019-10-10|       30039|                68|         10|           3.6|2019-10-10 07:18:57|               null|          null|       null|not_ok|\n|2019-10-10|       30039|                68|         10|           3.6|2019-10-10 04:18:56|               null|          null|       null|not_ok|\n|2019-10-09|       30039|                49|         11|           3.6|2019-10-09 17:18:59|               null|          null|       null|    ok|\n|2019-10-09|       30039|                46|         12|           3.6|2019-10-09 15:18:58|               null|          null|       null|    ok|\n|2019-10-09|       30039|                38|         12|           3.6|2019-10-09 13:18:58|               null|          null|       null|    ok|\n|2019-10-09|       30039|                37|         12|           3.6|2019-10-09 10:18:57|               null|          null|       null|    ok|\n|2019-10-09|       30039|                33|         11|           3.6|2019-10-09 07:18:56|               null|          null|       null|    ok|\n|2019-10-09|       30039|                33|         11|           3.6|2019-10-09 04:18:56|               null|          null|       null|    ok|\n|2019-10-08|       30039|                20|         11|           3.6|2019-10-08 17:18:58|2019-10-08 10:18:57|           100|          6|    ok|\n|2019-10-08|       30039|                11|         11|           3.6|2019-10-08 15:19:03|2019-10-08 10:18:57|           100|          6|    ok|\n|2019-10-08|       30039|                 9|         10|           3.6|2019-10-08 13:18:58|2019-10-08 10:18:57|           100|          6|not_ok|\n|2019-10-08|       30039|                 6|          9|           3.6|2019-10-08 10:18:57|2019-10-08 10:18:57|           100|          6|not_ok|\n|2019-10-08|       30039|               100|          7|           3.6|2019-10-08 07:18:57|2019-10-08 10:18:57|           100|          6|not_ok|\n|2019-10-08|       30039|               100|          7|           3.6|2019-10-08 04:18:59|2019-10-08 10:18:57|           100|          6|not_ok|\n|2019-10-07|       30039|               100|          9|           3.6|2019-10-07 17:18:59|               null|          null|       null|not_ok|\n|2019-10-07|       30039|               100|          9|           3.6|2019-10-07 15:18:57|               null|          null|       null|not_ok|\n|2019-10-07|       30039|               100|          8|           3.6|2019-10-07 13:18:58|               null|          null|       null|not_ok|\n|2019-10-07|       30039|               100|          7|           3.6|2019-10-07 10:18:57|               null|          null|       null|not_ok|\n|2019-10-07|       30039|                99|          6|           3.6|2019-10-07 07:18:56|               null|          null|       null|not_ok|\n|2019-10-07|       30039|               100|          8|           3.6|2019-10-07 04:18:55|               null|          null|       null|not_ok|\n|2019-10-06|       30039|               100|         10|           3.6|2019-10-06 17:18:58|               null|          null|       null|not_ok|\n|2019-10-06|       30039|               100|         10|           3.6|2019-10-06 15:18:57|               null|          null|       null|not_ok|\n|2019-10-06|       30039|                90|         10|           3.6|2019-10-06 13:18:57|               null|          null|       null|not_ok|\n|2019-10-06|       30039|                85|          9|           3.6|2019-10-06 10:18:57|               null|          null|       null|not_ok|\n|2019-10-06|       30039|                84|          9|           3.6|2019-10-06 07:18:56|               null|          null|       null|not_ok|\n|2019-10-06|       30039|                84|          8|           3.6|2019-10-06 04:18:55|               null|          null|       null|not_ok|\n|2019-10-05|       30039|                84|          9|           3.6|2019-10-05 17:18:57|               null|          null|       null|not_ok|\n|2019-10-05|       30039|                85|         10|           3.6|2019-10-05 15:18:57|               null|          null|       null|not_ok|\n|2019-10-05|       30039|                63|         10|           3.6|2019-10-05 13:18:57|               null|          null|       null|not_ok|\n|2019-10-05|       30039|                29|         11|           3.6|2019-10-05 10:18:59|               null|          null|       null|    ok|\n|2019-10-05|       30039|                28|         11|           3.6|2019-10-05 07:18:55|               null|          null|       null|    ok|\n|2019-10-05|       30039|                26|         10|           3.6|2019-10-05 04:18:55|               null|          null|       null|not_ok|\n|2019-10-04|       30039|                20|         11|           3.6|2019-10-04 17:19:00|2019-10-04 10:18:59|            93|          8|    ok|\n|2019-10-04|       30039|                15|         12|           3.6|2019-10-04 15:18:57|2019-10-04 10:18:59|            93|          8|    ok|\n+----------+------------+------------------+-----------+--------------+-------------------+-------------------+--------------+-----------+------+\nonly showing top 100 rows\n\nmonth: org.apache.spark.sql.expressions.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,Some(List(StringType)))\nnadoba30039_3: org.apache.spark.sql.DataFrame \u003d [event_date: string, container_id: int ... 8 more fields]\noknotok: org.apache.spark.sql.expressions.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,Some(List(IntegerType)))\nnadoba30039_4: org.apache.spark.sql.DataFrame \u003d [event_date: string, container_id: int ... 8 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225895_-172599813",
+      "id": "20191028-135404_319133906",
+      "dateCreated": "2020-11-10 09:40:25.895",
+      "dateStarted": "2020-11-10 14:53:07.825",
+      "dateFinished": "2020-11-10 14:53:09.664",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Vizualizace v notebooku",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.897",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eVizualizace v notebooku\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225897_1720862697",
+      "id": "20201028-191039_1312077939",
+      "dateCreated": "2020-11-10 09:40:25.897",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// pouzijte dataset agg1\nagg1.registerTempTable(\"rok_mesic_vyneseni\")",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:53:45.946",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225898_-716880792",
+      "id": "20201028-191058_1140168360",
+      "dateCreated": "2020-11-10 09:40:25.898",
+      "dateStarted": "2020-11-10 14:53:46.021",
+      "dateFinished": "2020-11-10 14:53:47.380",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect * from rok_mesic_vyneseni",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 14:54:57.599",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": true,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "year": "string",
+                      "month": "string",
+                      "celkem": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "pieChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "year",
+                  "index": 0.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "month",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "month",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "year\tmonth\tcelkem\n2018\t12\t574\n2019\t01\t1686\n2019\t02\t2234\n2019\t03\t2599\n2019\t04\t2600\n2019\t05\t3033\n2019\t06\t2734\n2019\t07\t3193\n2019\t08\t2781\n2019\t09\t1553\n2019\t10\t1002\n"
+          },
+          {
+            "type": "TEXT",
+            "data": ""
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605020038157_-996355737",
+      "id": "20201110-145358_1114908168",
+      "dateCreated": "2020-11-10 14:53:58.157",
+      "dateStarted": "2020-11-10 14:54:16.213",
+      "dateFinished": "2020-11-10 14:54:18.601",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### RDD\nResilient distributed dataset\nPříklad mapreduce s RDD, pro ukázku jak se dá udělat word count a jak z RDD pomocí toDF() udělat dataframe.",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.898",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eRDD\u003c/h3\u003e\n\u003cp\u003eResilient distributed dataset\u003cbr/\u003ePříklad mapreduce s RDD, pro ukázku jak se dá udělat word count a jak z RDD pomocí toDF() udělat dataframe.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225898_-2121995663",
+      "id": "20191030-220319_1859129519",
+      "dateCreated": "2020-11-10 09:40:25.898",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// mapreduce priklad (reduceByKey je wide transformace)\nval textFile \u003d sc.textFile(\"TODO sem si dosad nejaky textovy soubor, ktery si zkopirujes do slozky work\")\nval counts \u003d textFile.flatMap(line \u003d\u003e line.split(\";|:\"))\n                 .map(word \u003d\u003e (word, 1))\n                 .reduceByKey(_ + _)\ncounts.toDF().show()\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.899",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225899_-343995142",
+      "id": "20201028-130833_629816541",
+      "dateCreated": "2020-11-10 09:40:25.899",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2020-11-10 09:40:25.899",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605001225899_2060092286",
+      "id": "20201028-204754_1314635094",
+      "dateCreated": "2020-11-10 09:40:25.899",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "spark-cviceni-workbook",
+  "id": "2FQZ97PTB",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

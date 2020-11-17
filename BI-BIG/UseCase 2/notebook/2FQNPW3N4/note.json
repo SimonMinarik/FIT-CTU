@@ -1,0 +1,1510 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n## Příklad analýza sentimentu amerických aerolinek - BATCH\nDataset zdroj: https://www.kaggle.com/crowdflower/twitter-airline-sentiment\n\n## Odkazy\n* Spark home: https://spark.apache.org/\n* Spark dokumentace (2.3.4): https://spark.apache.org/docs/2.3.4/\n* Scala: https://docs.scala-lang.org/",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.208",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003ePříklad analýza sentimentu amerických aerolinek - BATCH\u003c/h2\u003e\n\u003cp\u003eDataset zdroj: \u003ca href\u003d\"https://www.kaggle.com/crowdflower/twitter-airline-sentiment\"\u003ehttps://www.kaggle.com/crowdflower/twitter-airline-sentiment\u003c/a\u003e\u003c/p\u003e\n\u003ch2\u003eOdkazy\u003c/h2\u003e\n\u003cul\u003e\n  \u003cli\u003eSpark home: \u003ca href\u003d\"https://spark.apache.org/\"\u003ehttps://spark.apache.org/\u003c/a\u003e\u003c/li\u003e\n  \u003cli\u003eSpark dokumentace (2.3.4): \u003ca href\u003d\"https://spark.apache.org/docs/2.3.4/\"\u003ehttps://spark.apache.org/docs/2.3.4/\u003c/a\u003e\u003c/li\u003e\n  \u003cli\u003eScala: \u003ca href\u003d\"https://docs.scala-lang.org/\"\u003ehttps://docs.scala-lang.org/\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168198_-2099531325",
+      "id": "20191106-105239_1026198512",
+      "dateCreated": "2020-11-11 10:06:08.199",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//shell",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.224",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168218_719499019",
+      "id": "20201102-133456_2070985159",
+      "dateCreated": "2020-11-11 10:06:08.223",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Read",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.225",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eRead\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168224_274697378",
+      "id": "20191106-122443_129902174",
+      "dateCreated": "2020-11-11 10:06:08.225",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// READ: načtení datasetu\nval twitt1 \u003d spark.read.format(\"csv\").option(\"sep\", \";\").option(\"header\", \"true\").load(\"twitter-airline-sentiment-all.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:08:07.527",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "twitt1: org.apache.spark.sql.DataFrame \u003d [tweet_id: string, airline_sentiment: string ... 13 more fields]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d0"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168225_799286348",
+      "id": "20191105-092049_948688852",
+      "dateCreated": "2020-11-11 10:06:08.225",
+      "dateStarted": "2020-11-11 10:08:07.992",
+      "dateFinished": "2020-11-11 10:08:48.907",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "twitt1.show(3)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:08:26.237",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------------+-----------------+----------------------------+--------------+-------------------------+--------------+----------------------+----------+-------------------+-------------+--------------------+-----------+--------------------+--------------+--------------------+\n|          tweet_id|airline_sentiment|airline_sentiment_confidence|negativereason|negativereason_confidence|       airline|airline_sentiment_gold|      name|negativereason_gold|retweet_count|                text|tweet_coord|       tweet_created|tweet_location|       user_timezone|\n+------------------+-----------------+----------------------------+--------------+-------------------------+--------------+----------------------+----------+-------------------+-------------+--------------------+-----------+--------------------+--------------+--------------------+\n|570306133677760513|          neutral|                         1.0|          null|                     null|Virgin America|                  null|   cairdin|               null|            0|@VirginAmerica Wh...|       null|2015-02-24 11:35:...|          null|Eastern Time (US ...|\n|570301130888122368|         positive|                      0.3486|          null|                      0.0|Virgin America|                  null|  jnardino|               null|            0|@VirginAmerica pl...|       null|2015-02-24 11:15:...|          null|Pacific Time (US ...|\n|570301083672813571|          neutral|                      0.6837|          null|                     null|Virgin America|                  null|yvonnalynn|               null|            0|@VirginAmerica I ...|       null|2015-02-24 11:15:...|      New York|Central Time (US ...|\n+------------------+-----------------+----------------------------+--------------+-------------------------+--------------+----------------------+----------+-------------------+-------------+--------------------+-----------+--------------------+--------------+--------------------+\nonly showing top 3 rows\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d1"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089296579_1107749892",
+      "id": "20201111-100816_1548890440",
+      "dateCreated": "2020-11-11 10:08:16.579",
+      "dateStarted": "2020-11-11 10:08:27.075",
+      "dateFinished": "2020-11-11 10:08:50.520",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 1. Scala přístup",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.226",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e1. Scala přístup\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168226_-347357923",
+      "id": "20191106-122427_1009609286",
+      "dateCreated": "2020-11-11 10:06:08.226",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// jaké jsou různé aerolinky v datasetu?\ntwitt1.select($\"airline\").distinct().show(false)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:09:11.957",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+\n|airline       |\n+--------------+\n|Delta         |\n|Virgin America|\n|United        |\n|US Airways    |\n|Southwest     |\n|American      |\n+--------------+\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d2",
+            "http://12967291abdc:4041/jobs/job?id\u003d3",
+            "http://12967291abdc:4041/jobs/job?id\u003d4",
+            "http://12967291abdc:4041/jobs/job?id\u003d5",
+            "http://12967291abdc:4041/jobs/job?id\u003d6"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168227_-756603437",
+      "id": "20191105-101344_284283201",
+      "dateCreated": "2020-11-11 10:06:08.227",
+      "dateStarted": "2020-11-11 10:09:12.135",
+      "dateFinished": "2020-11-11 10:09:18.543",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// prozkoumání datasetu\ntwitt1.select($\"airline\").distinct().show(false)\ntwitt1.select($\"airline_sentiment\").distinct().show()\ntwitt1.select($\"airline_sentiment_confidence\").distinct().show(5)\ntwitt1.select($\"negativereason\").distinct().show(false)\ntwitt1.select($\"tweet_location\").distinct().show(false)\ntwitt1.select($\"tweet_created\").distinct().show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:09:32.211",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+\n|airline       |\n+--------------+\n|Delta         |\n|Virgin America|\n|United        |\n|US Airways    |\n|Southwest     |\n|American      |\n+--------------+\n\n+-----------------+\n|airline_sentiment|\n+-----------------+\n|         positive|\n|          neutral|\n|         negative|\n+-----------------+\n\n+----------------------------+\n|airline_sentiment_confidence|\n+----------------------------+\n|                      0.6547|\n|                         675|\n|                      0.3498|\n|                         691|\n|                         1.0|\n+----------------------------+\nonly showing top 5 rows\n\n+---------------------------+\n|negativereason             |\n+---------------------------+\n|Lost Luggage               |\n|longlines                  |\n|Late Flight                |\n|null                       |\n|Damaged Luggage            |\n|Cancelled Flight           |\n|Customer Service Issue     |\n|Flight Attendant Complaints|\n|Bad Flight                 |\n|Can\u0027t Tell                 |\n|Flight Booking Problems    |\n+---------------------------+\n\n+--------------------------+\n|tweet_location            |\n+--------------------------+\n|Utah                      |\n|Heart of America          |\n|Ho-Flo/Columbus/NYC       |\n|Winnipeg, MB Canada       |\n|washington, dc            |\n|Bangalore                 |\n|Novi, MI                  |\n|Port Washington, NY 11050 |\n|Brooklyn NY               |\n|Wilmington, North Carolina|\n|Winchester | Northend Ma  |\n|Gone West                 |\n|ʞᴚoʎ   ʍǝu                |\n|Downtown Dallas, Texas    |\n|Melbourne, Aus            |\n|Alexandria, Va            |\n|Scituate, MA              |\n|Richmond, VA              |\n|Harrisburg                |\n|East Hanover, NJ          |\n+--------------------------+\nonly showing top 20 rows\n\n+--------------------+\n|       tweet_created|\n+--------------------+\n|2015-02-23 11:58:...|\n|2015-02-23 04:39:...|\n|2015-02-22 17:43:...|\n|2015-02-22 12:34:...|\n|2015-02-22 01:27:...|\n+--------------------+\nonly showing top 5 rows\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d7",
+            "http://12967291abdc:4041/jobs/job?id\u003d8",
+            "http://12967291abdc:4041/jobs/job?id\u003d9",
+            "http://12967291abdc:4041/jobs/job?id\u003d10",
+            "http://12967291abdc:4041/jobs/job?id\u003d11",
+            "http://12967291abdc:4041/jobs/job?id\u003d12",
+            "http://12967291abdc:4041/jobs/job?id\u003d13",
+            "http://12967291abdc:4041/jobs/job?id\u003d14",
+            "http://12967291abdc:4041/jobs/job?id\u003d15",
+            "http://12967291abdc:4041/jobs/job?id\u003d16",
+            "http://12967291abdc:4041/jobs/job?id\u003d17",
+            "http://12967291abdc:4041/jobs/job?id\u003d18",
+            "http://12967291abdc:4041/jobs/job?id\u003d19",
+            "http://12967291abdc:4041/jobs/job?id\u003d20",
+            "http://12967291abdc:4041/jobs/job?id\u003d21",
+            "http://12967291abdc:4041/jobs/job?id\u003d22",
+            "http://12967291abdc:4041/jobs/job?id\u003d23",
+            "http://12967291abdc:4041/jobs/job?id\u003d24",
+            "http://12967291abdc:4041/jobs/job?id\u003d25",
+            "http://12967291abdc:4041/jobs/job?id\u003d26"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168227_1000445202",
+      "id": "20191105-101915_1882133804",
+      "dateCreated": "2020-11-11 10:06:08.227",
+      "dateStarted": "2020-11-11 10:09:32.360",
+      "dateFinished": "2020-11-11 10:09:40.009",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// informace o tom, proč bylo negativní hodnocení\nval negativeInfo \u003d twitt1.select(\"airline\",\"airline_sentiment\",\"airline_sentiment_confidence\",\"negativereason\",\"text\").filter($\"airline\" \u003d\u003d\u003d \"United\").filter($\"airline_sentiment\" \u003d\u003d\u003d \"negative\").drop(\"airline\",\"airline_sentiment\")\nnegativeInfo.show(5)\n//UI 1: podívejte se na to jak se vytvořily stage: http://localhost:18080/?showIncomplete\u003dtrue\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:11:17.897",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------------------------+----------------+--------------------+\n|airline_sentiment_confidence|  negativereason|                text|\n+----------------------------+----------------+--------------------+\n|                         1.0|Cancelled Flight|@united still no ...|\n|                         1.0|     Late Flight|@united Delayed d...|\n|                      0.3475|      Can\u0027t Tell|@united Your ERI-...|\n|                      0.6667|      Can\u0027t Tell|@united you think...|\n|                      0.6735|      Bad Flight|@united Gate agen...|\n+----------------------------+----------------+--------------------+\nonly showing top 5 rows\n\nnegativeInfo: org.apache.spark.sql.DataFrame \u003d [airline_sentiment_confidence: string, negativereason: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d27"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168227_-153076507",
+      "id": "20191105-101534_582188826",
+      "dateCreated": "2020-11-11 10:06:08.227",
+      "dateStarted": "2020-11-11 10:11:18.057",
+      "dateFinished": "2020-11-11 10:11:19.454",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// group by\nval negativTweets \u003d twitt1.select(\"airline\",\"airline_sentiment\").filter($\"airline_sentiment\" \u003d\u003d\u003d \"negative\").groupBy(\"airline\").count()\nnegativTweets.show()\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:29:31.526",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+-----+\n|       airline|count|\n+--------------+-----+\n|         Delta|  955|\n|Virgin America|  180|\n|        United| 2633|\n|    US Airways| 2263|\n|     Southwest| 1186|\n|      American| 1960|\n+--------------+-----+\n\nnegativTweets: org.apache.spark.sql.DataFrame \u003d [airline: string, count: bigint]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d39",
+            "http://12967291abdc:4041/jobs/job?id\u003d40",
+            "http://12967291abdc:4041/jobs/job?id\u003d41",
+            "http://12967291abdc:4041/jobs/job?id\u003d42",
+            "http://12967291abdc:4041/jobs/job?id\u003d43"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168228_-713392254",
+      "id": "20201102-140731_330900633",
+      "dateCreated": "2020-11-11 10:06:08.228",
+      "dateStarted": "2020-11-11 10:29:31.597",
+      "dateFinished": "2020-11-11 10:29:34.025",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// která aerolinie má nejméně negativních hodnocení ?\nval negativTweets2 \u003d twitt1.select(\"airline\",\"airline_sentiment\").filter($\"airline_sentiment\" \u003d\u003d\u003d \"negative\").groupBy(\"airline\").count().select(min($\"count\"))\nnegativTweets2.show()\n\n//UI 2:  podívejte se na to jak se vytvořili stage: http://localhost:18080/?showIncomplete\u003dtrue",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:29:32.975",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------+\n|min(count)|\n+----------+\n|       180|\n+----------+\n\nnegativTweets2: org.apache.spark.sql.DataFrame \u003d [min(count): bigint]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d44"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168228_-674827151",
+      "id": "20191105-101207_1372208561",
+      "dateCreated": "2020-11-11 10:06:08.228",
+      "dateStarted": "2020-11-11 10:29:33.230",
+      "dateFinished": "2020-11-11 10:29:36.653",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// hodnocení na základě pouhých součtů není úplně fér, může jít o datové zkreselní, udělejme si tedy spíše porovnání procent hodnocení ze všech vyplněných\n\n// porovnání přes join full_outer\nval tweetsAll \u003d twitt1.select(\"airline\",\"airline_sentiment\").groupBy(\"airline\").count()\nval joined \u003d negativTweets.join(tweetsAll, usingColumns \u003d Seq(\"airline\"), joinType \u003d \"full_outer\")\njoined.show()\n// UI 3: podívejte se na to jak se vytvořili stage: http://localhost:18080/?showIncomplete\u003dtrue",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:29:34.341",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+-----+-----+\n|       airline|count|count|\n+--------------+-----+-----+\n|         Delta|  955| 2222|\n|Virgin America|  180|  503|\n|        United| 2633| 3822|\n|    US Airways| 2263| 2913|\n|     Southwest| 1186| 2420|\n|      American| 1960| 2759|\n+--------------+-----+-----+\n\ntweetsAll: org.apache.spark.sql.DataFrame \u003d [airline: string, count: bigint]\njoined: org.apache.spark.sql.DataFrame \u003d [airline: string, count: bigint ... 1 more field]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d45",
+            "http://12967291abdc:4041/jobs/job?id\u003d46",
+            "http://12967291abdc:4041/jobs/job?id\u003d47",
+            "http://12967291abdc:4041/jobs/job?id\u003d48",
+            "http://12967291abdc:4041/jobs/job?id\u003d49"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168228_-1125862053",
+      "id": "20191105-112208_1730495948",
+      "dateCreated": "2020-11-11 10:06:08.228",
+      "dateStarted": "2020-11-11 10:29:34.448",
+      "dateFinished": "2020-11-11 10:29:42.427",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// to samé ale přes inner join\nval joined2 \u003d negativTweets.join(tweetsAll, usingColumns \u003d Seq(\"airline\"), joinType \u003d \"inner\")\njoined2.show()\n\n// UI 3: podívejte se na to jak se vytvořili stage: http://localhost:18080/?showIncomplete\u003dtrue",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:30:39.864",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+-----+-----+\n|       airline|count|count|\n+--------------+-----+-----+\n|         Delta|  955| 2222|\n|Virgin America|  180|  503|\n|        United| 2633| 3822|\n|    US Airways| 2263| 2913|\n|     Southwest| 1186| 2420|\n|      American| 1960| 2759|\n+--------------+-----+-----+\n\njoined2: org.apache.spark.sql.DataFrame \u003d [airline: string, count: bigint ... 1 more field]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d50",
+            "http://12967291abdc:4041/jobs/job?id\u003d51",
+            "http://12967291abdc:4041/jobs/job?id\u003d52",
+            "http://12967291abdc:4041/jobs/job?id\u003d53",
+            "http://12967291abdc:4041/jobs/job?id\u003d54",
+            "http://12967291abdc:4041/jobs/job?id\u003d55"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168228_-38526789",
+      "id": "20201102-151612_669775744",
+      "dateCreated": "2020-11-11 10:06:08.228",
+      "dateStarted": "2020-11-11 10:30:39.953",
+      "dateFinished": "2020-11-11 10:30:44.743",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\u003d\u003d\u003d Explain",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.233",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003e\u003d\u003d\u003d Explain\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168229_-186356677",
+      "id": "20201103-140949_1707843306",
+      "dateCreated": "2020-11-11 10:06:08.233",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// outer\njoined.explain()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:31:24.765",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u003d\u003d Physical Plan \u003d\u003d\n*(5) Project [coalesce(airline#15, airline#347) AS airline#410, count#296L, count#339L]\n+- SortMergeJoin [airline#15], [airline#347], FullOuter\n   :- *(2) Sort [airline#15 ASC NULLS FIRST], false, 0\n   :  +- *(2) HashAggregate(keys\u003d[airline#15], functions\u003d[count(1)])\n   :     +- Exchange hashpartitioning(airline#15, 200)\n   :        +- *(1) HashAggregate(keys\u003d[airline#15], functions\u003d[partial_count(1)])\n   :           +- *(1) Project [airline#15]\n   :              +- *(1) Filter (isnotnull(airline_sentiment#11) \u0026\u0026 (airline_sentiment#11 \u003d negative))\n   :                 +- *(1) FileScan csv [airline_sentiment#11,airline#15] Batched: false, Format: CSV, Location: InMemoryFileIndex[file:/work/twitter-airline-sentiment-all.csv], PartitionFilters: [], PushedFilters: [IsNotNull(airline_sentiment), EqualTo(airline_sentiment,negative)], ReadSchema: struct\u003cairline_sentiment:string,airline:string\u003e\n   +- *(4) Sort [airline#347 ASC NULLS FIRST], false, 0\n      +- *(4) HashAggregate(keys\u003d[airline#347], functions\u003d[count(1)])\n         +- Exchange hashpartitioning(airline#347, 200)\n            +- *(3) HashAggregate(keys\u003d[airline#347], functions\u003d[partial_count(1)])\n               +- *(3) FileScan csv [airline#347] Batched: false, Format: CSV, Location: InMemoryFileIndex[file:/work/twitter-airline-sentiment-all.csv], PartitionFilters: [], PushedFilters: [], ReadSchema: struct\u003cairline:string\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168233_2104245777",
+      "id": "20201102-151719_778675314",
+      "dateCreated": "2020-11-11 10:06:08.233",
+      "dateStarted": "2020-11-11 10:31:24.871",
+      "dateFinished": "2020-11-11 10:31:25.389",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// inner\njoined2.explain()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:31:33.327",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u003d\u003d Physical Plan \u003d\u003d\n*(4) Project [airline#15, count#296L, count#339L]\n+- *(4) BroadcastHashJoin [airline#15], [airline#382], Inner, BuildRight\n   :- *(4) HashAggregate(keys\u003d[airline#15], functions\u003d[count(1)])\n   :  +- Exchange hashpartitioning(airline#15, 200)\n   :     +- *(1) HashAggregate(keys\u003d[airline#15], functions\u003d[partial_count(1)])\n   :        +- *(1) Project [airline#15]\n   :           +- *(1) Filter ((isnotnull(airline_sentiment#11) \u0026\u0026 (airline_sentiment#11 \u003d negative)) \u0026\u0026 isnotnull(airline#15))\n   :              +- *(1) FileScan csv [airline_sentiment#11,airline#15] Batched: false, Format: CSV, Location: InMemoryFileIndex[file:/work/twitter-airline-sentiment-all.csv], PartitionFilters: [], PushedFilters: [IsNotNull(airline_sentiment), EqualTo(airline_sentiment,negative), IsNotNull(airline)], ReadSchema: struct\u003cairline_sentiment:string,airline:string\u003e\n   +- BroadcastExchange HashedRelationBroadcastMode(ArrayBuffer(input[0, string, true]))\n      +- *(3) HashAggregate(keys\u003d[airline#382], functions\u003d[count(1)])\n         +- Exchange hashpartitioning(airline#382, 200)\n            +- *(2) HashAggregate(keys\u003d[airline#382], functions\u003d[partial_count(1)])\n               +- *(2) Project [airline#382]\n                  +- *(2) Filter isnotnull(airline#382)\n                     +- *(2) FileScan csv [airline#382] Batched: false, Format: CSV, Location: InMemoryFileIndex[file:/work/twitter-airline-sentiment-all.csv], PartitionFilters: [], PushedFilters: [IsNotNull(airline)], ReadSchema: struct\u003cairline:string\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168234_-822544853",
+      "id": "20201102-151735_1897514223",
+      "dateCreated": "2020-11-11 10:06:08.234",
+      "dateStarted": "2020-11-11 10:31:33.432",
+      "dateFinished": "2020-11-11 10:31:33.940",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// dokončení joinu\nval ba \u003d negativTweets.select($\"airline\", $\"count\" as \"count_negative\").join(tweetsAll.select($\"airline\", $\"count\" as \"count_all\"), usingColumns \u003d Seq(\"airline\"), joinType \u003d \"inner\")\nval ba2 \u003d ba.select($\"airline\", $\"count_negative\"/$\"count_all\" * 100 as \"bad_rank\")\nval ba3 \u003d ba2.sort(desc(\"bad_rank\"))\n\nba.show()\nba2.show()\nba3.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:36:53.410",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+--------------+---------+\n|       airline|count_negative|count_all|\n+--------------+--------------+---------+\n|         Delta|           955|     2222|\n|Virgin America|           180|      503|\n|        United|          2633|     3822|\n|    US Airways|          2263|     2913|\n|     Southwest|          1186|     2420|\n|      American|          1960|     2759|\n+--------------+--------------+---------+\n\n+--------------+------------------+\n|       airline|          bad_rank|\n+--------------+------------------+\n|         Delta| 42.97929792979298|\n|Virgin America|35.785288270377734|\n|        United| 68.89063317634746|\n|    US Airways| 77.68623412289736|\n|     Southwest| 49.00826446280992|\n|      American| 71.04023196810438|\n+--------------+------------------+\n\n+--------------+------------------+\n|       airline|          bad_rank|\n+--------------+------------------+\n|    US Airways| 77.68623412289736|\n|      American| 71.04023196810438|\n|        United| 68.89063317634746|\n|     Southwest| 49.00826446280992|\n|         Delta| 42.97929792979298|\n|Virgin America|35.785288270377734|\n+--------------+------------------+\n\nba: org.apache.spark.sql.DataFrame \u003d [airline: string, count_negative: bigint ... 1 more field]\nba2: org.apache.spark.sql.DataFrame \u003d [airline: string, bad_rank: double]\nba3: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [airline: string, bad_rank: double]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d56",
+            "http://12967291abdc:4041/jobs/job?id\u003d57",
+            "http://12967291abdc:4041/jobs/job?id\u003d58",
+            "http://12967291abdc:4041/jobs/job?id\u003d59",
+            "http://12967291abdc:4041/jobs/job?id\u003d60",
+            "http://12967291abdc:4041/jobs/job?id\u003d61",
+            "http://12967291abdc:4041/jobs/job?id\u003d62",
+            "http://12967291abdc:4041/jobs/job?id\u003d63",
+            "http://12967291abdc:4041/jobs/job?id\u003d64",
+            "http://12967291abdc:4041/jobs/job?id\u003d65",
+            "http://12967291abdc:4041/jobs/job?id\u003d66",
+            "http://12967291abdc:4041/jobs/job?id\u003d67",
+            "http://12967291abdc:4041/jobs/job?id\u003d68",
+            "http://12967291abdc:4041/jobs/job?id\u003d69"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168234_193558895",
+      "id": "20191105-120125_151187324",
+      "dateCreated": "2020-11-11 10:06:08.234",
+      "dateStarted": "2020-11-11 10:36:53.465",
+      "dateFinished": "2020-11-11 10:37:02.709",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 2. SQL přístup",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.235",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e2. SQL přístup\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168234_-32638667",
+      "id": "20191106-122257_118335471",
+      "dateCreated": "2020-11-11 10:06:08.234",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Spark SQL, vytvoření twitt_table\ntwitt1.createOrReplaceTempView(\"twitt_table\")",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:37:46.260",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168235_-1019010732",
+      "id": "20191105-120103_1738774472",
+      "dateCreated": "2020-11-11 10:06:08.235",
+      "dateStarted": "2020-11-11 10:37:46.355",
+      "dateFinished": "2020-11-11 10:37:47.337",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// využití sqlContext.sql",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.237",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168236_499989772",
+      "id": "20201102-184849_1422189363",
+      "dateCreated": "2020-11-11 10:06:08.236",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// původní query\n// select(\"airline\",\"airline_sentiment\",\"airline_sentiment_confidence\",\"negativereason\",\"text\").filter($\"airline\" \u003d\u003d\u003d \"United\").filter($\"airline_sentiment\" \u003d\u003d\u003d \"negative\").drop(\"airline\",\"airline_sentiment\")\nval twittsql \u003d sqlContext.sql(\"SELECT airline,airline_sentiment,airline_sentiment_confidence,negativereason,text FROM twitt_table WHERE airline \u003d \u0027United\u0027 AND airline_sentiment \u003d \u0027negative\u0027\")\ntwittsql.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:39:14.616",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+-----------------+----------------------------+--------------------+--------------------+\n|airline|airline_sentiment|airline_sentiment_confidence|      negativereason|                text|\n+-------+-----------------+----------------------------+--------------------+--------------------+\n| United|         negative|                         1.0|    Cancelled Flight|@united still no ...|\n| United|         negative|                         1.0|         Late Flight|@united Delayed d...|\n| United|         negative|                      0.3475|          Can\u0027t Tell|@united Your ERI-...|\n| United|         negative|                      0.6667|          Can\u0027t Tell|@united you think...|\n| United|         negative|                      0.6735|          Bad Flight|@united Gate agen...|\n| United|         negative|                         1.0|Flight Booking Pr...|@united is the wo...|\n| United|         negative|                         1.0|Customer Service ...|@united @CheerTym...|\n| United|         negative|                      0.6547|Customer Service ...|@united I did sta...|\n| United|         negative|                         1.0|        Lost Luggage|@united if the ca...|\n| United|         negative|                      0.6526|          Can\u0027t Tell|@united @highbudd...|\n| United|         negative|                         1.0|Customer Service ...|@united beginning...|\n| United|         negative|                         1.0|Customer Service ...|@United the inter...|\n| United|         negative|                         1.0|          Can\u0027t Tell|@united thats wea...|\n| United|         negative|                         1.0|          Can\u0027t Tell|@united I flew ba...|\n| United|         negative|                         1.0|Customer Service ...|@united I am tryi...|\n| United|         negative|                         1.0|Customer Service ...|@united I sure di...|\n| United|         negative|                         1.0|         Late Flight|@united See? We w...|\n| United|         negative|                         1.0|           longlines|@united why no pr...|\n| United|         negative|                      0.6495|          Can\u0027t Tell|@united #Newarkli...|\n| United|         negative|                      0.6538|Customer Service ...|@united yes pleas...|\n+-------+-----------------+----------------------------+--------------------+--------------------+\nonly showing top 20 rows\n\ntwittsql: org.apache.spark.sql.DataFrame \u003d [airline: string, airline_sentiment: string ... 3 more fields]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d70"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168237_446161243",
+      "id": "20191105-122006_1591774014",
+      "dateCreated": "2020-11-11 10:06:08.237",
+      "dateStarted": "2020-11-11 10:39:14.687",
+      "dateFinished": "2020-11-11 10:39:15.823",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// vypsání  \"Reason \u003d  \" + duvod + \",  wrote : \" + text",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.237",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168237_-1110685157",
+      "id": "20191105-123631_1563544881",
+      "dateCreated": "2020-11-11 10:06:08.237",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// SQL GROUP BY\n// puvodni: val negativTweets \u003d twitt1.select(\"airline\",\"airline_sentiment\").filter($\"airline_sentiment\" \u003d\u003d\u003d \"negative\").groupBy(\"airline\").count()\nval twittsql2 \u003d sqlContext.sql(\"SELECT airline, COUNT(airline_sentiment) FROM twitt_table WHERE airline_sentiment \u003d \u0027negative\u0027 GROUP BY airline\")\ntwittsql2.show()\n// explain\n\n//UI 6: jak to vypadá v UI http://localhost:18080/history/\u003cAPP-ID\u003e/SQL/",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:45:11.835",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+------------------------+\n|       airline|count(airline_sentiment)|\n+--------------+------------------------+\n|         Delta|                     955|\n|Virgin America|                     180|\n|        United|                    2633|\n|    US Airways|                    2263|\n|     Southwest|                    1186|\n|      American|                    1960|\n+--------------+------------------------+\n\ntwittsql2: org.apache.spark.sql.DataFrame \u003d [airline: string, count(airline_sentiment): bigint]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d72",
+            "http://12967291abdc:4041/jobs/job?id\u003d73",
+            "http://12967291abdc:4041/jobs/job?id\u003d74",
+            "http://12967291abdc:4041/jobs/job?id\u003d75",
+            "http://12967291abdc:4041/jobs/job?id\u003d76"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168237_530177102",
+      "id": "20191105-124004_546877158",
+      "dateCreated": "2020-11-11 10:06:08.237",
+      "dateStarted": "2020-11-11 10:45:11.921",
+      "dateFinished": "2020-11-11 10:45:14.245",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// SQL DISTINCT\n// původní: twitt1.select($\"airline\").distinct().show(false)\nval twittsql3 \u003d sqlContext.sql(\"SELECT DISTINCT airline FROM twitt_table\")\ntwittsql3.show()\n\n// explain",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:47:09.753",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+\n|       airline|\n+--------------+\n|         Delta|\n|Virgin America|\n|        United|\n|    US Airways|\n|     Southwest|\n|      American|\n+--------------+\n\ntwittsql3: org.apache.spark.sql.DataFrame \u003d [airline: string]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://12967291abdc:4041/jobs/job?id\u003d77",
+            "http://12967291abdc:4041/jobs/job?id\u003d78",
+            "http://12967291abdc:4041/jobs/job?id\u003d79",
+            "http://12967291abdc:4041/jobs/job?id\u003d80",
+            "http://12967291abdc:4041/jobs/job?id\u003d81"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168238_565970973",
+      "id": "20191105-183249_392732793",
+      "dateCreated": "2020-11-11 10:06:08.238",
+      "dateStarted": "2020-11-11 10:47:09.845",
+      "dateFinished": "2020-11-11 10:47:12.440",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### 3. pohled přes tabulku Zeppelinu",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.238",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003e3. pohled přes tabulku Zeppelinu\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168238_1792301819",
+      "id": "20191105-122833_372556074",
+      "dateCreated": "2020-11-11 10:06:08.238",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.238",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9.0,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": true,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "airline_sentiment_confidence": "string",
+                      "negativereason": "string",
+                      "text": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "pieChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "negativereason",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "airline_sentiment_confidence",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168238_1213058700",
+      "id": "20191105-121806_1648558514",
+      "dateCreated": "2020-11-11 10:06:08.238",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.238",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9.0,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": true,
+              "setting": {
+                "table": {
+                  "tableGridState": {
+                    "columns": [
+                      {
+                        "name": "airline_sentiment",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "airline",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {
+                          "direction": "asc",
+                          "priority": 0.0
+                        },
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      }
+                    ],
+                    "scrollFocus": {},
+                    "selection": [],
+                    "grouping": {
+                      "grouping": [
+                        {
+                          "field": "airline",
+                          "groupPriority": 0.0,
+                          "colName": "airline"
+                        }
+                      ],
+                      "aggregations": [],
+                      "rowExpandedStates": {}
+                    },
+                    "treeView": {},
+                    "pagination": {
+                      "paginationCurrentPage": 1.0,
+                      "paginationPageSize": 250.0
+                    }
+                  },
+                  "tableColumnTypeState": {
+                    "names": {
+                      "airline": "string",
+                      "airline_sentiment": "string",
+                      "count(airline_sentiment)": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": true
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "pieChart": {}
+              },
+              "commonSetting": {},
+              "keys": [],
+              "groups": [
+                {
+                  "name": "airline_sentiment",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "count(airline_sentiment)",
+                  "index": 2.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168238_-1030959270",
+      "id": "20191105-183808_385756229",
+      "dateCreated": "2020-11-11 10:06:08.238",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Další příklady",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.239",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eDalší příklady\u003c/h1\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168239_1619328681",
+      "id": "20191105-130058_22382473",
+      "dateCreated": "2020-11-11 10:06:08.239",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// nejhorší aerolinka má jaké rozložení tweetů (místně)\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.239",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168239_2034939588",
+      "id": "20191105-124822_772955469",
+      "dateCreated": "2020-11-11 10:06:08.239",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// prumerna nespokojenost podle lokace\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.239",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168239_687711497",
+      "id": "20191105-125912_1791730646",
+      "dateCreated": "2020-11-11 10:06:08.239",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// mapovací funkce, vypsat nickname uživatelů z twitteru\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:06:08.239",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605089168239_-621881154",
+      "id": "20191104-212417_765789059",
+      "dateCreated": "2020-11-11 10:06:08.239",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "analyza-sentimentu-zadani",
+  "id": "2FQNPW3N4",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

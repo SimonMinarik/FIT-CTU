@@ -1,0 +1,522 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Streaming\n\n### read\n```\nval df \u003d spark\n  .readStream\n  .format(FORMAT) // text, rate, kafka, socket\n  .option(\"KEY\",\"VALUE\")\n  .\n  .\n  .\n  .load()\n```\n### write\n```\nval query \u003d df.writeStream\n  .outputMode(MODE) // complete, append, update\n  .format(FORMAT) // console, memory, parquet, csv, avro, ...\n  .option(\"KEY\",\"VALUE\")\n  .\n  .\n  .\n  .start()\n```",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:50:49.184",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eStreaming\u003c/h1\u003e\n\u003ch3\u003eread\u003c/h3\u003e\n\u003cpre\u003e\u003ccode\u003eval df \u003d spark\n  .readStream\n  .format(FORMAT) // text, rate, kafka, socket\n  .option(\u0026quot;KEY\u0026quot;,\u0026quot;VALUE\u0026quot;)\n  .\n  .\n  .\n  .load()\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3\u003ewrite\u003c/h3\u003e\n\u003cpre\u003e\u003ccode\u003eval query \u003d df.writeStream\n  .outputMode(MODE) // complete, append, update\n  .format(FORMAT) // console, memory, parquet, csv, avro, ...\n  .option(\u0026quot;KEY\u0026quot;,\u0026quot;VALUE\u0026quot;)\n  .\n  .\n  .\n  .start()\n\u003c/code\u003e\u003c/pre\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605091684027_1245878454",
+      "id": "20191105-131015_1448165509",
+      "dateCreated": "2020-11-11 10:48:04.027",
+      "dateStarted": "2020-11-11 10:50:49.185",
+      "dateFinished": "2020-11-11 10:50:56.582",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Testovací streaming RateStreamSource",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:48:04.029",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eTestovací streaming RateStreamSource\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605091684029_2051143438",
+      "id": "20191105-191332_1004475812",
+      "dateCreated": "2020-11-11 10:48:04.029",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// testovaci stream source\nval rates \u003d spark\n  .readStream\n  .format(\"rate\") // text, rate, kafka, socket\n  .load()\n  \nval query \u003d rates.writeStream.outputMode(\"append\").format(\"console\").start()\nquery.awaitTermination()\n\n// POZOR musí se zabít přes restart kontextu\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:58:04.171",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "org.apache.zeppelin.interpreter.InterpreterNotFoundException: No interpreter is binded to this note: 2FPXWXSBZ"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605091684030_-91861125",
+      "id": "20191105-191253_2047384864",
+      "dateCreated": "2020-11-11 10:48:04.030",
+      "dateStarted": "2020-11-11 10:51:05.584",
+      "dateFinished": "2020-11-11 10:50:58.776",
+      "status": "ERROR",
+      "errorMessage": "org.apache.zeppelin.interpreter.InterpreterNotFoundException: No interpreter is binded to this note: 2FPXWXSBZ\n\tat org.apache.zeppelin.interpreter.InterpreterFactory.getInterpreter(InterpreterFactory.java:60)\n\tat org.apache.zeppelin.notebook.Paragraph.getBindedInterpreter(Paragraph.java:242)\n\tat org.apache.zeppelin.notebook.Paragraph.execute(Paragraph.java:350)\n\tat org.apache.zeppelin.notebook.Note.run(Note.java:683)\n\tat org.apache.zeppelin.socket.NotebookServer.persistAndExecuteSingleParagraph(NotebookServer.java:1881)\n\tat org.apache.zeppelin.socket.NotebookServer.runParagraph(NotebookServer.java:1840)\n\tat org.apache.zeppelin.socket.NotebookServer.onMessage(NotebookServer.java:262)\n\tat org.apache.zeppelin.socket.NotebookSocket.onWebSocketText(NotebookSocket.java:59)\n\tat org.eclipse.jetty.websocket.common.events.JettyListenerEventDriver.onTextMessage(JettyListenerEventDriver.java:189)\n\tat org.eclipse.jetty.websocket.common.message.SimpleTextMessage.messageComplete(SimpleTextMessage.java:69)\n\tat org.eclipse.jetty.websocket.common.events.AbstractEventDriver.appendMessage(AbstractEventDriver.java:66)\n\tat org.eclipse.jetty.websocket.common.events.JettyListenerEventDriver.onTextFrame(JettyListenerEventDriver.java:158)\n\tat org.eclipse.jetty.websocket.common.events.AbstractEventDriver.incomingFrame(AbstractEventDriver.java:162)\n\tat org.eclipse.jetty.websocket.common.WebSocketSession.incomingFrame(WebSocketSession.java:459)\n\tat org.eclipse.jetty.websocket.common.extensions.AbstractExtension.nextIncomingFrame(AbstractExtension.java:182)\n\tat org.eclipse.jetty.websocket.common.extensions.compress.CompressExtension.forwardIncoming(CompressExtension.java:142)\n\tat org.eclipse.jetty.websocket.common.extensions.compress.DeflateFrameExtension.incomingFrame(DeflateFrameExtension.java:69)\n\tat org.eclipse.jetty.websocket.common.extensions.ExtensionStack.incomingFrame(ExtensionStack.java:220)\n\tat org.eclipse.jetty.websocket.common.Parser.notifyFrame(Parser.java:219)\n\tat org.eclipse.jetty.websocket.common.Parser.parse(Parser.java:244)\n\tat org.eclipse.jetty.websocket.common.io.AbstractWebSocketConnection.readParse(AbstractWebSocketConnection.java:559)\n\tat org.eclipse.jetty.websocket.common.io.AbstractWebSocketConnection.onFillable(AbstractWebSocketConnection.java:390)\n\tat org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:305)\n\tat org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:103)\n\tat org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:118)\n\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.runTask(EatWhatYouKill.java:333)\n\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:310)\n\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:168)\n\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:126)\n\tat org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:366)\n\tat org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:765)\n\tat org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:683)\n\tat java.lang.Thread.run(Thread.java:748)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Streamovaný word count ze souboru",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:48:04.031",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eStreamovaný word count ze souboru\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605091684031_1781706316",
+      "id": "20191105-191246_95120935",
+      "dateCreated": "2020-11-11 10:48:04.031",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// jak na batch word cout? \nval batch \u003d spark.read\n  .format(\"text\")\n  .load(\"word-stream\")\n\n// 1. způsob získání slov: explode \u0026 split\nval eas \u003d batch.withColumn(\"value\", explode(split($\"value\", \" \")))\neas.show()\n\n// 2. způsob získání slov: Scala  magic\nval caj \u003d batch.as[String].flatMap(_.split(\" \"))\ncaj.show()\n\n// word count",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:59:31.655",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+\n|value|\n+-----+\n|   bi|\n| bibg|\n| data|\n| test|\n| test|\n| test|\n| halo|\n| halo|\n|   lo|\n+-----+\n\n+-----+\n|value|\n+-----+\n|   bi|\n| bibg|\n| data|\n| test|\n| test|\n| test|\n| halo|\n| halo|\n|   lo|\n+-----+\n\nbatch: org.apache.spark.sql.DataFrame \u003d [value: string]\neas: org.apache.spark.sql.DataFrame \u003d [value: string]\ncaj: org.apache.spark.sql.Dataset[String] \u003d [value: string]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {},
+      "apps": [],
+      "jobName": "paragraph_1605091684031_-1297365742",
+      "id": "20191105-192532_1161316774",
+      "dateCreated": "2020-11-11 10:48:04.031",
+      "dateStarted": "2020-11-11 10:59:31.781",
+      "dateFinished": "2020-11-11 10:59:33.944",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val res \u003d eas.groupBy(\"value\").count()\nres.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 11:00:00.104",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+-----+\n|value|count|\n+-----+-----+\n| halo|    2|\n| data|    1|\n|   bi|    1|\n| bibg|    1|\n| test|    3|\n|   lo|    1|\n+-----+-----+\n\nres: org.apache.spark.sql.DataFrame \u003d [value: string, count: bigint]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {},
+      "apps": [],
+      "jobName": "paragraph_1605092382023_-2006372946",
+      "id": "20201111-105942_1522140191",
+      "dateCreated": "2020-11-11 10:59:42.023",
+      "dateStarted": "2020-11-11 11:00:00.207",
+      "dateFinished": "2020-11-11 11:00:04.692",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// streaming ze souboru\nval stream \u003d spark.readStream\n  .format(\"text\")\n  .load(\"word-stream\")\nval words \u003d stream.withColumn(\"value\", explode(split($\"value\", \" \")))\nval wordCount \u003d words.groupBy(\"value\").count()\n\nval q \u003d wordCount.writeStream.outputMode(\"complete\").format(\"console\").start()\nq.awaitTermination()\n// POZOR musí se zabít přes restart kontextu",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 11:02:01.409",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "org.apache.thrift.transport.TTransportException\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:132)\n\tat org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)\n\tat org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.recv_interpret(RemoteInterpreterService.java:274)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:258)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:233)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:229)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.callRemoteFunction(RemoteInterpreterProcess.java:135)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:228)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:437)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:188)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:315)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\tat java.lang.Thread.run(Thread.java:748)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605091684032_1472181842",
+      "id": "20191105-130752_1130482538",
+      "dateCreated": "2020-11-11 10:48:04.032",
+      "dateStarted": "2020-11-11 11:02:01.603",
+      "dateFinished": "2020-11-11 11:06:05.596",
+      "status": "ABORT",
+      "errorMessage": "org.apache.thrift.transport.TTransportException\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:132)\n\tat org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)\n\tat org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.recv_interpret(RemoteInterpreterService.java:274)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:258)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:233)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:229)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.callRemoteFunction(RemoteInterpreterProcess.java:135)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:228)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:437)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:188)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:315)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\tat java.lang.Thread.run(Thread.java:748)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//update\nval stream \u003d spark.readStream\n  .format(\"text\")\n  .load(\"word-stream\")\nval words \u003d stream.withColumn(\"value\", explode(split($\"value\", \" \")))\nval wordCount \u003d words.groupBy(\"value\").count()\n\nval q \u003d wordCount.writeStream.outputMode(\"update\").format(\"console\").start()\nq.awaitTermination()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 11:07:38.995",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "org.apache.thrift.transport.TTransportException\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:132)\n\tat org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)\n\tat org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.recv_interpret(RemoteInterpreterService.java:274)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:258)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:233)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:229)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.callRemoteFunction(RemoteInterpreterProcess.java:135)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:228)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:437)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:188)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:315)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\tat java.lang.Thread.run(Thread.java:748)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605091684032_1321233000",
+      "id": "20201103-104953_1083599284",
+      "dateCreated": "2020-11-11 10:48:04.032",
+      "dateStarted": "2020-11-11 11:07:39.182",
+      "dateFinished": "2020-11-11 11:09:10.376",
+      "status": "ABORT",
+      "errorMessage": "org.apache.thrift.transport.TTransportException\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:132)\n\tat org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)\n\tat org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.recv_interpret(RemoteInterpreterService.java:274)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:258)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:233)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:229)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.callRemoteFunction(RemoteInterpreterProcess.java:135)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:228)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:437)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:188)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:315)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\tat java.lang.Thread.run(Thread.java:748)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Analýza sentimentu streaming",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:48:04.032",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eAnalýza sentimentu streaming\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605091684032_-628535212",
+      "id": "20191106-134631_1271464262",
+      "dateCreated": "2020-11-11 10:48:04.032",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// sentiment analysis - batch\nval twitt1 \u003d spark.read.format(\"csv\")\n  .option(\"sep\", \";\")\n  .option(\"inferSchema\", \"true\")\n  .option(\"header\", \"true\")\n  .load(\"twitter-airline-sentiment-all.csv\")\n\nval twitt2 \u003d spark.readStream.format(\"csv\")\n  .option(\"sep\", \";\")\n  .schema(twitt1.schema)\n  .option(\"header\", \"true\")\n  .load(\"tweet-stream\")\n\n// co si lide na Twitteru myslí teď \u003d update\n\nval opinion \u003d twitt1.select(\"airline_sentiment\", \"airline\").withColumn(\"negative\", when ($\"airline_sentiment\" \u003d\u003d\u003d \"negative\", 1).otherwise(0)).withColumn(\"all\", lit(1)).groupBy(\"airline\").agg(sum($\"negative\"), sum($\"all\")).map(row \u003d\u003e row(0) + \": \" + row(1) + \"/\" + row(2))\nopinion.show(3, false)\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 11:14:15.521",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------------------+\n|value                  |\n+-----------------------+\n|Delta: 955/2222        |\n|Virgin America: 180/503|\n|United: 2633/3822      |\n+-----------------------+\nonly showing top 3 rows\n\ntwitt1: org.apache.spark.sql.DataFrame \u003d [tweet_id: bigint, airline_sentiment: string ... 13 more fields]\ntwitt2: org.apache.spark.sql.DataFrame \u003d [tweet_id: bigint, airline_sentiment: string ... 13 more fields]\nopinion: org.apache.spark.sql.Dataset[String] \u003d [value: string]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://8d22b5d30c47:4040/jobs/job?id\u003d7",
+            "http://8d22b5d30c47:4040/jobs/job?id\u003d8",
+            "http://8d22b5d30c47:4040/jobs/job?id\u003d9",
+            "http://8d22b5d30c47:4040/jobs/job?id\u003d10",
+            "http://8d22b5d30c47:4040/jobs/job?id\u003d11",
+            "http://8d22b5d30c47:4040/jobs/job?id\u003d12",
+            "http://8d22b5d30c47:4040/jobs/job?id\u003d13"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605091684032_769096860",
+      "id": "20191105-131002_2075631467",
+      "dateCreated": "2020-11-11 10:48:04.032",
+      "dateStarted": "2020-11-11 11:14:15.708",
+      "dateFinished": "2020-11-11 11:14:19.537",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val opinion2 \u003d twitt2.select(\"airline_sentiment\", \"airline\").withColumn(\"negative\", when ($\"airline_sentiment\" \u003d\u003d\u003d \"negative\", 1).otherwise(0)).withColumn(\"all\", lit(1)).groupBy(\"airline\").agg(sum($\"negative\"), sum($\"all\")).map(row \u003d\u003e row(0) + \": \" + row(1) + \"/\" + row(2))\nval q \u003d opinion2.writeStream.outputMode(\"update\").format(\"console\").start()\nq.awaitTermination()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 11:15:38.351",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605093288811_-637489866",
+      "id": "20201111-111448_899901554",
+      "dateCreated": "2020-11-11 11:14:48.811",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// co si lide na Twitteru myslí doteď \u003d complete",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:48:04.032",
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605091684032_-570743658",
+      "id": "20191105-194450_914318119",
+      "dateCreated": "2020-11-11 10:48:04.032",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// my jsme mohli využít twitt1 schematu, které si spark umí materializovat z headeru, a protože víme,že jsou to stejná data, tak jsme jen přepoužili, normálně ovšem schema definovat musíme, protože stream data chodí typicky bez headeru a Spark by tak schema neměl z čeho brát\n// HOWTO tvorba schematu\nval customSchema \u003d StructType(Array(\n  StructField(\"project\", StringType, true),\n  StructField(\"article\", StringType, true),\n  StructField(\"requests\", IntegerType, true),\n  StructField(\"bytes_served\", DoubleType, true))\n)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-11 10:48:04.033",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605091684032_-1410891590",
+      "id": "20191105-130927_2063810991",
+      "dateCreated": "2020-11-11 10:48:04.032",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "streaming-zadani",
+  "id": "2FPXWXSBZ",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

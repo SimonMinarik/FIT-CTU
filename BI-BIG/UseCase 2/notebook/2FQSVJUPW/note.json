@@ -1,0 +1,706 @@
+{
+  "paragraphs": [
+    {
+      "text": "// read\nval ratings \u003d spark.read.format(\"csv\").option(\"sep\", \"\\t\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"data.tsv\")\nval episode \u003d spark.read.format(\"csv\").option(\"sep\", \"\\t\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"data-2.tsv\")\nval crew \u003d spark.read.format(\"csv\").option(\"sep\", \"\\t\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"data-3.tsv\")\nval basics \u003d spark.read.format(\"csv\").option(\"sep\", \"\\t\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"data-4.tsv\")\nval basics2 \u003d spark.read.format(\"csv\").option(\"sep\", \"\\t\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"data-5.tsv\")\nval akas \u003d spark.read.format(\"csv\").option(\"sep\", \"\\t\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"data-6.tsv\")\nval principals \u003d spark.read.format(\"csv\").option(\"sep\", \"\\t\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"data-7.tsv\")",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 11:14:37.508",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "ratings: org.apache.spark.sql.DataFrame \u003d [tconst: string, averageRating: double ... 1 more field]\nepisode: org.apache.spark.sql.DataFrame \u003d [tconst: string, parentTconst: string ... 2 more fields]\ncrew: org.apache.spark.sql.DataFrame \u003d [tconst: string, directors: string ... 1 more field]\nbasics: org.apache.spark.sql.DataFrame \u003d [tconst: string, titleType: string ... 7 more fields]\nbasics2: org.apache.spark.sql.DataFrame \u003d [nconst: string, primaryName: string ... 4 more fields]\nakas: org.apache.spark.sql.DataFrame \u003d [titleId: string, ordering: int ... 6 more fields]\nprincipals: org.apache.spark.sql.DataFrame \u003d [tconst: string, ordering: int ... 4 more fields]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d124",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d125",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d126",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d127",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d128",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d129",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d130",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d131",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d132",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d133",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d134",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d135",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d136",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d137"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605170282057_-1790335664",
+      "id": "20201112-083802_965865889",
+      "dateCreated": "2020-11-12 08:38:02.057",
+      "dateStarted": "2020-11-12 10:58:56.502",
+      "dateFinished": "2020-11-12 11:07:43.633",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// 1\nratings.show(10, false)\nepisode.show(10, false)\ncrew.show(10, false)\nbasics.show(10, false)\nbasics2.show(10, false)\nakas.show(10, false)\nprincipals.show(10, false)principals.show(10, false)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 14:06:43.345",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+-------------+--------+\n|tconst   |averageRating|numVotes|\n+---------+-------------+--------+\n|tt0000001|5.6          |1658    |\n|tt0000002|6.1          |203     |\n|tt0000003|6.5          |1371    |\n|tt0000004|6.2          |123     |\n|tt0000005|6.2          |2159    |\n|tt0000006|5.3          |115     |\n|tt0000007|5.4          |661     |\n|tt0000008|5.4          |1828    |\n|tt0000009|5.9          |155     |\n|tt0000010|6.9          |6082    |\n+---------+-------------+--------+\nonly showing top 10 rows\n\n+---------+------------+------------+-------------+\n|tconst   |parentTconst|seasonNumber|episodeNumber|\n+---------+------------+------------+-------------+\n|tt0041951|tt0041038   |1           |9            |\n|tt0042816|tt0989125   |1           |17           |\n|tt0042889|tt0989125   |null        |null         |\n|tt0043426|tt0040051   |3           |42           |\n|tt0043631|tt0989125   |2           |16           |\n|tt0043693|tt0989125   |2           |8            |\n|tt0043710|tt0989125   |3           |3            |\n|tt0044093|tt0959862   |1           |6            |\n|tt0044668|tt0044243   |2           |16           |\n|tt0044901|tt0989125   |3           |46           |\n+---------+------------+------------+-------------+\nonly showing top 10 rows\n\n+---------+-------------------+---------+\n|tconst   |directors          |writers  |\n+---------+-------------------+---------+\n|tt0000001|nm0005690          |null     |\n|tt0000002|nm0721526          |null     |\n|tt0000003|nm0721526          |null     |\n|tt0000004|nm0721526          |null     |\n|tt0000005|nm0005690          |null     |\n|tt0000006|nm0005690          |null     |\n|tt0000007|nm0374658,nm0005690|null     |\n|tt0000008|nm0005690          |null     |\n|tt0000009|nm0085156          |nm0085156|\n|tt0000010|nm0525910          |null     |\n+---------+-------------------+---------+\nonly showing top 10 rows\n\n+---------+---------+-------------------------------------------+-------------------------------------------+-------+---------+-------+--------------+------------------------+\n|tconst   |titleType|primaryTitle                               |originalTitle                              |isAdult|startYear|endYear|runtimeMinutes|genres                  |\n+---------+---------+-------------------------------------------+-------------------------------------------+-------+---------+-------+--------------+------------------------+\n|tt0000001|short    |Carmencita                                 |Carmencita                                 |0      |1894     |null   |1             |Documentary,Short       |\n|tt0000002|short    |Le clown et ses chiens                     |Le clown et ses chiens                     |0      |1892     |null   |5             |Animation,Short         |\n|tt0000003|short    |Pauvre Pierrot                             |Pauvre Pierrot                             |0      |1892     |null   |4             |Animation,Comedy,Romance|\n|tt0000004|short    |Un bon bock                                |Un bon bock                                |0      |1892     |null   |12            |Animation,Short         |\n|tt0000005|short    |Blacksmith Scene                           |Blacksmith Scene                           |0      |1893     |null   |1             |Comedy,Short            |\n|tt0000006|short    |Chinese Opium Den                          |Chinese Opium Den                          |0      |1894     |null   |1             |Short                   |\n|tt0000007|short    |Corbett and Courtney Before the Kinetograph|Corbett and Courtney Before the Kinetograph|0      |1894     |null   |1             |Short,Sport             |\n|tt0000008|short    |Edison Kinetoscopic Record of a Sneeze     |Edison Kinetoscopic Record of a Sneeze     |0      |1894     |null   |1             |Documentary,Short       |\n|tt0000009|movie    |Miss Jerry                                 |Miss Jerry                                 |0      |1894     |null   |45            |Romance                 |\n|tt0000010|short    |Leaving the Factory                        |La sortie de l\u0027usine Lumière à Lyon        |0      |1895     |null   |1             |Documentary,Short       |\n+---------+---------+-------------------------------------------+-------------------------------------------+-------+---------+-------+--------------+------------------------+\nonly showing top 10 rows\n\n+---------+---------------+---------+---------+-----------------------------------+---------------------------------------+\n|nconst   |primaryName    |birthYear|deathYear|primaryProfession                  |knownForTitles                         |\n+---------+---------------+---------+---------+-----------------------------------+---------------------------------------+\n|nm0000001|Fred Astaire   |1899     |1987     |soundtrack,actor,miscellaneous     |tt0050419,tt0053137,tt0031983,tt0072308|\n|nm0000002|Lauren Bacall  |1924     |2014     |actress,soundtrack                 |tt0117057,tt0038355,tt0037382,tt0071877|\n|nm0000003|Brigitte Bardot|1934     |null     |actress,soundtrack,music_department|tt0059956,tt0057345,tt0054452,tt0049189|\n|nm0000004|John Belushi   |1949     |1982     |actor,soundtrack,writer            |tt0072562,tt0080455,tt0077975,tt0078723|\n|nm0000005|Ingmar Bergman |1918     |2007     |writer,director,actor              |tt0060827,tt0050976,tt0050986,tt0083922|\n|nm0000006|Ingrid Bergman |1915     |1982     |actress,soundtrack,producer        |tt0034583,tt0036855,tt0038787,tt0038109|\n|nm0000007|Humphrey Bogart|1899     |1957     |actor,soundtrack,producer          |tt0043265,tt0037382,tt0034583,tt0040897|\n|nm0000008|Marlon Brando  |1924     |2004     |actor,soundtrack,director          |tt0047296,tt0078788,tt0070849,tt0068646|\n|nm0000009|Richard Burton |1925     |1984     |actor,soundtrack,producer          |tt0057877,tt0059749,tt0061184,tt0087803|\n|nm0000010|James Cagney   |1899     |1986     |actor,soundtrack,director          |tt0031867,tt0042041,tt0035575,tt0029870|\n+---------+---------------+---------+---------+-----------------------------------+---------------------------------------+\nonly showing top 10 rows\n\n+---------+--------+-------------------------+------+--------+-----------+-------------+---------------+\n|titleId  |ordering|title                    |region|language|types      |attributes   |isOriginalTitle|\n+---------+--------+-------------------------+------+--------+-----------+-------------+---------------+\n|tt0000001|1       |Карменсіта               |UA    |null    |imdbDisplay|null         |0              |\n|tt0000001|2       |Carmencita               |DE    |null    |null       |literal title|0              |\n|tt0000001|3       |Carmencita - spanyol tánc|HU    |null    |imdbDisplay|null         |0              |\n|tt0000001|4       |Καρμενσίτα               |GR    |null    |imdbDisplay|null         |0              |\n|tt0000001|5       |Карменсита               |RU    |null    |imdbDisplay|null         |0              |\n|tt0000001|6       |Carmencita               |US    |null    |null       |null         |0              |\n|tt0000001|7       |Carmencita               |null  |null    |original   |null         |1              |\n|tt0000001|8       |カルメンチータ                  |JP    |ja      |imdbDisplay|null         |0              |\n|tt0000002|1       |Le clown et ses chiens   |null  |null    |original   |null         |1              |\n|tt0000002|2       |A bohóc és kutyái        |HU    |null    |imdbDisplay|null         |0              |\n+---------+--------+-------------------------+------+--------+-----------+-------------+---------------+\nonly showing top 10 rows\n\n+---------+--------+---------+---------------+-----------------------+----------+\n|tconst   |ordering|nconst   |category       |job                    |characters|\n+---------+--------+---------+---------------+-----------------------+----------+\n|tt0000001|1       |nm1588970|self           |null                   |[\"Self\"]  |\n|tt0000001|2       |nm0005690|director       |null                   |null      |\n|tt0000001|3       |nm0374658|cinematographer|director of photography|null      |\n|tt0000002|1       |nm0721526|director       |null                   |null      |\n|tt0000002|2       |nm1335271|composer       |null                   |null      |\n|tt0000003|1       |nm0721526|director       |null                   |null      |\n|tt0000003|2       |nm5442194|producer       |producer               |null      |\n|tt0000003|3       |nm1335271|composer       |null                   |null      |\n|tt0000003|4       |nm5442200|editor         |null                   |null      |\n|tt0000004|1       |nm0721526|director       |null                   |null      |\n+---------+--------+---------+---------------+-----------------------+----------+\nonly showing top 10 rows\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d83",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d84",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d85",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d86",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d87",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d88",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d89"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605170549796_-1866198813",
+      "id": "20201112-084229_1079435413",
+      "dateCreated": "2020-11-12 08:42:29.797",
+      "dateStarted": "2020-11-12 10:03:01.281",
+      "dateFinished": "2020-11-12 10:03:06.852",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// 2\nratings.distinct.show(10, false)\nepisode.distinct.show(10, false)\ncrew.distinct.show(10, false)\nbasics.distinct.show(10, false)\nbasics2.distinct.show(10, false)\nakas.distinct.show(10, false)\nprincipals.distinct.show(10, false)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 14:49:28.449",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+-------------+--------+\n|tconst   |averageRating|numVotes|\n+---------+-------------+--------+\n|tt0000357|5.8          |346     |\n|tt0000662|4.8          |18      |\n|tt0001044|5.7          |80      |\n|tt0002266|6.3          |6       |\n|tt0003565|5.8          |21      |\n|tt0003860|5.1          |76      |\n|tt0005190|7.5          |11      |\n|tt0006101|7.6          |9       |\n|tt0006333|6.2          |1521    |\n|tt0006820|6.1          |75      |\n+---------+-------------+--------+\nonly showing top 10 rows\n\n+---------+------------+------------+-------------+\n|tconst   |parentTconst|seasonNumber|episodeNumber|\n+---------+------------+------------+-------------+\n|tt0062158|tt0058853   |1           |103          |\n|tt0064705|tt0046593   |16          |2            |\n|tt0065902|tt0212699   |5           |27           |\n|tt0069480|tt0046593   |17          |4            |\n|tt0087919|tt0167732   |1           |10           |\n|tt0095202|tt0094999   |1           |1            |\n|tt0111105|tt0075471   |15          |1            |\n|tt0111370|tt0806910   |1           |289          |\n|tt0111571|tt0959258   |1           |5            |\n|tt0113549|tt0298685   |5           |5            |\n+---------+------------+------------+-------------+\nonly showing top 10 rows\n\norg.apache.spark.SparkException: Job 217 cancelled part of cancelled job group zeppelin-2FQSVJUPW-20201112-090147_1645500341\n  at org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1661)\n  at org.apache.spark.scheduler.DAGScheduler.handleJobCancellation(DAGScheduler.scala:1596)\n  at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply$mcVI$sp(DAGScheduler.scala:811)\n  at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:811)\n  at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:811)\n  at scala.collection.mutable.HashSet.foreach(HashSet.scala:78)\n  at org.apache.spark.scheduler.DAGScheduler.handleJobGroupCancelled(DAGScheduler.scala:811)\n  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1851)\n  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1831)\n  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1820)\n  at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)\n  at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:642)\n  at org.apache.spark.SparkContext.runJob(SparkContext.scala:2034)\n  at org.apache.spark.SparkContext.runJob(SparkContext.scala:2055)\n  at org.apache.spark.SparkContext.runJob(SparkContext.scala:2074)\n  at org.apache.spark.sql.execution.SparkPlan.executeTake(SparkPlan.scala:363)\n  at org.apache.spark.sql.execution.CollectLimitExec.executeCollect(limit.scala:38)\n  at org.apache.spark.sql.Dataset.org$apache$spark$sql$Dataset$$collectFromPlan(Dataset.scala:3284)\n  at org.apache.spark.sql.Dataset$$anonfun$head$1.apply(Dataset.scala:2495)\n  at org.apache.spark.sql.Dataset$$anonfun$head$1.apply(Dataset.scala:2495)\n  at org.apache.spark.sql.Dataset$$anonfun$51.apply(Dataset.scala:3265)\n  at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:77)\n  at org.apache.spark.sql.Dataset.withAction(Dataset.scala:3264)\n  at org.apache.spark.sql.Dataset.head(Dataset.scala:2495)\n  at org.apache.spark.sql.Dataset.take(Dataset.scala:2709)\n  at org.apache.spark.sql.Dataset.showString(Dataset.scala:254)\n  at org.apache.spark.sql.Dataset.show(Dataset.scala:731)\n  ... 47 elided\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d215",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d216",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d217"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605171707936_1921385584",
+      "id": "20201112-090147_1645500341",
+      "dateCreated": "2020-11-12 09:01:47.937",
+      "dateStarted": "2020-11-12 14:49:28.810",
+      "dateFinished": "2020-11-12 14:50:18.056",
+      "status": "ABORT",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// 3\nval types_count \u003d akas.select(\"region\", \"language\", \"types\").groupBy(\"region\", \"language\", \"types\").count()\ntypes_count.coalesce(1)\n    .write.format(\"csv\")\n    .option(\"sep\", \";\")\n    .option(\"header\", \"true\")\n    .save(\"types_count.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 14:10:00.896",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "types_count: org.apache.spark.sql.DataFrame \u003d [region: string, language: string ... 2 more fields]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d198"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605172015622_-541219865",
+      "id": "20201112-090655_411901395",
+      "dateCreated": "2020-11-12 09:06:55.622",
+      "dateStarted": "2020-11-12 14:10:01.050",
+      "dateFinished": "2020-11-12 14:11:32.601",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// 8\nval actors2 \u003d principals.filter($\"category\" \u003d\u003d\u003d \"actor\" || $\"category\" \u003d\u003d\u003d \"actress\").select(\"nconst\", \"tconst\")\n\nval dead_people \u003d basics2.filter($\"deathYear\" \u003e\u003d 1980 \u0026\u0026 $\"deathYear\" \u003c\u003d 2010).select(\"nconst\")\n\nval dead_actors \u003d dead_people.join(actors2, actors2(\"nconst\") \u003d\u003d\u003d dead_people(\"nconst\"), \"left\")\n\nval dead_actors_final \u003d dead_actors.drop(\"nconst\").distinct()\n\nval comedies \u003d basics.filter($\"genres\".contains(\"Comedy\"))\nval eight_final \u003d comedies.join(dead_actors_final, Seq(\"tconst\"), \"inner\")\n\neight_final.show(5)\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 15:13:30.039",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+---------+--------------------+--------------------+-------+---------+-------+--------------+--------------------+\n|   tconst|titleType|        primaryTitle|       originalTitle|isAdult|startYear|endYear|runtimeMinutes|              genres|\n+---------+---------+--------------------+--------------------+-------+---------+-------+--------------+--------------------+\n|tt0006441|    movie|  Blue Blood and Red|  Blue Blood and Red|      0|     1916|     \\N|            50|      Comedy,Western|\n|tt0010179|    movie|        God\u0027s Outlaw|        God\u0027s Outlaw|      0|     1919|     \\N|            \\N|Comedy,Drama,Western|\n|tt0010752|    short|      Swat the Crook|      Swat the Crook|      0|     1919|     \\N|            \\N|        Comedy,Short|\n|tt0011852|    movie|What\u0027s Your Husba...|What\u0027s Your Husba...|      0|     1920|     \\N|            50|              Comedy|\n|tt0012255|    short|   The Haunted House|   The Haunted House|      0|     1921|     \\N|            21| Comedy,Horror,Short|\n+---------+---------+--------------------+--------------------+-------+---------+-------+--------------+--------------------+\nonly showing top 5 rows\n\ncomedies: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [tconst: string, titleType: string ... 7 more fields]\neight_final: org.apache.spark.sql.DataFrame \u003d [tconst: string, titleType: string ... 7 more fields]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d219"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605182713260_631204856",
+      "id": "20201112-120513_1381361007",
+      "dateCreated": "2020-11-12 12:05:13.264",
+      "dateStarted": "2020-11-12 15:07:42.745",
+      "dateFinished": "2020-11-12 15:10:28.263",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// 5\n\nval episodes \u003d episode.join(basics, basics(\"tconst\") \u003d\u003d\u003d episode(\"tconst\"), \"left\").drop(basics(\"tconst\"))\n    .filter($\"startYear\" \u003e\u003d 2005 \u0026\u0026 $\"startYear\" \u003c\u003d 2016 \u0026\u0026 $\"runtimeMinutes\"\u003e 60)\n    .select(\"tconst\", \"primaryTitle\", \"startYear\", \"runtimeMinutes\")\n\nval actors2 \u003d principals.filter($\"category\" \u003d\u003d\u003d \"actor\" || $\"category\" \u003d\u003d\u003d \"actress\").select(\"nconst\", \"tconst\")\nval fqhwfwq \u003d actors2.join(episodes, episodes(\"tconst\") \u003d\u003d\u003d actors2(\"tconst\"), \"inner\").drop(actors2(\"tconst\"))\nval named_actors \u003d fqhwfwq.join(basics2.select(\"nconst\", \"primaryName\"), Seq(\"nconst\"), \"inner\")\nval qwhof \u003d named_actors.groupBy(\"primaryTitle\").agg(collect_list(\"primaryName\").as(\"herci\"))\nqwhof.show(5, false)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 14:17:51.407",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------------------------------+--------------------------------------------------------------------------------------------+\n|primaryTitle                     |herci                                                                                       |\n+---------------------------------+--------------------------------------------------------------------------------------------+\n|Combat Jack                      |[Alexander Skarsgård, James Ransone, Jon Huertas, Lee Tergesen]                             |\n|The Battle for Hitler\u0027s Supership|[Lincoln Fraser, Sarah Evetts, Andrea Ewing, Ian Carnegie, Helen Austin, Marcus Churchill]  |\n|Dame de Carreau                  |[Valérie Decobert-Koretzky, Jean-Toussaint Bernard, Sophie-Charlotte Husson, Thierry Godard]|\n|Padnij                           |[Milena Lisiecka, Dorota Kolak, Marta Kalmus, Monika Chomicka]                              |\n|Bienzle und der Sizilianer       |[Rita Russek, Rüdiger Wandel, Klaus Spürkel, Dietz Werner Steck]                            |\n+---------------------------------+--------------------------------------------------------------------------------------------+\nonly showing top 5 rows\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d197"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605189454591_816579360",
+      "id": "20201112-135734_1634814028",
+      "dateCreated": "2020-11-12 13:57:34.622",
+      "dateStarted": "2020-11-12 14:02:05.149",
+      "dateFinished": "2020-11-12 14:05:55.925",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// 4\nval czech_movies \u003d akas.select(\"titleId\", \"title\", \"region\").filter($\"region\" \u003d\u003d\u003d \"CZ\")\nval years \u003d basics.select(\"tconst\", \"startYear\", \"originalTitle\")\nval cz_movies \u003d czech_movies.join(years, years(\"tconst\") \u003d\u003d\u003d czech_movies(\"titleId\"), \"inner\").sort(\"startYear\")\n\nval crew_added \u003d cz_movies.join(crew, Seq(\"tconst\"), \"inner\")\n\nval actors \u003d principals.filter($\"category\" \u003d\u003d\u003d \"actor\" || $\"category\" \u003d\u003d\u003d \"actress\")\nval countt \u003d actors.groupBy(\"tconst\").count()\n\nval finallll \u003d countt.join(crew_added, Seq(\"tconst\"), \"inner\").orderBy(col(\"startYear\")).drop(\"tconst\", \"titleId\", \"region\", \"startYear\")\nfinallll.show(5)\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 15:58:21.256",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+--------------------+--------------------+-------------------+--------------------+\n|count|               title|       originalTitle|          directors|             writers|\n+-----+--------------------+--------------------+-------------------+--------------------+\n|    2|    Pokropený kropic|   L\u0027arroseur arrosé|nm0525910,nm0349785|                  \\N|\n|    1|    Dreyfusova aféra|   L\u0027affaire Dreyfus|          nm0617588|           nm0617588|\n|    4|      Cesta na Mesíc|Le voyage dans la...|          nm0617588|nm0617588,nm08945...|\n|    7|Velká zeleznicní ...|The Great Train R...|          nm0692105| nm1145809,nm0692105|\n|    4|    Cesta do nemozna|Le voyage à trave...|          nm0617588|nm0617588,nm08945...|\n+-----+--------------------+--------------------+-------------------+--------------------+\nonly showing top 5 rows\n\nczech_movies: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [titleId: string, title: string ... 1 more field]\nyears: org.apache.spark.sql.DataFrame \u003d [tconst: string, startYear: string ... 1 more field]\ncz_movies: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [titleId: string, title: string ... 4 more fields]\ncrew_added: org.apache.spark.sql.DataFrame \u003d [tconst: string, titleId: string ... 6 more fields]\nactors: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [tconst: string, ordering: int ... 4 more fields]\ncountt: org.apache.spark.sql.DataFrame \u003d [tconst: string, count: bigint]\nfinallll: org.apache.spark.sql.DataFrame \u003d [count: bigint, title: string ... 3 more fields]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d230",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d231"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605189724909_-1028182582",
+      "id": "20201112-140204_1431647704",
+      "dateCreated": "2020-11-12 14:02:04.912",
+      "dateStarted": "2020-11-12 15:58:21.392",
+      "dateFinished": "2020-11-12 16:02:13.858",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// 6\nimport org.apache.spark.sql.types.DoubleType\n\nval top \u003d ratings.select(\"tconst\", \"averageRating\").filter($\"averageRating\" \u003e 7.5)\nval decade \u003d basics.select(\"tconst\", \"startYear\", \"originalTitle\").filter($\"startYear\" \u003e\u003d 1900 \u0026\u0026 $\"startYear\" \u003c 2000)\n\nval czech_tmp \u003d akas.select(\"titleId\", \"title\", \"region\").filter($\"region\" \u003d\u003d\u003d \"CZ\")\nval czech_decade \u003d czech_tmp.join(decade, decade(\"tconst\") \u003d\u003d\u003d czech_tmp(\"titleId\"), \"inner\")\nval cz_top \u003d czech_decade.join(top, Seq(\"tconst\"), \"inner\").drop(\"region\", \"startYear\", \"originalTitle\", \"tconst\")\ncz_top.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 15:55:57.044",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+--------------------+-------------+\n|  titleId|               title|averageRating|\n+---------+--------------------+-------------+\n|tt0032553|            Diktátor|          8.4|\n|tt0032599|    Jeho dívka Pátek|          7.9|\n|tt0120815|Zachraňte vojína ...|          8.6|\n|tt0091251|      Jdi a dívej se|          8.3|\n|tt0063522| Rosemary má děťátko|          8.0|\n+---------+--------------------+-------------+\nonly showing top 5 rows\n\nimport org.apache.spark.sql.types.DoubleType\ntop: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [tconst: string, averageRating: double]\ndecade: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [tconst: string, startYear: string ... 1 more field]\nczech_tmp: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [titleId: string, title: string ... 1 more field]\nczech_decade: org.apache.spark.sql.DataFrame \u003d [titleId: string, title: string ... 4 more fields]\ncz_top: org.apache.spark.sql.DataFrame \u003d [titleId: string, title: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d228",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d229"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605195238416_328083253",
+      "id": "20201112-153358_1674627875",
+      "dateCreated": "2020-11-12 15:33:58.425",
+      "dateStarted": "2020-11-12 15:55:57.151",
+      "dateFinished": "2020-11-12 15:57:28.903",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// 10\nval year_movies \u003d basics.groupBy(\"startYear\").count().filter(not($\"startYear\" \u003d\u003d\u003d \"\\\\N\")).orderBy(\"startYear\")\nyear_movies.show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 16:07:15.144",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+-----+\n|startYear|count|\n+---------+-----+\n|     1874|    1|\n|     1878|    2|\n|     1881|    1|\n|     1883|    1|\n|     1885|    1|\n+---------+-----+\nonly showing top 5 rows\n\nyear_movies: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [startYear: string, count: bigint]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d235"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605196152954_592855599",
+      "id": "20201112-154912_974402304",
+      "dateCreated": "2020-11-12 15:49:12.961",
+      "dateStarted": "2020-11-12 16:07:15.353",
+      "dateFinished": "2020-11-12 16:07:32.869",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "year_movies.registerTempTable(\"visualize\")",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 16:07:36.988",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {}
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1605196808726_-205824523",
+      "id": "20201112-160008_251505197",
+      "dateCreated": "2020-11-12 16:00:08.745",
+      "dateStarted": "2020-11-12 16:07:37.056",
+      "dateFinished": "2020-11-12 16:07:37.741",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect * from visualize where startYear \u003e\u003d 2010",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 16:12:22.109",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "startYear": "string",
+                      "count": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "startYear",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "count",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "startYear\tcount\n2010\t227475\n2011\t259940\n2012\t289685\n2013\t310854\n2014\t329414\n2015\t343673\n2016\t360350\n2017\t378200\n2018\t377857\n2019\t350457\n2020\t252794\n2021\t10302\n2022\t850\n2023\t105\n2024\t32\n2025\t4\n2026\t6\n2027\t6\n2028\t1\n2115\t1\n"
+          },
+          {
+            "type": "TEXT",
+            "data": ""
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d238"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605197120289_-1533574153",
+      "id": "20201112-160520_956845837",
+      "dateCreated": "2020-11-12 16:05:20.294",
+      "dateStarted": "2020-11-12 16:12:04.132",
+      "dateFinished": "2020-11-12 16:12:17.461",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// 9\nval x \u003d principals.groupBy(\"category\").count()\nx.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-11-12 16:19:18.545",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------------------+-------+\n|           category|  count|\n+-------------------+-------+\n|            actress|7198377|\n|           producer|2572540|\n|             writer|5530050|\n|           composer|1482212|\n|           director|4818398|\n|               self|7191582|\n|              actor|9578629|\n|             editor|1403155|\n|    cinematographer|1499213|\n|      archive_sound|   2686|\n|production_designer| 305516|\n|    archive_footage| 252431|\n+-------------------+-------+\n\nx: org.apache.spark.sql.DataFrame \u003d [category: string, count: bigint]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d239",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d240",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d241",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d242",
+            "http://6b62c4e00fd5:4040/jobs/job?id\u003d243"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1605197133737_886277547",
+      "id": "20201112-160533_302221414",
+      "dateCreated": "2020-11-12 16:05:33.737",
+      "dateStarted": "2020-11-12 16:19:18.715",
+      "dateFinished": "2020-11-12 16:21:10.828",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1605197958546_2025143119",
+      "id": "20201112-161918_5253952",
+      "dateCreated": "2020-11-12 16:19:18.555",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "uc2_notebook",
+  "id": "2FQSVJUPW",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

@@ -1,0 +1,9 @@
+Požiadavky:
+Python 3.6 alebo vyššie (+Pip)
+Knižnice vypísané v requirements.txt
+
+Spustenie aplikácie:
+1. V termináli, cd do zložky movie_recommender
+2. V prípade, že nie sú dostupné všetky potrebné knižnice, nainštalujú sa pomocou: pip install -r requirements.txt
+3. Po stiahnnutí knižníc, stačí spustiť aplikáciu: python app.py
+4. Defaultne aplikácia beží na http://localhost:5000/, ak by tomu tak nebolo, adresa sa vypíše do kozole

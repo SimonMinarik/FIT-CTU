@@ -1,0 +1,50 @@
+# Write your rules to this file
+# Rules could be on more lines, but must end with semicolon (;)
+# You can use hashtag for comment lines, block comments are not supported
+# Grammar definition is described in documentation
+
+#check for mountain
+#IF player_dont_have_base AND terrain 0 0 == mountain THEN build_base 0 0;
+#IF player_dont_have_base AND terrain 0 1 == mountain THEN build_base 0 1;
+#IF player_dont_have_base AND terrain 0 -1 == mountain THEN build_base 0 -1;
+#IF player_dont_have_base AND terrain 1 0 == mountain THEN build_base 1 0;
+#IF player_dont_have_base AND terrain -1 0 == mountain THEN build_base -1 0;
+#IF player_dont_have_base AND terrain 1 -1 == mountain THEN build_base 1 -1;
+#IF player_dont_have_base AND terrain -1 -1 == mountain THEN build_base -1 -1;
+
+#check for village
+#IF player_dont_have_base AND terrain 0 0 == village THEN build_base 0 0;
+#IF player_dont_have_base AND terrain 0 1 == village THEN build_base 0 1;
+#IF player_dont_have_base AND terrain 0 -1 == village THEN build_base 0 -1;
+#IF player_dont_have_base AND terrain 1 0 == village THEN build_base 1 0;
+#IF player_dont_have_base AND terrain -1 0 == village THEN build_base -1 0;
+#IF player_dont_have_base AND terrain 1 -1 == village THEN build_base 1 -1;
+#IF player_dont_have_base AND terrain -1 -1 == village THEN build_base -1 -1;
+
+#check for forrest
+#IF player_dont_have_base AND terrain 0 0 == forrest THEN build_base 0 0;
+#IF player_dont_have_base AND terrain 0 1 == forrest THEN build_base 0 1;
+#IF player_dont_have_base AND terrain 0 -1 == forrest THEN build_base 0 -1;
+#IF player_dont_have_base AND terrain 1 0 == forrest THEN build_base 1 0;
+#IF player_dont_have_base AND terrain -1 0 == forrest THEN build_base -1 0;
+#IF player_dont_have_base AND terrain 1 -1 == forrest THEN build_base 1 -1;
+#IF player_dont_have_base AND terrain -1 -1 == forrest THEN build_base -1 -1;
+
+#if everything else fails (check for river)
+#IF player_dont_have_base AND terrain 0 0 != river THEN build_base 0 0;
+#IF player_dont_have_base AND terrain 0 1 != river THEN build_base 0 1;
+#IF player_dont_have_base AND terrain 0 -1 != river THEN build_base 0 -1;
+#IF player_dont_have_base AND terrain 1 0 != river THEN build_base 1 0;
+#IF player_dont_have_base AND terrain -1 0 != river THEN build_base -1 0;
+#IF player_dont_have_base AND terrain 1 -1 != river THEN build_base 1 -1;
+#IF player_dont_have_base AND terrain -1 -1 != river THEN build_base -1 -1;
+
+#if everything REALLY fails
+IF player_dont_have_base THEN build_base 0 0;
+
+IF have_enough_money 10 AND can_place_unit 0 1 THEN spawn_knight 0 1;
+IF have_enough_money 25 AND can_place_unit 1 -1 THEN spawn_druid 1 -1;
+IF have_enough_money 5 AND can_place_unit 0 -1 THEN spawn_archer 0 -1;
+IF have_enough_money 10 AND can_place_unit 1 0 THEN spawn_knight 1 0;
+IF have_enough_money 30 AND can_place_unit -1 0 THEN spawn_magician -1 0;
+IF have_enough_money 10 AND can_place_unit -1 -1 THEN spawn_knight -1 -1;

@@ -1,0 +1,8 @@
+# Write your rules to this file
+# Rules could be on more lines, but must end with semicolon (;)
+# You can use hashtag for comment lines, block comments are not supported
+# Grammar definition is described in documentation
+
+
+IF player_dont_have_base THEN build_base 0 0;
+

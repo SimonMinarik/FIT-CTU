@@ -1,0 +1,9 @@
+IF physician-fee-freeze AND synfuels-corporation-cutback AND immigration THEN republican
+IF physician-fee-freeze AND synfuels-corporation-cutback AND NOT immigration THEN democrat
+IF physician-fee-freeze AND NOT synfuels-corporation-cutback AND NOT duty-free-exports THEN republican
+IF physician-fee-freeze AND NOT synfuels-corporation-cutback AND duty-free-exports THEN republican
+IF NOT physician-fee-freeze AND NOT crime THEN democrat
+IF NOT physician-fee-freeze AND crime AND synfuels-corporation-cutback THEN democrat
+IF NOT physician-fee-freeze AND crime AND NOT synfuels-corporation-cutback AND NOT anti-satellite-test-ban THEN democrat
+IF NOT physician-fee-freeze AND crime AND NOT synfuels-corporation-cutback AND anti-satellite-test-ban AND el-salvador-aid THEN democrat
+IF NOT physician-fee-freeze AND crime AND NOT synfuels-corporation-cutback AND anti-satellite-test-ban AND NOT el-salvador-aid THEN democrat

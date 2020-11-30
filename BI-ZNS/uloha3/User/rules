@@ -1,0 +1,37 @@
+# Write your rules to this file
+# Rules could be on more lines, but must end with semicolon (;)
+# You can use hash tag for comment lines, block comments are not supported
+# Grammar definition is described in documentation
+
+IF player_dont_have_base AND best_tile* THEN build_base_n best_tile;
+
+IF base_defense_tile* AND have_enough_money 25 THEN spawn_druid_n base_defense_tile;
+IF base_defense_tile* AND have_enough_money 30 THEN spawn_druid_n base_defense_tile;
+IF base_defense_tile* AND have_enough_money 30 THEN spawn_druid_n base_defense_tile;
+IF base_defense_tile* AND have_enough_money 25 THEN spawn_druid_n base_defense_tile;
+IF base_defense_tile* AND have_enough_money 30 THEN spawn_druid_n base_defense_tile;
+IF base_defense_tile* AND have_enough_money 30 THEN spawn_druid_n base_defense_tile;
+
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+IF base_defense_tile2* AND have_enough_money 12 THEN spawn_knight_n2 base_defense_tile2;
+
+IF enemies_from_left[0.8] AND have_enough_money 30 AND tile_from_base* left THEN spawn_magician_n2 tile_from_base WITH 0.5;
+IF enemies_from_top[0.8] AND have_enough_money 30 AND tile_from_base* top THEN spawn_magician_n2 tile_from_base WITH 0.5;
+IF enemies_from_right[0.8] AND have_enough_money 30 AND tile_from_base* right THEN spawn_magician_n2 tile_from_base WITH 0.5;
+IF enemies_from_bottom[0.8] AND have_enough_money 30 AND tile_from_base* bottom THEN spawn_magician_n2 tile_from_base WITH 0.5;
+
+
+# IF visible_free_tile* mountain AND money > 10 THEN build_archer visible_free_tile;
+# IF daemon_from_top [0.25] THEN build_ent WITH 0.20;
+
+

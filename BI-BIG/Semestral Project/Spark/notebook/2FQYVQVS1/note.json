@@ -1,0 +1,275 @@
+{
+  "paragraphs": [
+    {
+      "text": "val publishers \u003d spark.read.format(\"csv\")\n  .option(\"sep\", \",\")\n  .option(\"inferSchema\", \"true\")\n  .option(\"header\", \"true\")\n  .load(\"publisher.csv\")\n  \nval platforms \u003d spark.read.format(\"csv\")\n  .option(\"sep\", \",\")\n  .option(\"inferSchema\", \"true\")\n  .option(\"header\", \"true\")\n  .load(\"platform.csv\")\n  \nval sales \u003d spark.read.format(\"csv\")\n  .option(\"sep\", \",\")\n  .option(\"inferSchema\", \"true\")\n  .option(\"header\", \"true\")\n  .load(\"vgsales.csv\")\n  \n  ",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-10 11:13:38.010",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "publishers: org.apache.spark.sql.DataFrame \u003d [Publisher: string, Headquarters: string ... 4 more fields]\nplatforms: org.apache.spark.sql.DataFrame \u003d [Initiales: string, nom: string ... 6 more fields]\nsales: org.apache.spark.sql.DataFrame \u003d [Name: string, Platform: string ... 14 more fields]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://e4daa9301623:4040/jobs/job?id\u003d0",
+            "http://e4daa9301623:4040/jobs/job?id\u003d1",
+            "http://e4daa9301623:4040/jobs/job?id\u003d2",
+            "http://e4daa9301623:4040/jobs/job?id\u003d3",
+            "http://e4daa9301623:4040/jobs/job?id\u003d4",
+            "http://e4daa9301623:4040/jobs/job?id\u003d5"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1607091390717_1373419824",
+      "id": "20201204-141630_165965277",
+      "dateCreated": "2020-12-04 14:16:30.718",
+      "dateStarted": "2020-12-10 11:13:38.472",
+      "dateFinished": "2020-12-10 11:14:45.839",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Agregace 1 datasetu\nval result1 \u003d publishers.groupBy(\"`Est.`\").count().sort($\"count\".desc)\nresult1.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-10 11:14:48.694",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+-----+\n|Est.|count|\n+----+-----+\n|1982|   55|\n|1983|   40|\n|1987|   37|\n|1981|   34|\n|1984|   32|\n|1988|   29|\n|1990|   28|\n|1989|   26|\n|1985|   26|\n|2002|   26|\n|1986|   25|\n|1993|   25|\n|1998|   25|\n|1980|   25|\n|1994|   24|\n|2000|   24|\n|1991|   24|\n|1999|   23|\n|1995|   22|\n|2001|   22|\n+----+-----+\nonly showing top 20 rows\n\nresult1: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [Est.: int, count: bigint]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://e4daa9301623:4040/jobs/job?id\u003d6"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1607092668982_1464809008",
+      "id": "20201204-143748_702169686",
+      "dateCreated": "2020-12-04 14:37:48.986",
+      "dateStarted": "2020-12-10 11:14:49.099",
+      "dateFinished": "2020-12-10 11:15:02.762",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//Agregace 2 datasetov\nval tmp \u003d platforms.filter(substring($\"sortie_eu\",7,10) \u003c 2000).select(\"Initiales\")\nval result2 \u003d sales.join(tmp, $\"Platform\" \u003d\u003d\u003d $\"Initiales\", \"inner\")\n                   .groupBy(\"Platform\", \"Year_of_Release\")\n                   .agg(round(sum(\"Global_Sales\"), 2)\n                   .as(\"Platform_Global_Sales\"))\n                   .sort(\"Year_of_Release\")\nresult2.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-10 11:14:54.669",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+---------------+---------------------+\n|Platform|Year_of_Release|Platform_Global_Sales|\n+--------+---------------+---------------------+\n|    2600|           1980|                11.38|\n|    2600|           1981|                35.77|\n|    2600|           1982|                28.86|\n|    2600|           1983|                 5.83|\n|     NES|           1983|                10.96|\n|     NES|           1984|                50.09|\n|    2600|           1984|                 0.27|\n|     NES|           1985|                53.44|\n|    2600|           1985|                 0.45|\n|    2600|           1986|                 0.66|\n|     NES|           1986|                36.41|\n|     NES|           1987|                19.76|\n|    2600|           1987|                 1.98|\n|     NES|           1988|                45.01|\n|    2600|           1988|                 0.75|\n|      GB|           1988|                 1.43|\n|    2600|           1989|                 0.62|\n|     NES|           1989|                 7.85|\n|      GB|           1989|                64.98|\n|    SNES|           1990|                26.16|\n+--------+---------------+---------------------+\nonly showing top 20 rows\n\ntmp: org.apache.spark.sql.DataFrame \u003d [Initiales: string]\nresult2: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [Platform: string, Year_of_Release: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://e4daa9301623:4040/jobs/job?id\u003d7",
+            "http://e4daa9301623:4040/jobs/job?id\u003d8"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1607093170707_-180613253",
+      "id": "20201204-144610_619507342",
+      "dateCreated": "2020-12-04 14:46:10.707",
+      "dateStarted": "2020-12-10 11:14:55.254",
+      "dateFinished": "2020-12-10 11:15:12.820",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//Save dataframe\nresult2.coalesce(1).write.format(\"csv\").option(\"sep\", \",\").option(\"header\", \"true\").save(\"result_dataset_tmp\")",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-10 11:15:29.796",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://e4daa9301623:4040/jobs/job?id\u003d9",
+            "http://e4daa9301623:4040/jobs/job?id\u003d10",
+            "http://e4daa9301623:4040/jobs/job?id\u003d11"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1607098313160_-166237853",
+      "id": "20201204-161153_860398374",
+      "dateCreated": "2020-12-04 16:11:53.162",
+      "dateStarted": "2020-12-10 11:15:30.182",
+      "dateFinished": "2020-12-10 11:15:42.406",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\n\n//Agregace agregace a datasetu\nval tmp2 \u003d result2.join(sales, result2(\"Platform\") \u003d\u003d\u003d sales(\"Platform\") \u0026\u0026 result2(\"Year_of_Release\") \u003d\u003d\u003d sales(\"Year_of_Release\"), \"inner\")\n                  .drop(result2(\"Year_of_Release\"))\n                  .drop(result2(\"Platform\"))\nval result3 \u003d tmp2.filter($\"Global_Sales\" * 10 \u003e\u003d $\"Platform_Global_Sales\")\n                  .groupBy(\"Platform\", \"Year_of_Release\")\n                  .count()\n                  .withColumnRenamed(\"count\", \"Number_of_Big_Games\")\n                  .sort(\"Year_of_Release\")\nresult3.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-06 19:18:25.757",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+---------------+-------------------+\n|Platform|Year_of_Release|Number_of_Big_Games|\n+--------+---------------+-------------------+\n|    2600|           1980|                  3|\n|    2600|           1981|                  1|\n|    2600|           1982|                  1|\n|     NES|           1983|                  6|\n|    2600|           1983|                  3|\n|     NES|           1984|                  1|\n|    2600|           1984|                  1|\n|    2600|           1985|                  1|\n|     NES|           1985|                  1|\n|    2600|           1986|                  2|\n|     NES|           1986|                  1|\n|     NES|           1987|                  5|\n|    2600|           1987|                  4|\n|      GB|           1988|                  1|\n|    2600|           1988|                  2|\n|     NES|           1988|                  3|\n|     NES|           1989|                  4|\n|      GB|           1989|                  2|\n|    2600|           1989|                  2|\n|     NES|           1990|                  3|\n+--------+---------------+-------------------+\nonly showing top 20 rows\n\ntmp2: org.apache.spark.sql.DataFrame \u003d [Platform_Global_Sales: double, Name: string ... 15 more fields]\nresult3: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [Platform: string, Year_of_Release: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1607093960628_1542281366",
+      "id": "20201204-145920_190688761",
+      "dateCreated": "2020-12-04 14:59:20.628",
+      "dateStarted": "2020-12-06 19:18:25.893",
+      "dateFinished": "2020-12-06 19:18:42.975",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1607095539236_969809550",
+      "id": "20201204-152539_1324902547",
+      "dateCreated": "2020-12-04 15:25:39.236",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Steam Games",
+  "id": "2FQYVQVS1",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

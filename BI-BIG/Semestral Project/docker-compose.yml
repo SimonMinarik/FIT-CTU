@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
+    container_name: elastic
+    volumes:
+      - ./Elastic+Kibana/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elastic
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash-oss:6.2.4
+    container_name: logstash
+    volumes:
+      - ./Elastic+Kibana/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./Elastic+Kibana/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
+      - ./Elastic+Kibana/logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./Datasets:/datasets
+    ports:
+      - "5000:5000"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elastic
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:6.2.4 
+    build: ./Elastic+Kibana/kibana
+    container_name: kibana
+    volumes:
+      - ./Elastic+Kibana/kibana/config/:/usr/share/kibana/config:ro
+    ports:
+      - "5601:5601"
+    networks:
+      - elastic
+    depends_on:
+      - elasticsearch
+
+networks:
+  elastic:
+    driver: bridge

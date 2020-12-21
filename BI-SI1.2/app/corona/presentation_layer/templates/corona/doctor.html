@@ -1,0 +1,20 @@
+{% extends "./base.html" %}
+
+{% block title %}Stranka doktora{% endblock %}
+
+{% block head-block %}{% endblock %}
+
+{% block page-title %}Stranka doktora{% endblock %}
+
+{% block page-content %}
+<h2>Vitejte, {{ user.username }}</h2>
+<a href="/doctor-register-patient">Registrovat priznakoveho pacienta</a>
+<br>
+<br>
+<br>
+<a href="/add-covidpass">Pridat CovidPass registrovanemu pacientovi</a>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

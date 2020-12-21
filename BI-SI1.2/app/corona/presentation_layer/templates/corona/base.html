@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    {% block head-block %}{% endblock %}
+</head>
+<body>
+    <header>
+        <center>
+            <h1>
+                <a href="\">
+                    CoronaAgent
+                </a>
+            </h1>
+        </center>
+        <center>
+            <h1>{% block page-title %}{% endblock %}</h1>
+        </center>
+    </header>
+    <center>
+        {% block page-content %}{% endblock %}
+    </center>
+<footer>
+    <center>
+        {% if user.is_authenticated %}
+            <b>Prihlaseny uzivatel: {{user.username}}</b><br>
+            <a href="/logout">Odhlasit se</a>
+        {% endif %}
+    </center>
+</footer>
+</body>
+</html>

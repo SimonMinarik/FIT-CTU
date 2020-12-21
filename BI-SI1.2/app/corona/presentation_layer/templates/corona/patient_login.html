@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prihlaseni pacienta</title>
+    <script>
+        {% if messages %}
+            {% for message in messages %}
+                alert("{{message}}");
+            {% endfor %}
+        {% endif %}
+    </script>
+</head>
+<body>
+<center>
+    <h1>Prihlaseni pacienta</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <table class="form">{{ form }}</table>
+        <input type="submit" value="Prihlasit se" class="button">
+    </form>
+</center>
+</body>
+</html>
+

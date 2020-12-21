@@ -1,0 +1,22 @@
+{% extends "./base.html" %}
+
+{% block title %}Prihlaseni doktora{% endblock %}
+{% block head-block %}
+    <script>
+        {% if messages %}
+            {% for message in messages %}
+                alert("{{message}}");
+            {% endfor %}
+        {% endif %}
+    </script>
+{% endblock %}
+
+{% block page-title %}Prihlaseni doktora{% endblock %}
+
+{% block page-content %}
+    <form method="POST">
+        {% csrf_token %}
+        <table class="form">{{ form }}</table>
+        <input type="submit" value="Prihlasit se" class="button">
+    </form>
+{% endblock %}

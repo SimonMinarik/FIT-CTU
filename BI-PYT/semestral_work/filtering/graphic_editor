@@ -1,0 +1,158 @@
+#!/usr/bin/python
+
+import getopt
+import sys
+from PIL import Image
+import numpy as np
+
+
+def read_image(file_name: str) -> np.array:
+    return np.asarray(Image.open(file_name), dtype=np.uint8)
+
+
+def load_img(path):
+    try:
+        img = Image.open(path)
+    except IOError:
+        print("Image couldn't be opened, check the path. For more information, run the application with --help")
+        sys.exit()
+    img = np.asarray(img, dtype=np.uint8)
+    return img
+
+
+def save_img(img, path):
+    new_image = Image.fromarray(img.astype('uint8'))
+    try:
+        new_image.save(path)
+    except ValueError:
+        print("Image couldn't be saved, check if the format of the file is correct.")
+        sys.exit()
+    except IOError:
+        print("Image couldn't be saved, check if the path is correct.")
+        sys.exit()
+
+
+def main(argv):
+    if not len(argv):
+        print("Check --help for more information.")
+        sys.exit()
+
+    try:
+        opts, args = getopt.getopt(argv, "",
+                                   ["help", "rotate", "mirror", "inverse", "bw", "lighten=", "darken=", "sharpen"])
+    except getopt.GetoptError:
+        print("Wrong options used, check --help for more information.")
+        sys.exit(0)
+
+    if not opts:
+        print("0 options used.. so, why even bother? Check --help for more information.")
+        sys.exit()
+
+    to_do = list()
+
+    for opt, arg in opts:
+        to_do.append(opt)
+        to_do.append(arg)
+        if opt == '--help':
+            print("Options that can be used to edit your image:\n"
+                  "--rotate - rotates your image by 90° to the right\n"
+                  "--mirror - mirrors your image\n"
+                  "--inverse - inverts the colors of your image\n"
+                  "--bw - transforms your image to grayscale/black and white\n"
+                  "--lighten <0-100> - lightens your image by the given percentage (value is mandatory!)\n"
+                  "--darken <0-100> - lightens your image by the given percentage (value is mandatory!)\n"
+                  "--sharpen - sharpens your image\n"
+                  "INPUT_IMAGE_PATH - path of the image you want to edit, for supported image formats "
+                  "check https://pillow.readthedocs.io/en/5.1.x/handbook/image-file-formats.html\n"
+                  "OUTPUT_IMAGE_PATH - path where the edited image should be saved to, for supported image formats "
+                  "check https://pillow.readthedocs.io/en/5.1.x/handbook/image-file-formats.html\n\n"
+                  "Example of usage: python graphic_editor --rotate --bw --lighten 25 Lena.png new_Lenna.png")
+            sys.exit()
+        if opt == '--lighten' and not isinstance(arg, int) or (int(arg) < 0 or int(arg) > 100):
+            print("Option --lighten requires a value <0-100>. Check --help for more information.")
+            sys.exit()
+        if opt == '--darken' and not isinstance(arg, int) or (int(arg) < 0 or int(arg) > 100):
+            print("Option --darken requires a value <0-100>. Check --help for more information.")
+            sys.exit()
+        if argv[-2] in to_do:
+            print("Missing input/output path. Check --help for more information.")
+            sys.exit()
+
+    img = load_img(argv[-2])
+
+    for x in range(0, len(to_do), 2):
+        if to_do[x] == '--rotate':
+            img = rotate(img)
+        if to_do[x] == '--mirror':
+            img = mirror(img)
+        if to_do[x] == '--inverse':
+            img = invert(img)
+        if to_do[x] == '--bw':
+            img = grayscale(img)
+        if to_do[x] == '--lighten':
+            img = lighten(img, to_do[x + 1])
+        if to_do[x] == '--darken':
+            img = darken(img, to_do[x + 1])
+        if to_do[x] == '--sharpen':
+            img = sharpen(img)
+
+    save_img(img, argv[-1])
+
+
+def rotate(img):
+    return np.rot90(img)
+
+
+def mirror(img):
+    return np.flip(img, axis=1)
+
+
+def invert(img):
+    return np.invert(img)
+
+
+def grayscale(img):
+    try:
+        r, g, b = img[:, :, 0], img[:, :, 1], img[:, :, 2]
+        img = 0.2989 * r + 0.5870 * g + 0.1140 * b
+    except IndexError:
+        return img
+    return img
+
+
+def darken(img, val):
+    return img * (1 - (int(val) / 100))
+
+
+def lighten(img, val):
+    return np.clip(img * (1 + (int(val) / 100)), 0, 255)
+
+
+def sharpen(img):
+    img = np.array(img).astype(dtype=int)
+    kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
+
+    res = img * kernel[1, 1]
+
+    img = np.roll(img, 1, axis=0)
+    res = res + img * kernel[2, 1]
+
+    img = np.roll(img, 1, axis=1)
+    img = np.roll(img, -1, axis=0)
+    res = res + img * kernel[1, 2]
+
+    img = np.roll(img, -1, axis=0)
+    img = np.roll(img, -1, axis=1)
+    res = res + img * kernel[0, 1]
+
+    img = np.roll(img, -1, axis=1)
+    img = np.roll(img, 1, axis=0)
+    res = res + img * kernel[1, 0]
+
+    res = np.where(res < 0, 0, res)
+    res = np.where(res > 255, 255, res)
+    return res
+
+
+if __name__ == '__main__':
+    main(sys.argv[1:])

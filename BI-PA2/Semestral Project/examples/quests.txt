@@ -1,0 +1,8 @@
+Hello, wanderer! Please, help me clear the land of the evil demonic trees (e)
+Kill 4 evil demonic trees (e)
+4
+1 1 50
+Please! I'm helpless, my daughter got captured by one of the bad satanic bushes (e), kill them and help me find her!
+Kill 3 bad satanic bushes (e)
+3
+0 2 111

@@ -1,4 +1,0 @@
-var searchData=
-[
-  ['_5f_5finit_5f_5f_2epy',['__init__.py',['../____init_____8py.html',1,'(Global Namespace)'],['../app_2____init_____8py.html',1,'(Global Namespace)'],['../corona_2____init_____8py.html',1,'(Global Namespace)'],['../corona_2business__layer_2____init_____8py.html',1,'(Global Namespace)'],['../corona_2business__layer_2handlers_2____init_____8py.html',1,'(Global Namespace)'],['../corona_2business__layer_2handlers_2interfaces_2____init_____8py.html',1,'(Global Namespace)'],['../corona_2data__layer_2____init_____8py.html',1,'(Global Namespace)'],['../corona_2data__layer_2interfaces_2____init_____8py.html',1,'(Global Namespace)'],['../corona_2presentation__layer_2____init_____8py.html',1,'(Global Namespace)'],['../corona_2presentation__layer_2views_2____init_____8py.html',1,'(Global Namespace)']]]
-];

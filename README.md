@@ -9,6 +9,8 @@
 [BI-BIG](https://github.com/SimonMinarik/FIT-CTU/tree/main/BI-BIG) - DB Technologies for Big Data<br>
 **Docker, Kibana, Logstash, ElasticSearch, Spark**
 
+[BI-EMP](https://github.com/SimonMinarik/FIT-CTU/tree/main/BI-EMP) - Economic and management principles
+
 [BI-IOS](https://github.com/SimonMinarik/FIT-CTU/tree/main/BI-IOS) - Fundamentals of iOS Application Development for iPhone and iPad<br>
 **Swift**
 

@@ -1,0 +1,140 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+install.packages("Sleuth2")
+library(Sleuth2)
+vietnam <- subset(case0302, Veteran=='Vietnam')[,1]
+other <- subset(case0302, Veteran=='Other')[,1]
+```
+```{r}
+mean(vietnam)
+var(vietnam)
+median(vietnam)
+```
+```{r}
+vietnam
+```
+
+```{r}
+mean(other)
+var(other)
+median(other)
+```
+
+```{r}
+hist(vietnam,
+     breaks = 45,
+     freq=FALSE,
+     main = "Soldiers in Vietnam",
+     xlab = "TCDD (parts per trillion)",
+     ylab = "Density")
+```
+```{r}
+hist(other,
+     breaks = 15,
+     freq=FALSE,
+     main = "Soldiers elsewhere",
+     xlab = "TCDD (parts per trillion)",
+     ylab = "Density")
+```
+```{r}
+plot(ecdf(vietnam),
+     main = "Soldiers in Vietnam")
+```
+```{r}
+plot(ecdf(other),
+     main = "Soldiers elsewhere")
+```
+
+```{r}
+Evietnam <- mean(vietnam)
+
+minvietnam <- min(vietnam)
+maxvietnam <- max(vietnam)
+vecvietnam <- seq(minvietnam, maxvietnam, length.out=100)
+
+vietnamUnif <- dunif(vecvietnam, minvietnam, maxvietnam)
+
+vietnamNorm <- dnorm(vecvietnam, Evietnam - 1, sd(vietnam) - 0.5)
+
+lambdavietnam <- 1/Evietnam
+
+vietnamExp <- dexp(vecvietnam, lambdavietnam)
+
+hist(vietnam, breaks = 45, freq=FALSE, main = "Histogram vietnam")
+lines(vecvietnam, vietnamNorm, col="red")
+lines(vecvietnam, vietnamExp, col="green")
+lines(vecvietnam, vietnamUnif, col="blue")
+lines(density(vietnam), col='orange')
+```
+
+```{r}
+Eother <- mean(other)
+
+minother <- min(other)
+maxother <- max(other)
+vecother <- seq(minother, maxother, length.out=100)
+
+
+otherUnif <- dunif(vecother, minother, maxother)
+
+otherNorm <- dnorm(vecother, Eother - 1, sd(other) - 0.5)
+
+lambdaother <- 1/Eother
+
+otherExp <- dexp(vecother, lambdaother)
+
+hist(other, breaks = 15, freq=FALSE, main = "Histogram other")     
+lines(vecother, otherNorm, col="red")
+lines(vecother, otherExp, col="green")
+lines(vecother, otherUnif, col="blue")
+lines(density(other), col='orange')
+```
+```{r}
+n <- 0
+positiveGeneratedVietnam = c()
+while (n < 100 000 ){
+  generatedVietnam <- rnorm(1, mean = Evietnam - 1, sd = sd(vietnam) - 0.5)
+  if (generatedVietnam > 0){
+    positiveGeneratedVietnam[n] <- generatedVietnam
+    n <- n + 1
+  }
+}
+hist(positiveGeneratedVietnam, breaks = 15, freq=FALSE, main = "Histogram of generated vietnam")
+lines(density(vietnam), col='red')
+```
+```{r}
+n <- 0
+positiveGeneratedOther = c()
+while (n < 100 ){
+  generatedOther <- rnorm(1, mean = Eother - 1, sd = sd(other) - 0.5)
+  if (generatedOther > 0){
+    positiveGeneratedOther[n] <- generatedOther
+    n <- n + 1
+  }
+}
+hist(positiveGeneratedOther, freq=FALSE, main = "Histogram of generated other")
+lines(density(other), col='blue')
+```
+```{r}
+confIntVietnam <- t.test(vietnam, conf.level = 0.95)$"conf.int"
+confIntOther <- t.test(other, conf.level = 0.95)$"conf.int"
+print("95 percent confidence interval: ")
+print("VIETNAM")
+print(confIntVietnam[1:2])
+print("OTHER")
+print(confIntOther[1:2])
+# t.test(generatedOther)$"conf.int"
+# t.test(generatedVietnam)$"conf.int"
+```
+```{r}
+var.test(vietnam,other)
+```
+
+```{r}
+t.test(vietnam,other,paired=F,alternative="two.sided",var.equal=T)
+```
+

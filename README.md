@@ -26,6 +26,9 @@
 [BI-PSI](https://github.com/SimonMinarik/FIT-CTU/tree/main/BI-PSI) - Computer Networks<br>
 **Python**
 
+[BI-PST](https://github.com/SimonMinarik/FIT-CTU/tree/main/BI-PST) - Probability and Statistics<br>
+**R**
+
 [BI-PYT](https://github.com/SimonMinarik/FIT-CTU/tree/main/BI-PYT) - Programming in Python<br>
 **Python**
 

@@ -39,7 +39,7 @@
 **Python, Django**
 
 [BI-VWM](https://github.com/SimonMinarik/FIT-CTU/tree/main/BI-VWM) - Searching Web and Multimedia Databases<br>
-**Python**
+**Python, Flask**
 
 [BI-VZD](https://github.com/SimonMinarik/FIT-CTU/tree/main/BI-VZD) - Data Mining<br>
 **Python**

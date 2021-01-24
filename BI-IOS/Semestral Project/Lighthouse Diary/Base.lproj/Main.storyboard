@@ -67,6 +67,64 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2fE-eZ-L2a">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
                             </mapView>
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="FA8-ug-5K2">
+                                <rect key="frame" x="8" y="96" width="90" height="126"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YgL-gw-cen">
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="All"/>
+                                        <connections>
+                                            <action selector="allLayerButtonTapped:" destination="nC7-BD-ZgW" eventType="touchUpInside" id="KXc-L1-IwB"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lir-eW-qbp">
+                                        <rect key="frame" x="0.0" y="32" width="90" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <color key="tintColor" systemColor="systemGreenColor"/>
+                                        <state key="normal" title="Bucket List">
+                                            <color key="titleColor" systemColor="systemGreenColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="bucketlistLayerButtonTapped:" destination="nC7-BD-ZgW" eventType="touchUpInside" id="0Mb-Bt-gyp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wnh-DL-T0a">
+                                        <rect key="frame" x="0.0" y="64" width="90" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <color key="tintColor" systemColor="systemYellowColor"/>
+                                        <state key="normal" title="Visited">
+                                            <color key="titleColor" systemColor="systemYellowColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="visitedLayerButtonTapped:" destination="nC7-BD-ZgW" eventType="touchUpInside" id="iNN-59-xP3"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LJ2-2O-Ezy">
+                                        <rect key="frame" x="0.0" y="96" width="90" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <color key="tintColor" systemColor="systemRedColor"/>
+                                        <state key="normal" title="Not Visited">
+                                            <color key="titleColor" systemColor="systemRedColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="notVisitedLayerButtonTapped:" destination="nC7-BD-ZgW" eventType="touchUpInside" id="liG-xb-fdP"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="Dxy-bJ-BDL"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t6d-8s-Tgh">
+                                <rect key="frame" x="330.33333333333331" y="96" width="24.666666666666686" height="23.666666666666671"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="location" catalog="system" symbolScale="large"/>
+                                </state>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="b7K-2x-Vrb"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -74,7 +132,11 @@
                             <constraint firstItem="2fE-eZ-L2a" firstAttribute="bottom" secondItem="b7K-2x-Vrb" secondAttribute="bottom" id="AYd-ca-saO"/>
                             <constraint firstItem="2fE-eZ-L2a" firstAttribute="leading" secondItem="b7K-2x-Vrb" secondAttribute="leading" id="M8u-9f-5QC"/>
                             <constraint firstItem="2fE-eZ-L2a" firstAttribute="trailing" secondItem="b7K-2x-Vrb" secondAttribute="trailing" id="MXv-tv-s22"/>
+                            <constraint firstItem="t6d-8s-Tgh" firstAttribute="trailing" secondItem="b7K-2x-Vrb" secondAttribute="trailing" constant="-20" id="QTi-6F-zZr"/>
                             <constraint firstItem="2fE-eZ-L2a" firstAttribute="top" secondItem="Zbi-NS-gmO" secondAttribute="top" id="Szy-hR-RS3"/>
+                            <constraint firstItem="FA8-ug-5K2" firstAttribute="leading" secondItem="b7K-2x-Vrb" secondAttribute="leading" constant="8" id="h3m-lX-KJY"/>
+                            <constraint firstItem="b7K-2x-Vrb" firstAttribute="top" secondItem="FA8-ug-5K2" secondAttribute="top" constant="-8" id="jrq-yV-49R"/>
+                            <constraint firstItem="t6d-8s-Tgh" firstAttribute="top" secondItem="b7K-2x-Vrb" secondAttribute="top" constant="8" id="kdB-OA-HEz"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="map" catalog="system" id="jHq-sV-FfO"/>
@@ -110,13 +172,19 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="allLayerButton" destination="YgL-gw-cen" id="RpG-qk-4IB"/>
+                        <outlet property="bucketlistLayerButton" destination="Lir-eW-qbp" id="CqR-5t-PSk"/>
                         <outlet property="layersButton" destination="tPD-sv-zC7" id="I6b-88-oYT"/>
+                        <outlet property="layersStackView" destination="FA8-ug-5K2" id="xSN-HS-dVh"/>
+                        <outlet property="mapView" destination="2fE-eZ-L2a" id="Ft8-VS-yWa"/>
+                        <outlet property="notVisitedLayerButton" destination="LJ2-2O-Ezy" id="eHv-li-F2f"/>
                         <outlet property="searchButton" destination="Rj0-b1-4Cx" id="SBc-Rx-DSB"/>
+                        <outlet property="visitedLayerButton" destination="Wnh-DL-T0a" id="Ufu-sS-QOB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4BI-Cs-ent" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1173.913043478261" y="-479.46428571428567"/>
+            <point key="canvasLocation" x="1173.5999999999999" y="-479.55665024630542"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="VVA-BV-MLD">
@@ -384,6 +452,7 @@
         <image name="612664395a40232133447d33247d38313233393434333331.jpeg" width="640" height="560"/>
         <image name="book" catalog="system" width="128" height="102"/>
         <image name="leuchtturm-busum.jpg" width="960" height="1280"/>
+        <image name="location" catalog="system" width="128" height="121"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="map" catalog="system" width="128" height="110"/>
         <image name="person" catalog="system" width="128" height="117"/>
@@ -394,6 +463,15 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -1,1 +1,4 @@
 # BI-SI1.2 (Software Engineering 1)
+
+Course description:
+> Students learn the methods of analysis and design of large software systems, which are typically designed and implemented in teams. Students will get acquainted with CASE tools using a visual modeling language UML for modeling and solving software-related problems. Students will get an overview of object-oriented analysis, design, architecture, validation, verification, and testing processes. The knowledge obtained in the lectures is practiced on a team project. If enrolled for the BIE-SP1 course running in parallel (only summer semester), the students can work on a single more complex project and they are classified to both courses for a single project. This course does not teach the students programming, nor any particular technology, framework or programming language. The students are required to have some knowledge of these to apply them on their team project. 

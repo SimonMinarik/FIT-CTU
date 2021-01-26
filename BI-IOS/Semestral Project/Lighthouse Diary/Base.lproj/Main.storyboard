@@ -538,6 +538,7 @@
                         <outlet property="thirdPhotoDeleteButton" destination="1Fe-Le-jFm" id="TEB-Ya-SZw"/>
                         <outlet property="thirdUserPhotoImageView" destination="fQr-mb-WFn" id="XaW-SZ-ZKx"/>
                         <outlet property="thirdUserPhotoView" destination="NZg-tl-gAS" id="Z41-re-R3U"/>
+                        <outlet property="userDescriptionTextView" destination="rNk-wv-hgX" id="fho-Yb-rXx"/>
                         <outlet property="userPhotosStackView" destination="rIF-Va-4hG" id="VHB-eN-zQ4"/>
                     </connections>
                 </viewController>

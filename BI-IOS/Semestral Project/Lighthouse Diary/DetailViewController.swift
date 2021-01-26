@@ -20,7 +20,7 @@ final class DetailViewController: UIViewController {
     @IBOutlet weak var thirdUserPhotoView: UIView!
     @IBOutlet weak var thirdPhotoDeleteButton: UIButton!
     @IBOutlet weak var userPhotosStackView: UIStackView!
-    @IBOutlet weak var userDescriptionTextField: UITextField!
+    @IBOutlet weak var userDescriptionTextView: UITextView!
     
     private var setUserPhotos:[UIImage] = [UIImage(named: "612664395a40232133447d33247d38313233393434333331.jpeg")!, UIImage(named: "leuchtturm-busum.jpg")!]
     
@@ -47,6 +47,8 @@ final class DetailViewController: UIViewController {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        self.hideKeyboardWhenTappedAround()
     }
     
     @objc func adjustForKeyboard(notification: Notification) {
@@ -62,6 +64,9 @@ final class DetailViewController: UIViewController {
         }
 
         self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset
+        
+//        let selectedRange = userDescriptionTextView.selectedRange
+//        userDescriptionTextView.scrollRangeToVisible(selectedRange)
     }
     
     @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
@@ -139,5 +144,17 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         addPhoto(image: (info[.originalImage] as? UIImage)!)
         picker.dismiss(animated: true)
+    }
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

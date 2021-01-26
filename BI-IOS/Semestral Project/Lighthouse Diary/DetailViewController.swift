@@ -8,68 +8,136 @@
 import UIKit
 
 final class DetailViewController: UIViewController {
-    private weak var lighthouseImageView: UIImageView!
-    private weak var lighthouseNameLabel: UILabel!
-    private weak var lighthouseDescriptionLabel: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var firstUserPhotoImageView: UIImageView!
+    @IBOutlet weak var secondUserPhotoImageView: UIImageView!
+    @IBOutlet weak var thirdUserPhotoImageView: UIImageView!
+    @IBOutlet weak var addPhotoButton: UIButton!
+    @IBOutlet weak var firstUserPhotoView: UIView!
+    @IBOutlet weak var secondUserPhotoView: UIView!
+    @IBOutlet weak var thirdUserPhotoView: UIView!
+    @IBOutlet weak var thirdPhotoDeleteButton: UIButton!
+    @IBOutlet weak var userPhotosStackView: UIStackView!
+    @IBOutlet weak var userDescriptionTextField: UITextField!
     
-    private let descriptionText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo accumsan tellus sed dapibus. Morbi sed sodales elit. Sed ut ultricies augue. Donec vel congue risus, a mollis nisl. Ut eu posuere est. Quisque ultricies justo massa, at iaculis arcu lacinia eu. Proin aliquet iaculis posuere. Quisque porttitor, enim vitae ultricies rhoncus, erat ligula faucibus augue, nec hendrerit augue tortor sit amet augue. Etiam viverra sem eget pulvinar feugiat. Proin vehicula condimentum tortor, sed posuere mauris tempor mattis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse in ante nibh.\nDuis sed ligula tincidunt, rutrum sem et, dapibus odio. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis sit amet vulputate turpis, et imperdiet sapien. Proin et elit non mauris porta ultrices. Nullam sagittis tempus vulputate. Sed nunc elit, aliquet quis dolor id, dignissim rutrum massa. Morbi semper neque eu lacus aliquet, sed tempus leo bibendum. Phasellus quam felis, volutpat ac lacinia vel, porttitor ultricies metus.\nPraesent varius lacus vitae sapien tincidunt, nec condimentum enim ornare. Quisque imperdiet nunc ac blandit egestas. Ut justo velit, auctor pharetra imperdiet et, bibendum vel odio. Nunc nec sapien enim. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin sed odio in lectus dignissim faucibus eu ac erat. Nulla eget lorem sagittis, pellentesque mauris nec, tempus urna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed tincidunt dui sit amet leo fermentum vulputate. Quisque suscipit, ligula ut posuere tempor, lectus massa posuere orci, a porttitor nunc magna at lacus. Integer magna eros, varius non ipsum id, pharetra dapibus justo. Ut ante urna, porta in finibus nec, facilisis vitae elit. Integer ac lacus faucibus, pharetra enim vitae, fermentum est. Fusce facilisis orci non aliquam dignissim. Nam sagittis malesuada tortor quis pharetra. Donec nibh orci, cursus nec vehicula in, finibus et enim.\nSed et porttitor nibh. Integer et felis malesuada, facilisis erat ac, finibus nibh. Phasellus augue lacus, porttitor ut mauris vel, congue auctor dui. Maecenas in egestas sem. Nunc vestibulum sed elit eu commodo. Aliquam nibh mi, tincidunt non rutrum nec, volutpat eu est. Maecenas sed sapien mauris. Ut mattis justo sit amet justo sagittis, quis varius nibh commodo. Nullam iaculis finibus nisi sed sagittis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin efficitur fermentum nunc ut tincidunt. Mauris at faucibus leo, sit amet cursus sapien. Cras varius arcu vel imperdiet ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras feugiat porta enim sed tempor."
+    private var setUserPhotos:[UIImage] = [UIImage(named: "612664395a40232133447d33247d38313233393434333331.jpeg")!, UIImage(named: "leuchtturm-busum.jpg")!]
+    
+    private let descriptionText = "The Cape Arkona Lighthouse (German: Leuchtturm Kap Arkona) comprises two lighthouses and a radio navigation tower on the German Baltic Sea coast in Mecklenburg-Vorpommern, with the international serial number C 1062. It is located on Cape Arkona on the peninsula of Wittow on the northern tip of the island of Rügen."
     
     override func loadView() {
         super.loadView()
+        self.descriptionLabel.text = descriptionText
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scrollView)
+        firstUserPhotoView.translatesAutoresizingMaskIntoConstraints = false
+        secondUserPhotoView.translatesAutoresizingMaskIntoConstraints = false
+        thirdUserPhotoView.translatesAutoresizingMaskIntoConstraints = false
+        let width = (view.frame.width - 16) / 3
         NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
+            firstUserPhotoView.widthAnchor.constraint(equalToConstant: width),
+            secondUserPhotoView.widthAnchor.constraint(equalToConstant: width),
+            thirdUserPhotoView.widthAnchor.constraint(equalToConstant: width)
         ])
         
-        let contentView = UIView()
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(contentView)
-        NSLayoutConstraint.activate([
-            contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
-        ])
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            self.scrollView.contentInset = .zero
+        } else {
+            self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+        }
+
+        self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset
+    }
+    
+    @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true)
+    }
+    
+    func addPhoto(image: UIImage) {
+        self.setUserPhotos.append(image)
+        switch self.setUserPhotos.count {
+        case 1:
+            self.firstUserPhotoView.isHidden = false
+            self.firstUserPhotoImageView.image = setUserPhotos[0]
+            break
+        case 2:
+            self.secondUserPhotoView.isHidden = false
+            self.secondUserPhotoImageView.image = setUserPhotos[1]
+            break
+        case 3:
+            self.thirdUserPhotoImageView.image = setUserPhotos[2]
+            self.thirdPhotoDeleteButton.isHidden = false
+            self.addPhotoButton.isHidden = true
+        default:
+            fatalError("That shouldn't happen..")
+        }
+    }
+    
+    func removePhoto(at: Int) {
+        print("removed photo at:", at)
+        self.setUserPhotos.remove(at: at)
+        switch self.setUserPhotos.count {
+        case 2:
+            self.firstUserPhotoImageView.image = setUserPhotos[0]
+            self.secondUserPhotoImageView.image = setUserPhotos[1]
+            self.thirdUserPhotoImageView.image = UIImage()
+            self.addPhotoButton.isHidden = false
+            self.thirdPhotoDeleteButton.isHidden = true
+            break
+        case 1:
+            self.firstUserPhotoImageView.image = setUserPhotos[0]
+            self.secondUserPhotoView.isHidden = true
+            break
+        case 0:
+            self.firstUserPhotoView.isHidden = true
+            break
+        default:
+            fatalError("Well..")
+        }
+    }
+    
+    @IBAction func firstPhotoDeleteButtonTapped(_ sender: UIButton) {
+        removePhoto(at: 0)
+    }
+    
+    @IBAction func secondPhotoDeleteButtonTapped(_ sender: UIButton) {
+        removePhoto(at: 1)
+    }
+    
+    @IBAction func thirdPhotoDeleteButtonTapped(_ sender: UIButton) {
+        removePhoto(at: 2)
+    }
+    
+    @IBAction func locationButtonTapped(_ sender: UIButton) {
         
-        let lighthouseImageView = UIImageView(image: UIImage(named: "612664395a40232133447d33247d38313233393434333331.jpeg"))
-        lighthouseImageView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(lighthouseImageView)
-        NSLayoutConstraint.activate([
-            lighthouseImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            lighthouseImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            lighthouseImageView.widthAnchor.constraint(equalToConstant: 150),
-            lighthouseImageView.heightAnchor.constraint(equalTo: lighthouseImageView.widthAnchor)
-        ])
-        self.lighthouseImageView = lighthouseImageView
-        
-        let lighthouseNameLabel = UILabel()
-        lighthouseNameLabel.text = "Lighthouse Arkona"
-        lighthouseNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(lighthouseNameLabel)
-        NSLayoutConstraint.activate([
-            lighthouseNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            lighthouseNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 8),
-            lighthouseNameLabel.leadingAnchor.constraint(lessThanOrEqualTo: lighthouseImageView.trailingAnchor)
-        ])
-        self.lighthouseNameLabel = lighthouseNameLabel
-        
-        let lighthouseDescriptionLabel = UILabel()
-        lighthouseDescriptionLabel.text = self.descriptionText
-        lighthouseDescriptionLabel.numberOfLines = 0
-        lighthouseDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(lighthouseDescriptionLabel)
-        NSLayoutConstraint.activate([
-            lighthouseDescriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            lighthouseDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 8),
-            lighthouseDescriptionLabel.topAnchor.constraint(equalTo: lighthouseImageView.bottomAnchor, constant: 16),
-            lighthouseDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
+    }
+}
+
+extension DetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        addPhoto(image: (info[.originalImage] as? UIImage)!)
+        picker.dismiss(animated: true)
     }
 }

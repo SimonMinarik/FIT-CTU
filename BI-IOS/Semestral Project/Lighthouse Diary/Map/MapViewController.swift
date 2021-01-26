@@ -13,10 +13,11 @@ class MapViewController: UIViewController {
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var layersButton: UIButton!
     @IBOutlet weak var layersStackView: UIStackView!
-    @IBOutlet weak var allLayerButton: UIButton!
-    @IBOutlet weak var bucketlistLayerButton: UIButton!
-    @IBOutlet weak var visitedLayerButton: UIButton!
-    @IBOutlet weak var notVisitedLayerButton: UIButton!
+    @IBOutlet weak var bucketlistSwitch: UISwitch!
+    @IBOutlet weak var visitedSwitch: UISwitch!
+    @IBOutlet weak var notvisitedSwitch: UISwitch!
+    
+    fileprivate let locationManager = CLLocationManager()
     
     let lighthouseDB:[(name: String, location: String, coordinate: CLLocationCoordinate2D, image: UIImage, id: Int)] = [
         ("Lighthouse Arkona", "Puttgarten, Germany", CLLocationCoordinate2D(latitude: CLLocationDegrees(54.679564), longitude: CLLocationDegrees(13.432574)), UIImage(named: "612664395a40232133447d33247d38313233393434333331.jpeg")!, 1),
@@ -42,6 +43,12 @@ class MapViewController: UIViewController {
         
         self.layersStackView.layer.cornerRadius = 4.0
         self.layersStackView.layer.masksToBounds = true
+        
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.startUpdatingLocation()
+        mapView.showsUserLocation = true
     }
     
     override func viewDidLoad() {
@@ -67,6 +74,8 @@ class MapViewController: UIViewController {
             self.mapView.addAnnotation(annotation)
         }
         self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+        
+        self.centerOnUser()
     }
     
     @IBAction func layersButtonTapped(_ sender: UIButton) {
@@ -77,78 +86,38 @@ class MapViewController: UIViewController {
         print("search button tapped")
     }
     
-    @IBAction func allLayerButtonTapped(_ sender: UIButton) {
-        if self.allLayerButton.isSelected {
-            self.allLayerButton.isSelected = false
-            self.bucketlistLayerButton.isSelected = false
-            self.visitedLayerButton.isSelected = false
-            self.notVisitedLayerButton.isSelected = false
-            changeAnnotations(type: "all", show: true)
-        } else {
-            self.allLayerButton.isSelected = true
-            self.bucketlistLayerButton.isSelected = true
-            self.visitedLayerButton.isSelected = true
-            self.notVisitedLayerButton.isSelected = true
-            changeAnnotations(type: "all", show: false)
-        }
+    @IBAction func bucketlistSwitchTapped(_ sender: UISwitch) {
+        changeAnnotations(type: "bucketlist", show: !sender.isOn)
     }
     
-    @IBAction func bucketlistLayerButtonTapped(_ sender: UIButton) {
-        layerButtonTapped(button: self.bucketlistLayerButton, type: "bucketlist")
+    @IBAction func visitedSwitchTapped(_ sender: UISwitch) {
+        changeAnnotations(type: "visited", show: !sender.isOn)
     }
     
-    @IBAction func visitedLayerButtonTapped(_ sender: UIButton) {
-        layerButtonTapped(button: self.visitedLayerButton, type: "visited")
-    }
-    
-    @IBAction func notVisitedLayerButtonTapped(_ sender: UIButton) {
-        layerButtonTapped(button: self.notVisitedLayerButton, type: "")
-    }
-    
-    func layerButtonTapped(button: UIButton, type: String) {
-        if button.isSelected {
-            button.isSelected = false
-            self.allLayerButton.isSelected = false
-            changeAnnotations(type: type, show: true)
-        } else {
-            button.isSelected = true
-            self.allLayerButton.isSelected = areAllButtonsSelected()
-            changeAnnotations(type: type, show: false)
-        }
-    }
-    
-    func areAllButtonsSelected() -> Bool {
-        return self.bucketlistLayerButton.isSelected && self.visitedLayerButton.isSelected && self.notVisitedLayerButton.isSelected
+    @IBAction func notvisitedSwitchTapped(_ sender: UISwitch) {
+        changeAnnotations(type: "", show: !sender.isOn)
     }
     
     func changeAnnotations(type: String, show: Bool) {
-        switch type {
-        case "all":
-            for annotation in mapView.annotations {
+        for annotation in mapView.annotations {
+            guard let annotation = annotation as? LighthouseAnnotation else {
+                break
+            }
+            if annotation.type == type {
                 mapView.view(for: annotation)?.isHidden = show
             }
-            break
-        case "notvisited":
-            for annotation in mapView.annotations {
-                guard let annotation = annotation as? LighthouseAnnotation else {
-                    break
-                }
-                if annotation.type == "" {
-                    mapView.view(for: annotation)?.isHidden = show
-                }
-            }
-            break
-        default:
-            for annotation in mapView.annotations {
-                guard let annotation = annotation as? LighthouseAnnotation else {
-                    break
-                }
-                if annotation.type == type {
-                    mapView.view(for: annotation)?.isHidden = show
-                }
-            }
-            break
         }
+    }
+    
+    func centerOnUser() {
+        if let userLocation = locationManager.location?.coordinate {
+            let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 20000, longitudinalMeters: 20000)
+            mapView.setRegion(viewRegion, animated: true)
+        }
+    }
+    
+    @IBAction func locationButtonTapped(_ sender: UIButton) {
+        self.centerOnUser()
     }
 }
 

@@ -36,7 +36,7 @@ class DiaryViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "scrollViewTest")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailViewController")
         self.show(vc!, sender: self)
     }
     

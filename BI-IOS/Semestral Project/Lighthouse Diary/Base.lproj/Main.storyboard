@@ -9,31 +9,56 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Profile View Controller-->
         <scene sceneID="eQT-Wa-d8e">
             <objects>
-                <viewController id="dT6-Gm-Q0E" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileVC" id="dT6-Gm-Q0E" customClass="ProfileViewController" customModule="Lighthouse_Diary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MEq-of-yBE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PROFILE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgp-01-ll0">
-                                <rect key="frame" x="45" y="332" width="324" height="242"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="76"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_6567.PNG" translatesAutoresizingMaskIntoConstraints="NO" id="rYC-cr-T8h">
+                                <rect key="frame" x="107" y="44" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="Uzb-A0-2jT"/>
+                                    <constraint firstAttribute="width" constant="200" id="p80-bN-6R5"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="100"/>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nJK-5d-RfO">
+                                <rect key="frame" x="153.66666666666666" y="252" width="106.99999999999997" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WIX-B6-hnE">
+                                <rect key="frame" x="268.66666666666669" y="255.66666666666663" width="21" height="22"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="pencil" catalog="system" symbolScale="large"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeUsernameButtonTapped:" destination="dT6-Gm-Q0E" eventType="touchUpInside" id="NkI-4n-4Al"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zhE-Kh-joE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="zhE-Kh-joE" firstAttribute="bottom" secondItem="sgp-01-ll0" secondAttribute="bottom" constant="239" id="93T-aw-pDK"/>
-                            <constraint firstItem="zhE-Kh-joE" firstAttribute="trailing" secondItem="sgp-01-ll0" secondAttribute="trailing" constant="45" id="Apt-Ak-JWb"/>
-                            <constraint firstItem="sgp-01-ll0" firstAttribute="top" secondItem="zhE-Kh-joE" secondAttribute="top" constant="288" id="DD2-3j-kY0"/>
-                            <constraint firstItem="sgp-01-ll0" firstAttribute="leading" secondItem="zhE-Kh-joE" secondAttribute="leading" constant="45" id="Dmh-JB-Zct"/>
+                            <constraint firstItem="nJK-5d-RfO" firstAttribute="top" secondItem="rYC-cr-T8h" secondAttribute="bottom" constant="8" symbolic="YES" id="RNf-ul-kNX"/>
+                            <constraint firstItem="rYC-cr-T8h" firstAttribute="centerX" secondItem="zhE-Kh-joE" secondAttribute="centerX" id="fzm-9g-GUk"/>
+                            <constraint firstItem="WIX-B6-hnE" firstAttribute="centerY" secondItem="nJK-5d-RfO" secondAttribute="centerY" id="mkI-l1-sJb"/>
+                            <constraint firstItem="WIX-B6-hnE" firstAttribute="leading" secondItem="nJK-5d-RfO" secondAttribute="trailing" constant="8" id="tUu-p3-jpP"/>
+                            <constraint firstItem="nJK-5d-RfO" firstAttribute="centerX" secondItem="rYC-cr-T8h" secondAttribute="centerX" id="x7P-8a-KER"/>
+                            <constraint firstItem="rYC-cr-T8h" firstAttribute="top" secondItem="zhE-Kh-joE" secondAttribute="top" id="xLG-4D-pjn"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="person" catalog="system" id="05r-FW-bPm"/>
+                    <connections>
+                        <outlet property="usernameLabel" destination="nJK-5d-RfO" id="a4g-4j-lap"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9FY-1P-cV8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -201,10 +226,10 @@
             </objects>
             <point key="canvasLocation" x="1173.5999999999999" y="-479.55665024630542"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar Controller-->
         <scene sceneID="VVA-BV-MLD">
             <objects>
-                <tabBarController id="3Ja-aT-Pzw" sceneMemberID="viewController">
+                <tabBarController id="3Ja-aT-Pzw" customClass="MainTabBarController" customModule="Lighthouse_Diary" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MBW-Nx-na4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -213,7 +238,7 @@
                     <connections>
                         <segue destination="7eU-Pz-OCt" kind="relationship" relationship="viewControllers" id="CDF-IT-JHz"/>
                         <segue destination="9xL-X1-XJK" kind="relationship" relationship="viewControllers" id="gdG-SK-EGE"/>
-                        <segue destination="dT6-Gm-Q0E" kind="relationship" relationship="viewControllers" id="cl0-13-VP3"/>
+                        <segue destination="dT6-Gm-Q0E" kind="relationship" relationship="viewControllers" destinationCreationSelector="profileTab:" id="cl0-13-VP3"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hXG-al-HSG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -282,6 +307,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="lighthouseImageView" destination="1qd-tN-xtu" id="gQc-L5-SEb"/>
+                                            <outlet property="locationLabel" destination="oV8-uQ-4oV" id="1RR-oH-5Hn"/>
                                             <outlet property="nameLabel" destination="ePh-HQ-u9g" id="hfh-UH-83u"/>
                                             <outlet property="visitedLabel" destination="N0k-6D-NP3" id="urP-rT-q8j"/>
                                         </connections>
@@ -299,8 +325,22 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="book" catalog="system" id="2Lw-zK-DAO"/>
-                    <navigationItem key="navigationItem" id="O30-hA-CGE"/>
+                    <navigationItem key="navigationItem" id="O30-hA-CGE">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="EAv-wt-WDw">
+                            <rect key="frame" x="126.66666666666669" y="5.6666666666666679" width="161" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Visited"/>
+                                <segment title="Bucketlist"/>
+                            </segments>
+                            <connections>
+                                <action selector="segmentedControlChanged:" destination="go7-FO-sGp" eventType="valueChanged" id="2RW-RI-O5O"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
                     <connections>
+                        <outlet property="segmentedControl" destination="EAv-wt-WDw" id="5a9-t1-F1G"/>
                         <outlet property="tableView" destination="qwo-kQ-DtM" id="6Dw-Kq-fpm"/>
                     </connections>
                 </viewController>
@@ -311,7 +351,7 @@
         <!--Detail-->
         <scene sceneID="0CN-p7-dcK">
             <objects>
-                <viewController storyboardIdentifier="detailViewController" title="Detail" id="EPP-ay-Sau" customClass="DetailViewController" customModule="Lighthouse_Diary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="detailVC" title="Detail" id="EPP-ay-Sau" customClass="DetailViewController" customModule="Lighthouse_Diary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oZl-Jm-2oW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -322,11 +362,11 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4BI-MM-5xq">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="663"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="612664395a40232133447d33247d38313233393434333331.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="gWa-Ml-exh">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="612664395a40232133447d33247d38313233393434333331.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="gWa-Ml-exh">
                                                 <rect key="frame" x="8" y="8" width="150" height="150"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="gWa-Ml-exh" secondAttribute="height" multiplier="1:1" id="bGJ-O5-eRS"/>
                                                     <constraint firstAttribute="width" constant="150" id="cJU-4w-0WF"/>
+                                                    <constraint firstAttribute="height" constant="150" id="m6G-k2-yrk"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lighthouse Arkona" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6h-7e-fIO">
@@ -340,9 +380,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="15" id="p6a-gR-SAZ"/>
                                                 </constraints>
-                                                <state key="normal" title="Putgarten, Germany">
-                                                    <color key="titleColor" systemColor="labelColor"/>
-                                                </state>
+                                                <state key="normal" title="Putgarten, Germany"/>
                                                 <connections>
                                                     <action selector="locationButtonTapped:" destination="EPP-ay-Sau" eventType="touchUpInside" id="ain-Pq-wZf"/>
                                                 </connections>
@@ -454,7 +492,7 @@
                                                                 </connections>
                                                             </button>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                         <constraints>
                                                             <constraint firstItem="fQr-mb-WFn" firstAttribute="leading" secondItem="NZg-tl-gAS" secondAttribute="leading" id="0ZO-oN-xMp"/>
                                                             <constraint firstItem="1Fe-Le-jFm" firstAttribute="top" secondItem="NZg-tl-gAS" secondAttribute="topMargin" id="5QP-5j-aIz"/>
@@ -531,6 +569,8 @@
                         <outlet property="descriptionLabel" destination="s2r-ET-hlh" id="iz0-kd-Xot"/>
                         <outlet property="firstUserPhotoImageView" destination="Btz-1O-5f7" id="N17-du-EBz"/>
                         <outlet property="firstUserPhotoView" destination="1YF-yS-WZt" id="dnq-rH-vdy"/>
+                        <outlet property="lighthouseImageView" destination="gWa-Ml-exh" id="79M-dc-eQh"/>
+                        <outlet property="lighthouseNameLabel" destination="I6h-7e-fIO" id="jGk-Gn-deV"/>
                         <outlet property="locationButton" destination="5t0-18-ES1" id="5KV-OG-PIR"/>
                         <outlet property="scrollView" destination="UgD-WF-1iR" id="TOx-UX-PmP"/>
                         <outlet property="secondUserPhotoImageView" destination="VhV-uG-hc5" id="OOn-P2-2qp"/>
@@ -545,6 +585,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xRL-Ei-xO9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1947.826086956522" y="160.71428571428569"/>
+        </scene>
+        <!--Detail Map View Controller-->
+        <scene sceneID="lJo-an-Mex">
+            <objects>
+                <viewController storyboardIdentifier="DetailMapVC" id="JJb-r0-crL" customClass="DetailMapViewController" customModule="Lighthouse_Diary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bfT-wS-cmR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="s66-67-NRw">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                            </mapView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cm7-EC-unY">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <navigationItem id="pfx-gT-vSq">
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="lSh-t9-6am">
+                                            <connections>
+                                                <action selector="cancelButtonTapped:" destination="JJb-r0-crL" id="fIx-tW-zpZ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="1du-3y-RnX"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="1du-3y-RnX" firstAttribute="trailing" secondItem="s66-67-NRw" secondAttribute="trailing" id="5C8-HZ-26E"/>
+                            <constraint firstItem="s66-67-NRw" firstAttribute="leading" secondItem="1du-3y-RnX" secondAttribute="leading" id="Krd-Wl-126"/>
+                            <constraint firstItem="Cm7-EC-unY" firstAttribute="trailing" secondItem="1du-3y-RnX" secondAttribute="trailing" id="Ld2-ps-0mT"/>
+                            <constraint firstItem="s66-67-NRw" firstAttribute="bottom" secondItem="bfT-wS-cmR" secondAttribute="bottom" id="skG-gr-uFP"/>
+                            <constraint firstItem="s66-67-NRw" firstAttribute="top" secondItem="1du-3y-RnX" secondAttribute="top" id="tQv-kH-GSA"/>
+                            <constraint firstItem="Cm7-EC-unY" firstAttribute="leading" secondItem="1du-3y-RnX" secondAttribute="leading" id="wel-1u-BE2"/>
+                            <constraint firstItem="Cm7-EC-unY" firstAttribute="top" secondItem="1du-3y-RnX" secondAttribute="top" id="yl7-iP-4ax"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="s66-67-NRw" id="Blx-hz-NGl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4fc-Ba-N1v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2715.9420289855075" y="159.375"/>
         </scene>
         <!--Item-->
         <scene sceneID="13h-uu-gOe">
@@ -566,11 +650,13 @@
     </scenes>
     <resources>
         <image name="612664395a40232133447d33247d38313233393434333331.jpeg" width="640" height="560"/>
+        <image name="IMG_6567.PNG" width="1125" height="2436"/>
         <image name="book" catalog="system" width="128" height="102"/>
         <image name="leuchtturm-busum.jpg" width="960" height="1280"/>
         <image name="location" catalog="system" width="128" height="121"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="map" catalog="system" width="128" height="110"/>
+        <image name="pencil" catalog="system" width="128" height="113"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="square.stack.3d.up" catalog="system" width="128" height="124"/>
@@ -580,6 +666,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

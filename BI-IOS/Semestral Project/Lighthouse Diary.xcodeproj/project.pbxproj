@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC0427B925C4A84200C8F6DE /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0427B825C4A84200C8F6DE /* MainTabBarController.swift */; };
 		EC073F912562AF9D001F3731 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC073F902562AF9D001F3731 /* AppDelegate.swift */; };
 		EC073F932562AF9D001F3731 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC073F922562AF9D001F3731 /* SceneDelegate.swift */; };
-		EC073F952562AF9D001F3731 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC073F942562AF9D001F3731 /* ViewController.swift */; };
 		EC073F982562AF9D001F3731 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC073F962562AF9D001F3731 /* Main.storyboard */; };
 		EC073F9A2562AFA0001F3731 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC073F992562AFA0001F3731 /* Assets.xcassets */; };
 		EC073F9D2562AFA0001F3731 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC073F9B2562AFA0001F3731 /* LaunchScreen.storyboard */; };
@@ -20,14 +20,26 @@
 		EC073FB42562D025001F3731 /* 612664395a40232133447d33247d38313233393434333331.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = EC073FB12562D024001F3731 /* 612664395a40232133447d33247d38313233393434333331.jpeg */; };
 		EC073FB52562D025001F3731 /* leuchtturm-busum.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC073FB22562D025001F3731 /* leuchtturm-busum.jpg */; };
 		EC0DB2D925BDC1A200D4C028 /* LighthouseAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0DB2D825BDC1A200D4C028 /* LighthouseAnnotation.swift */; };
+		EC699E3B25C5D6E900C0DA3B /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC699E3A25C5D6E900C0DA3B /* UserData.swift */; };
+		EC6AA32025C19CC600F235B8 /* IMG_6567.PNG in Resources */ = {isa = PBXBuildFile; fileRef = EC6AA31F25C19CC600F235B8 /* IMG_6567.PNG */; };
+		EC6AA32625C19D9D00F235B8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AA32525C19D9D00F235B8 /* ProfileViewController.swift */; };
+		EC6AA32C25C1C99B00F235B8 /* Lighthouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AA32B25C1C99B00F235B8 /* Lighthouse.swift */; };
+		EC6AA33225C1F12700F235B8 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AA33125C1F12700F235B8 /* MapViewModel.swift */; };
+		EC6AA33525C1F13C00F235B8 /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AA33425C1F13C00F235B8 /* DiaryViewModel.swift */; };
+		EC6AA33825C1F14B00F235B8 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AA33725C1F14B00F235B8 /* DetailViewModel.swift */; };
+		EC6AA33B25C1F15A00F235B8 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AA33A25C1F15A00F235B8 /* ProfileViewModel.swift */; };
+		EC6AA33E25C1F3A900F235B8 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AA33D25C1F3A900F235B8 /* NetworkService.swift */; };
+		EC6AA34125C1F44F00F235B8 /* DetailMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AA34025C1F44F00F235B8 /* DetailMapViewController.swift */; };
+		EC6AA34525C1F48600F235B8 /* DetailMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AA34425C1F48600F235B8 /* DetailMapViewModel.swift */; };
 		EC9F608225BB53670063F4F0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9F608125BB53670063F4F0 /* DetailViewController.swift */; };
+		ECCADD8C25C58FD90014675C /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCADD8B25C58FD90014675C /* Preferences.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EC0427B825C4A84200C8F6DE /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		EC073F8D2562AF9D001F3731 /* Lighthouse Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lighthouse Diary.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC073F902562AF9D001F3731 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EC073F922562AF9D001F3731 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EC073F942562AF9D001F3731 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EC073F972562AF9D001F3731 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EC073F992562AFA0001F3731 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC073F9C2562AFA0001F3731 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -39,7 +51,19 @@
 		EC073FB12562D024001F3731 /* 612664395a40232133447d33247d38313233393434333331.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 612664395a40232133447d33247d38313233393434333331.jpeg; sourceTree = "<group>"; };
 		EC073FB22562D025001F3731 /* leuchtturm-busum.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "leuchtturm-busum.jpg"; sourceTree = "<group>"; };
 		EC0DB2D825BDC1A200D4C028 /* LighthouseAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LighthouseAnnotation.swift; sourceTree = "<group>"; };
+		EC699E3A25C5D6E900C0DA3B /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		EC6AA31F25C19CC600F235B8 /* IMG_6567.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_6567.PNG; sourceTree = "<group>"; };
+		EC6AA32525C19D9D00F235B8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		EC6AA32B25C1C99B00F235B8 /* Lighthouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lighthouse.swift; sourceTree = "<group>"; };
+		EC6AA33125C1F12700F235B8 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		EC6AA33425C1F13C00F235B8 /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
+		EC6AA33725C1F14B00F235B8 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		EC6AA33A25C1F15A00F235B8 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		EC6AA33D25C1F3A900F235B8 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		EC6AA34025C1F44F00F235B8 /* DetailMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapViewController.swift; sourceTree = "<group>"; };
+		EC6AA34425C1F48600F235B8 /* DetailMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapViewModel.swift; sourceTree = "<group>"; };
 		EC9F608125BB53670063F4F0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		ECCADD8B25C58FD90014675C /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,18 +98,22 @@
 			children = (
 				EC073F902562AF9D001F3731 /* AppDelegate.swift */,
 				EC073F922562AF9D001F3731 /* SceneDelegate.swift */,
-				EC073F942562AF9D001F3731 /* ViewController.swift */,
 				EC073F962562AF9D001F3731 /* Main.storyboard */,
 				EC073FB12562D024001F3731 /* 612664395a40232133447d33247d38313233393434333331.jpeg */,
+				EC6AA31F25C19CC600F235B8 /* IMG_6567.PNG */,
 				EC073FB22562D025001F3731 /* leuchtturm-busum.jpg */,
 				EC073FB02562D023001F3731 /* lighthouse-at-darsser-ort-with-museum-called-natureum-on-the-darss-peninsula-western-pomerania-lagoon-area-national-park-germany-R3PD9B.jpg */,
 				EC073F992562AFA0001F3731 /* Assets.xcassets */,
 				EC073F9B2562AFA0001F3731 /* LaunchScreen.storyboard */,
 				EC073F9E2562AFA0001F3731 /* Info.plist */,
 				EC0DB2DF25BDC52300D4C028 /* Map */,
-				EC073FAD2562C7FC001F3731 /* DiaryViewController.swift */,
-				EC073FA82562C739001F3731 /* DiaryCell.swift */,
-				EC9F608125BB53670063F4F0 /* DetailViewController.swift */,
+				EC6AA32825C1C89800F235B8 /* Diary */,
+				EC6AA32925C1C8A800F235B8 /* Detail */,
+				EC6AA34725C1F48E00F235B8 /* DetailMap */,
+				EC6AA32A25C1C8C200F235B8 /* Profile */,
+				EC6AA32E25C1C99F00F235B8 /* Model */,
+				EC6AA33D25C1F3A900F235B8 /* NetworkService.swift */,
+				EC0427B825C4A84200C8F6DE /* MainTabBarController.swift */,
 			);
 			path = "Lighthouse Diary";
 			sourceTree = "<group>";
@@ -95,8 +123,56 @@
 			children = (
 				EC073FA52562B896001F3731 /* MapViewController.swift */,
 				EC0DB2D825BDC1A200D4C028 /* LighthouseAnnotation.swift */,
+				EC6AA33125C1F12700F235B8 /* MapViewModel.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		EC6AA32825C1C89800F235B8 /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				EC073FAD2562C7FC001F3731 /* DiaryViewController.swift */,
+				EC073FA82562C739001F3731 /* DiaryCell.swift */,
+				EC6AA33425C1F13C00F235B8 /* DiaryViewModel.swift */,
+			);
+			path = Diary;
+			sourceTree = "<group>";
+		};
+		EC6AA32925C1C8A800F235B8 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				EC9F608125BB53670063F4F0 /* DetailViewController.swift */,
+				EC6AA33725C1F14B00F235B8 /* DetailViewModel.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		EC6AA32A25C1C8C200F235B8 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				EC6AA32525C19D9D00F235B8 /* ProfileViewController.swift */,
+				EC6AA33A25C1F15A00F235B8 /* ProfileViewModel.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		EC6AA32E25C1C99F00F235B8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EC6AA32B25C1C99B00F235B8 /* Lighthouse.swift */,
+				ECCADD8B25C58FD90014675C /* Preferences.swift */,
+				EC699E3A25C5D6E900C0DA3B /* UserData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EC6AA34725C1F48E00F235B8 /* DetailMap */ = {
+			isa = PBXGroup;
+			children = (
+				EC6AA34025C1F44F00F235B8 /* DetailMapViewController.swift */,
+				EC6AA34425C1F48600F235B8 /* DetailMapViewModel.swift */,
+			);
+			path = DetailMap;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,6 +235,7 @@
 				EC073FB32562D025001F3731 /* lighthouse-at-darsser-ort-with-museum-called-natureum-on-the-darss-peninsula-western-pomerania-lagoon-area-national-park-germany-R3PD9B.jpg in Resources */,
 				EC073FB42562D025001F3731 /* 612664395a40232133447d33247d38313233393434333331.jpeg in Resources */,
 				EC073F9D2562AFA0001F3731 /* LaunchScreen.storyboard in Resources */,
+				EC6AA32025C19CC600F235B8 /* IMG_6567.PNG in Resources */,
 				EC073F9A2562AFA0001F3731 /* Assets.xcassets in Resources */,
 				EC073F982562AF9D001F3731 /* Main.storyboard in Resources */,
 				EC073FB52562D025001F3731 /* leuchtturm-busum.jpg in Resources */,
@@ -172,12 +249,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC073F952562AF9D001F3731 /* ViewController.swift in Sources */,
+				EC6AA34525C1F48600F235B8 /* DetailMapViewModel.swift in Sources */,
+				EC6AA32C25C1C99B00F235B8 /* Lighthouse.swift in Sources */,
+				EC6AA33225C1F12700F235B8 /* MapViewModel.swift in Sources */,
+				EC699E3B25C5D6E900C0DA3B /* UserData.swift in Sources */,
 				EC073F912562AF9D001F3731 /* AppDelegate.swift in Sources */,
 				EC073F932562AF9D001F3731 /* SceneDelegate.swift in Sources */,
+				EC6AA33525C1F13C00F235B8 /* DiaryViewModel.swift in Sources */,
+				EC0427B925C4A84200C8F6DE /* MainTabBarController.swift in Sources */,
 				EC073FA92562C739001F3731 /* DiaryCell.swift in Sources */,
+				ECCADD8C25C58FD90014675C /* Preferences.swift in Sources */,
+				EC6AA34125C1F44F00F235B8 /* DetailMapViewController.swift in Sources */,
+				EC6AA33E25C1F3A900F235B8 /* NetworkService.swift in Sources */,
 				EC0DB2D925BDC1A200D4C028 /* LighthouseAnnotation.swift in Sources */,
+				EC6AA33825C1F14B00F235B8 /* DetailViewModel.swift in Sources */,
 				EC073FAE2562C7FC001F3731 /* DiaryViewController.swift in Sources */,
+				EC6AA32625C19D9D00F235B8 /* ProfileViewController.swift in Sources */,
+				EC6AA33B25C1F15A00F235B8 /* ProfileViewModel.swift in Sources */,
 				EC073FA62562B896001F3731 /* MapViewController.swift in Sources */,
 				EC9F608225BB53670063F4F0 /* DetailViewController.swift in Sources */,
 			);

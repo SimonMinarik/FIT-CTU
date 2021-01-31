@@ -8,7 +8,7 @@
 import UIKit
 
 final class ProfileViewController: UIViewController, UITextFieldDelegate {
-    private var viewModel: ProfileViewModeling
+    private let viewModel: ProfileViewModeling
     
     init?(coder: NSCoder, viewModel: ProfileViewModeling) {
         self.viewModel = viewModel

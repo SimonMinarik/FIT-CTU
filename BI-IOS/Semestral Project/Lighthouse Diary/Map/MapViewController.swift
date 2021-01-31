@@ -19,7 +19,7 @@ final class MapViewController: UIViewController {
     
     fileprivate let locationManager = CLLocationManager()
     
-    let viewModel: MapViewModeling
+    private let viewModel: MapViewModeling
     
     init?(coder: NSCoder, viewModel: MapViewModeling) {
         self.viewModel = viewModel
@@ -40,6 +40,7 @@ final class MapViewController: UIViewController {
     ] {
         didSet {
             changeAnnotations()
+            print("didSet")
         }
     }
     
@@ -91,6 +92,8 @@ final class MapViewController: UIViewController {
             )
             self.mapView.addAnnotation(annotation)
         }
+        mapView.register(LighthouseAnnotationView.self, forAnnotationViewWithReuseIdentifier: "LighthouseAnnotationView")
+        
         self.mapView.showAnnotations(self.mapView.annotations, animated: true)
         
         self.centerOnUser()
@@ -104,25 +107,24 @@ final class MapViewController: UIViewController {
         print("search button tapped")
     }
     
-    @IBAction func bucketlistSwitchTapped(_ sender: UISwitch) {
+    @IBAction func bucketlistSwitchValueChanged(_ sender: UISwitch) {
         self.showAnnotationType["bucketlist"] = sender.isOn
         
     }
     
-    @IBAction func visitedSwitchTapped(_ sender: UISwitch) {
+    @IBAction func visitedSwitchValueChanged(_ sender: UISwitch) {
         self.showAnnotationType["visited"] = sender.isOn
     }
     
-    @IBAction func notvisitedSwitchTapped(_ sender: UISwitch) {
+    @IBAction func notvisitedSwitchValueChanged(_ sender: UISwitch) {
         self.showAnnotationType[""] = sender.isOn
     }
     
     func changeAnnotations() {
         for annotation in mapView.annotations {
-            guard let annotation = annotation as? LighthouseAnnotation else {
-                break
+            if let annotation = annotation as? LighthouseAnnotation {
+                mapView.view(for: annotation)?.isHidden = !showAnnotationType[annotation.type!]!
             }
-            mapView.view(for: annotation)?.isHidden = !showAnnotationType[annotation.type!]!
         }
     }
     
@@ -133,60 +135,33 @@ final class MapViewController: UIViewController {
         }
     }
     
-    func setAnnotationType(annotationView: MKMarkerAnnotationView, type: String){
-        switch type {
-        case "visited":
-            annotationView.markerTintColor = .yellow
-            break
-        case "bucketlist":
-            annotationView.markerTintColor = .green
-            break
-        default:
-            break
-        }
-    }
-    
     @IBAction func locationButtonTapped(_ sender: UIButton) {
         self.centerOnUser()
     }
 }
 
 extension MapViewController: MKMapViewDelegate {
-    func mapView(
-        _ mapView: MKMapView,
-        viewFor annotation: MKAnnotation
-    ) -> MKAnnotationView? {
-        guard let annotation = annotation as? LighthouseAnnotation else {
-            return nil
-        }
-        let identifier = "annotation"
-        var view: MKMarkerAnnotationView
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(
-            withIdentifier: identifier) as? MKMarkerAnnotationView {
-            dequeuedView.annotation = annotation
-            dequeuedView.titleVisibility = .hidden
-            dequeuedView.displayPriority = .required
-            view = dequeuedView
-            view.glyphImage = UIImage(systemName: "lightbulb")
-            setAnnotationType(annotationView: view, type: annotation.type!)
-            view.isHidden = !showAnnotationType[annotation.type!]!
-        } else {
-            view = MKMarkerAnnotationView(
-                annotation: annotation,
-                reuseIdentifier: identifier)
-            view.canShowCallout = true
-            let btn = UIButton(type: .detailDisclosure)
-            btn.setImage(UIImage(systemName: "car.circle"), for: .normal)
-            view.rightCalloutAccessoryView = btn
-            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-            imageView.image = annotation.image
-            view.leftCalloutAccessoryView = imageView
-        }
-        return view
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let annotation = annotation as? LighthouseAnnotation else { return nil }
+        let lighthouseAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "LighthouseAnnotationView") as! LighthouseAnnotationView
+        lighthouseAnnotationView.canShowCallout = true
+        
+        let btn = UIButton(type: .infoLight)
+        btn.setImage(UIImage(systemName: "car.circle"), for: .normal)
+        //btn.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
+        lighthouseAnnotationView.rightCalloutAccessoryView = btn
+        lighthouseAnnotationView.displayPriority = .required
+        lighthouseAnnotationView.isHidden = !showAnnotationType[annotation.type!]!
+        return lighthouseAnnotationView
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        self.mapView.setCenter(view.annotation!.coordinate, animated: true)
+    @objc func buttonTap(){
+        let alert = UIAlertController(title: "Did it work?", message: "No..", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+
+        self.present(alert, animated: true)
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -196,5 +171,9 @@ extension MapViewController: MKMapViewDelegate {
             return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: lighthouse))
         }
         self.show(vc!, sender: self)
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        self.mapView.setCenter(view.annotation!.coordinate, animated: true)
     }
 }

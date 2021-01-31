@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ProfileViewModeling {
+protocol ProfileViewModeling: AnyObject {
     var username: String { get set }
     var profilePicture: UIImage? { get set }
     var viewModelDidChange: (ProfileViewModeling) -> Void { get set }

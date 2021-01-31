@@ -7,10 +7,6 @@
 
 import UIKit
 
-struct LighthouseResponse: Decodable {
-    let lighthouses: [Lighthouse]
-}
-
 struct Lighthouse: Hashable {
     let id: Int
     let name: String

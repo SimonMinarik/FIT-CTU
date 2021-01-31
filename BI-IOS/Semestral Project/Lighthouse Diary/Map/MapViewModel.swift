@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MapViewModeling {
+protocol MapViewModeling: AnyObject {
     var username: String { get }
     var lighthouses: [Lighthouse] { get }
     var preferences: Preferences { get }

@@ -25,7 +25,8 @@ final class DetailViewController: UIViewController {
     @IBOutlet weak var userPhotosStackView: UIStackView!
     @IBOutlet weak var userDescriptionTextView: UITextView!
     
-    private var viewModel: DetailViewModeling
+    private let viewModel: DetailViewModeling
+    
     init?(coder: NSCoder, viewModel: DetailViewModeling) {
         self.viewModel = viewModel
         super.init(coder: coder)
@@ -50,6 +51,8 @@ final class DetailViewController: UIViewController {
             self.userDescriptionTextView.isHidden = true
             self.userPhotosStackView.isHidden = true
         }
+        
+        self.title = viewModel.lighthouse.name
     }
     
     override func viewDidLoad() {
@@ -106,18 +109,18 @@ final class DetailViewController: UIViewController {
     }
     
     func addPhoto(image: UIImage) {
-        viewModel.userData.photos.append(image.toString() ?? "")
-        switch viewModel.userData.photos.count {
+        viewModel.userData.photos?.append(image.toString() ?? "")
+        switch viewModel.userData.photos?.count {
         case 1:
             self.firstUserPhotoView.isHidden = false
-            self.firstUserPhotoImageView.image = viewModel.userData.photos[0].toImage()
+            self.firstUserPhotoImageView.image = viewModel.userData.photos?[0].toImage()
             break
         case 2:
             self.secondUserPhotoView.isHidden = false
-            self.secondUserPhotoImageView.image = viewModel.userData.photos[1].toImage()
+            self.secondUserPhotoImageView.image = viewModel.userData.photos?[1].toImage()
             break
         case 3:
-            self.thirdUserPhotoImageView.image = viewModel.userData.photos[2].toImage()
+            self.thirdUserPhotoImageView.image = viewModel.userData.photos?[2].toImage()
             self.thirdPhotoDeleteButton.isHidden = false
             self.addPhotoButton.isHidden = true
         default:
@@ -126,17 +129,17 @@ final class DetailViewController: UIViewController {
     }
     
     func removePhoto(at: Int) {
-        viewModel.userData.photos.remove(at: at)
-        switch viewModel.userData.photos.count {
+        viewModel.userData.photos?.remove(at: at)
+        switch viewModel.userData.photos?.count {
         case 2:
-            self.firstUserPhotoImageView.image = viewModel.userData.photos[0].toImage()
-            self.secondUserPhotoImageView.image = viewModel.userData.photos[1].toImage()
+            self.firstUserPhotoImageView.image = viewModel.userData.photos?[0].toImage()
+            self.secondUserPhotoImageView.image = viewModel.userData.photos?[1].toImage()
             self.thirdUserPhotoImageView.image = UIImage()
             self.addPhotoButton.isHidden = false
             self.thirdPhotoDeleteButton.isHidden = true
             break
         case 1:
-            self.firstUserPhotoImageView.image = viewModel.userData.photos[0].toImage()
+            self.firstUserPhotoImageView.image = viewModel.userData.photos?[0].toImage()
             self.secondUserPhotoView.isHidden = true
             break
         case 0:

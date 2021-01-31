@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol DiaryViewModeling {
+protocol DiaryViewModeling: AnyObject {
     var username:String { get }
     var visited:[Lighthouse] { get set }
     var visitedDates:[Int: String] { get set }

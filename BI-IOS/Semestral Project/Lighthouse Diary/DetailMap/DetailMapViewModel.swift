@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-protocol DetailMapViewModeling {
+protocol DetailMapViewModeling: AnyObject {
     var coordinate: CLLocationCoordinate2D { get }
     var name: String { get }
 }

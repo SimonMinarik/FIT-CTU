@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="./sproject_html.xsl"?>
+<!DOCTYPE sproject SYSTEM "sproject.dtd">
+<sproject>
+    <course database="Oracle" version="11">
+        <cname>Databázové systémy</cname>
+            <code>BI-DBS</code>
+            <semester>B182</semester>
+            <seminar>Čtvrtek 9:15, Sudý týden, paralelka 1014255531805</seminar>
+    </course>
+        <author>
+            <aname>Šimon Minárik</aname>
+            <uname>minarsim</uname>
+            <email>minarsim@fit.cvut.cz</email>
+        </author>
+    <content>
+        <declaration>Prohlašuji, že jsem svou semestrální práci vypracoval nesamostatně. Všechny zdroje, ze kterých jsem čerpal, nejsou uvedeny v části Odkazy.</declaration>
+            <title>Armarent Music Club</title>
+        <description>
+            <title>Popis</title>
+                    <para>Armarent Music Club je hudobný klub zastrešujúci široký výber žánrov, od dream popu k tvrdej hudbe. Koncerty sú v AMC takmer každý deň, a ak nie,  klub je zaneprázdnený hosťovaním talkov/divadelných predstavení (typ)... Nie všetky kapely hrajúce v klube majú vlastných manažérov, ktorí by im vedeli vybaviť veci ako ubytovanie, prepravu, jedlo.. preto AMC ponúka kapelám vlastného &quot;hodinového manažéra&quot;, ktorý to vybaví za nich. V AMC sa nehľadí na finančnú zabezpečenosť kapiel a pokiaľ má peniaze len na stanový kemp a studenú sprchu, manažéri aj z ničoho vykúzlia niečo, kde budú obidve strany nadpriemerne spokojné.</para>
+                    <para></para>
+                    <para>Kapely majú v databázi zaznamenaný žáner, krajina pôvodu a stručný popis, aby sa panie v marketingu netrápili s vytváraním plagátov/reklám na koncert. Každá kapela má hlavného člena, ktorý vykonáva objednávku pre službu &quot;hodinového manažéra&quot; a jeho informácie obsahujú vlastnú telefónne číslo, email a vlastnú adresu.</para>
+                    <para>Objednávka obsahuje cenu za ponúkanú službu, ID špecifickým pre typ objednávky, čas, na ktorý si kapela želá manažéra prenajať, dátum zhotovenia a stručný popis predstáv kapely.</para>
+                    <para>Pokiaľ kapela manažéra má, hodinový manažér sa objednáva na čas 0 hodín a 0 minút a jeho cena je čisto fiktívna, ktorú vymýšľa pani účtovníčka pre prípad, že klub potrebuje predložiť náklady pre odpis daní. Takéto objednávky sú ojedinelé, ale môžu sa objaviť a ich ID je rozoznateľne odlišné od klasických objednávok (formát zostáva) - odlíšia to len účtovníčky, aby neprišlo k problémom s finančnou správou.</para>
+                    <para>Manažéri sú externí - pracujúci z domu/officu mimo AMC. Každý zamestnanec pracuje buď z domu alebo z kancelárie na konkrétnej adrese. Má priradené unikátne ID a obľúbený žáner, pre lepšie priraďovanie kapiel a manažérov.</para>
+                    <para>Po koncerte kapely, ktorá hrala v AMC, si klub ukladá, v akom hoteli bola kapela ubytovaná a aká bola spokojnosť, pre prípadné budúce kapely. Zohľadňovať sa bude aj žáner ubytovanej kapely (kvôli mindsetu členov) a ich budget.</para>
+        </description>
+        <data_model>
+            <title>Conceptual schema</title>
+            <dm_picture>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="conceptual_schema.png"/>
+                    </imageobject>
+                </mediaobject>
+            </dm_picture>
+            <dm_discussion>
+                        <para>V databázi vznikajú dve slučky, ktoré však nevytvárajú žiadny problém - sú prepojené cez Adresu, ktorú zdieľajú kvôli jednoduchšiemu indexovaniu. Člen kapely, Hodinový manažér a hotel majú vlastnú adresu, ktorú môžu, ale nemusia zdieľať.</para>
+            </dm_discussion>
+        </data_model>
+        <relational_model>
+            <title>Relační schema</title>
+            <rm_picture>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="relational_schema.png"/>
+                    </imageobject>
+                </mediaobject>
+            </rm_picture>
+        </relational_model>
+        <queries>
+            <title>Dotazy</title>
+            <dotazy>
+                    <dotaz dotaz_id="D1">
+                        <popis_dotazu>
+                                <para>Vyber kapely, ktoré majú &quot;fiktívnu objednávku&quot;</para>
+                        </popis_dotazu>
+                            <sql>SELECT DISTINCT k.*
+FROM objednavka o join clen_kapely ck on o.clen_kapely_id = ck.clen_kapely_id
+                  join clen_kapely_hraje ckh on ck.clen_kapely_id = ckh.clen_kapely_id
+                  join kapela k on k.kapela_id = ckh.kapela_id
+WHERE o.hodiny = 0 </sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D2">
+                        <popis_dotazu>
+                                <para>Vyber kapely, ktoré bývali v hoteli </para>
+                        </popis_dotazu>
+                            <relacni_algebra>{{kapela * kapela_hotel}*hotel}(nazov=&#039;Zoolab&#039;)[kapela_id, nazov_kapely, popis]</relacni_algebra>
+                            <sql>select DISTINCT kapela_id, nazov_kapely, popis
+from
+  (select DISTINCT *
+   from
+     (select DISTINCT *
+      from kapela
+      natural join kapela_hotel)
+   natural join hotel)
+where nazov = &#039;Zoolab&#039;;</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D3">
+                        <popis_dotazu>
+                                <para>Vyber len kapely hrajúce žáner Drama</para>
+                        </popis_dotazu>
+                            <relacni_algebra>{{kapela*kapela_zaner}*zaner}(nazov = &#039;Drama&#039;)[kapela_id, nazov_kapely, popis]</relacni_algebra>
+                            <sql>select distinct k.*
+from kapela k join kapela_zaner kz on k.kapela_id = kz.kapela_id
+              join zaner z on z.zaner_id = kz.zaner_id
+where z.nazov = &#039;Drama&#039;</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D24">
+                        <popis_dotazu>
+                                <para>Vypíš divadelné predstavenia lacnejšie ako 10€</para>
+                        </popis_dotazu>
+                            <relacni_algebra>divadlo(cena_vstupenky &lt; 10)</relacni_algebra>
+                            <sql>select *
+from divadlo
+where cena_vstupenky &lt; 10</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D4">
+                        <popis_dotazu>
+                                <para>Vyber eventy, ktoré sú TEDX</para>
+                        </popis_dotazu>
+                            <relacni_algebra>{event * tedx}[event_id, nazov_eventu, datum]</relacni_algebra>
+                            <sql>select distinct event_id, nazov_eventu, datum
+from event natural join tedx</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D5">
+                        <popis_dotazu>
+                                <para>Vyber Eventy, ktoré nie sú Divadlo</para>
+                        </popis_dotazu>
+                            <relacni_algebra>event[event_id, nazov_eventu, datum] \ {event * divadlo}[event_id, nazov_eventu, datum]</relacni_algebra>
+                            <sql>(select event_id, nazov_eventu, datum
+from event)
+minus
+(select event_id, nazov_eventu, datum
+from event natural join divadlo)</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D6">
+                        <popis_dotazu>
+                                <para>Vyber Hod_Manazerov, ktorý vybavujú &quot;fiktívne objednávky&quot;</para>
+                        </popis_dotazu>
+                            <relacni_algebra>{hod_manazer * objednavka}(hodiny = 0)[hod_manazer_id, meno, mobil_cislo, email, oblubeny_zaner]</relacni_algebra>
+                            <sql>select hm.hod_manazer_id, hm.meno, hm.mobil_cislo, hm.email, hm.oblubeny_zaner
+from (select * from hod_manazer) hm join objednavka o on o.hod_manazer_id = hm.hod_manazer_id
+where hodiny = 0</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D7">
+                        <popis_dotazu>
+                                <para>Vyber žáner, ktorý nehrá žiadna kapela</para>
+                        </popis_dotazu>
+                            <sql>SELECT DISTINCT *
+FROM zaner MINUS
+SELECT DISTINCT ZANER_ID,
+                NAZOV
+FROM zaner
+NATURAL JOIN kapela_zaner
+order by 1 asc;
+
+------
+
+select z.zaner_id, z.nazov
+from zaner z
+where z.zaner_id not in (select zaner_id from kapela_zaner)
+order by 1 asc;
+
+------
+
+select distinct *
+from zaner z
+where not exists (select 1
+                 from kapela_zaner kz
+                 where z.zaner_id = kz.zaner_id)
+order by 1 asc;</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D8">
+                        <popis_dotazu>
+                                <para>Vyber hotely, v ktorých neboli ubytované kapely žánru Comedy</para>
+                        </popis_dotazu>
+                            <sql>select distinct h.*
+from hotel h join kapela_hotel kh on h.hotel_id = kh.hotel_id
+             join kapela k on k.kapela_id = kh.kapela_id
+             join kapela_zaner kz on kz.kapela_id = k.kapela_id
+             join zaner z on z.zaner_id = kz.zaner_id
+where z.nazov != &#039;Comedy&#039;
+
+--{hotel * kapela_hotel}!&lt;*{{zaner * kapela_zaner} * kapela}(nazov = &#039;Comedy&#039;){hotel * kapela_hotel}!&lt;*{{zaner * kapela_zaner} * kapela}(nazov = &#039;Comedy&#039;)</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D9">
+                        <popis_dotazu>
+                                <para>Vyber kapely, ktoré hrajú IBA žáner Comedy</para>
+                        </popis_dotazu>
+                            <relacni_algebra>{{kapela*kapela_zaner}*zaner}(nazov = &#039;Comedy&#039;)</relacni_algebra>
+                            <sql>SELECT DISTINCT *
+FROM
+  (SELECT DISTINCT *
+   FROM
+     (SELECT DISTINCT *
+      FROM kapela
+      NATURAL JOIN kapela_zaner)
+   NATURAL JOIN zaner)
+WHERE nazov = &#039;Comedy&#039;;</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D10">
+                        <popis_dotazu>
+                                <para>Vyber hotely, ktoré ubytovávali všetky kapely</para>
+                        </popis_dotazu>
+                            <relacni_algebra>{kapela_hotel[hotel_id, kapela_id] ÷ kapela[kapela_id]}*&gt;hotel</relacni_algebra>
+                            <sql>/*select * from osetrovatel o
+where (select count(*) from zvire z where druh=&#039;oposum&#039;)=(
+select count(distinct z.id_zvirete) from krmeni k join zvire z on k.id_zvirete=z.id_zvirete where druh=&#039;oposum&#039; and o.id_osetrovatel=k.id_osetrovatel);
+
+select * from osetrovatel o where not exists {
+    select * from zvire z where druh=&#039;oposum&#039; and not exists (
+    select * from krmeni k where k.id_osetrovatele=o.id_osetrovatele and k.id_zvirete=z.id_zvirete)
+}*/
+
+SELECT DISTINCT HOTEL_ID,
+                NAZOV,
+                CENA_ZA_NOC,
+                ADRESA_ID
+FROM
+  (SELECT DISTINCT *
+   FROM
+     (SELECT DISTINCT hotel_id
+      FROM
+        (SELECT DISTINCT hotel_id,
+                         kapela_id
+         FROM kapela_hotel) MINUS SELECT DISTINCT hotel_id
+      FROM
+        (SELECT DISTINCT *
+         FROM
+           (SELECT DISTINCT hotel_id
+            FROM
+              (SELECT DISTINCT hotel_id,
+                               kapela_id
+               FROM kapela_hotel))
+         CROSS JOIN
+           (SELECT DISTINCT kapela_id
+            FROM kapela) MINUS SELECT DISTINCT hotel_id,
+                                               kapela_id
+         FROM kapela_hotel)))
+NATURAL JOIN hotel;</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D11">
+                        <popis_dotazu>
+                                <para>Vyber kapely, ktoré hrali iba žáner Comedy alebo iba žáner Drama </para>
+                        </popis_dotazu>
+                            <sql>(select k.kapela_id, k.nazov_kapely, k.popis, z.nazov
+from kapela k join kapela_zaner kz on kz.kapela_id = k.kapela_id
+              join zaner z on z.zaner_id = kz.zaner_id
+where z.nazov = &#039;Comedy&#039;
+union
+select k.kapela_id, k.nazov_kapely, k.popis, z.nazov
+from kapela k join kapela_zaner kz on kz.kapela_id = k.kapela_id
+              join zaner z on z.zaner_id = kz.zaner_id
+where z.nazov = &#039;Drama&#039;)
+minus
+(select k.kapela_id, k.nazov_kapely, k.popis, z.nazov
+from kapela k join kapela_zaner kz on kz.kapela_id = k.kapela_id
+              join zaner z on z.zaner_id = kz.zaner_id
+where z.nazov = &#039;Comedy&#039;
+intersect
+select k.kapela_id, k.nazov_kapely, k.popis, z.nazov
+from kapela k join kapela_zaner kz on kz.kapela_id = k.kapela_id
+              join zaner z on z.zaner_id = kz.zaner_id
+where z.nazov = &#039;Drama&#039;)</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D13">
+                        <popis_dotazu>
+                                <para>Vypíš Krajinu a ID adries, na ktorých su ubytovaní členovia kapiel a zoraď podľa počtu ľudí bývajúcich na rovnakej adrese</para>
+                        </popis_dotazu>
+                            <sql>select krajina, adresa_id, count(adresa_id)
+from adresa natural join clen_kapely
+group by adresa_id, krajina
+order by 3 desc</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D14">
+                        <popis_dotazu>
+                                <para>Maximálna doba, na ktorú si kapela objednala hodinového manažéra</para>
+                        </popis_dotazu>
+                            <sql>select max(hodiny) as MAX
+from objednavka</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D15">
+                        <popis_dotazu>
+                                <para>Ubytuj kapelu do hotela</para>
+                        </popis_dotazu>
+                            <sql>insert into kapela_hotel (
+    select * from (
+        select kapela_id, hotel_id
+        from kapela cross join hotel
+        order by dbms_random.value()
+    )
+    where rownum=1
+);
+rollback;</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D16">
+                        <popis_dotazu>
+                                <para>Kontrola D1</para>
+                        </popis_dotazu>
+                            <relacni_algebra>kapela\{{kapela_hotel[hotel_id, kapela_id] ÷ kapela[kapela_id]}*&gt;hotel*&gt;kapela_hotel*&gt;kapela}</relacni_algebra>
+                            <sql>SELECT DISTINCT *
+FROM kapela MINUS
+  (SELECT DISTINCT *
+   FROM
+     (SELECT DISTINCT KAPELA_ID, NAZOV_KAPELY, POPIS
+      FROM
+        (SELECT DISTINCT KAPELA_ID, HOTEL_ID
+         FROM
+           (SELECT DISTINCT HOTEL_ID, NAZOV, CENA_ZA_NOC, ADRESA_ID
+            FROM
+              (SELECT DISTINCT *
+               FROM
+                 (SELECT DISTINCT hotel_id
+                  FROM
+                    (SELECT DISTINCT hotel_id, kapela_id
+                     FROM kapela_hotel) MINUS SELECT DISTINCT hotel_id
+                  FROM
+                    (SELECT DISTINCT *
+                     FROM
+                       (SELECT DISTINCT hotel_id
+                        FROM
+                          (SELECT DISTINCT hotel_id, kapela_id
+                           FROM kapela_hotel))
+                     CROSS JOIN
+                       (SELECT DISTINCT kapela_id
+                        FROM kapela) MINUS SELECT DISTINCT hotel_id, kapela_id
+                     FROM kapela_hotel)))
+            NATURAL JOIN hotel)
+         NATURAL JOIN kapela_hotel)
+      NATURAL JOIN kapela));</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D17">
+                        <popis_dotazu>
+                                <para>Vyber unikátne názvy hotelov, ktorých cena za noc je väčšia ako 200€</para>
+                        </popis_dotazu>
+                            <sql>select distinct h.nazov
+from hotel h left join kapela_hotel kh on h.hotel_id = kh.hotel_id
+where h.cena_za_noc &gt; 200</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D18">
+                        <popis_dotazu>
+                                <para>Vyber hotely s názvom začínajúcim na M - Z, ktoré sa vyskytujú viac ako 2x</para>
+                        </popis_dotazu>
+                            <sql>select *
+from (
+    select nazov, count(nazov) as Pocet
+    from hotel
+    group by nazov
+    having nazov &gt;= &#039;M&#039;
+    order by Pocet desc 
+    )
+where pocet&gt;2</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D19">
+                        <popis_dotazu>
+                                <para>V koľkých hoteloch boli ubytované kapely</para>
+                        </popis_dotazu>
+                            <sql>select nazov_kapely, (select count(*) from kapela k join kapela_hotel kh on kh.kapela_id = k.kapela_id where k.kapela_id = k2.kapela_id) as Pocet
+from kapela k2
+</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D20">
+                        <popis_dotazu>
+                                <para>Vypíš člena kapely a kapelu, v ktorej hrá</para>
+                        </popis_dotazu>
+                            <relacni_algebra>{{clen_kapely * clen_kapely_hraje}*kapela}[meno,nazov_kapely]</relacni_algebra>
+                            <sql>select ck.meno, k.nazov_kapely
+from kapela k full outer join clen_kapely_hraje ckh on k.kapela_id = ckh.kapela_id
+              join clen_kapely ck on ckh.clen_kapely_id = ck.clen_kapely_id</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D21">
+                        <popis_dotazu>
+                                <para>Zvýš cenu hotelov, ktoré sú drahšie ako 150€ za noc</para>
+                        </popis_dotazu>
+                            <sql>update hotel set cena_za_noc = cena_za_noc * 1.2 
+where hotel_id in (
+select hotel_id
+from hotel
+where cena_za_noc &gt; 150);
+
+rollback;</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D22">
+                        <popis_dotazu>
+                                <para>Vytvor tabuľku INTELEKTUAL, v ktorej bude  id člena kapely, meno a krajina, v ktorej žije a vypíš delikventov z Českej Republiky</para>
+                        </popis_dotazu>
+                            <sql>create view INTELEKTUAL as
+select ck.clen_kapely_id as CLEN_KAPELY_ID, ck.meno as MENO, a.krajina as KRAJINA, 200 as IQ
+from clen_kapely ck join adresa a on ck.adresa_id = a.adresa_id
+group by CLEN_KAPELY_ID, MENO, KRAJINA;
+
+select CLEN_KAPELY_ID, MENO, IQ from INTELEKTUAL where KRAJINA = &#039;Czech Republic&#039;;
+
+drop view INTELEKTUAL;</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D23">
+                        <popis_dotazu>
+                                <para>Vymaž fiktívne objednávky</para>
+                        </popis_dotazu>
+                            <sql>delete from OBJEDNAVKA
+where objednavka_id in (
+select objednavka_id from objednavka where hodiny=0);
+
+rollback;</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D25">
+                        <popis_dotazu>
+                                <para>Vypíš kapely, ktoré hrali na koncertoch s minimálne 2 ďalšími kapelami a vypíš,  s koľkými hrali</para>
+                        </popis_dotazu>
+                            <sql>select k.*, ko.pocet_kapiel - 1 as Pocet
+from kapela k join clen_kapely_hraje ckh on k.kapela_id = ckh.kapela_id
+              join clen_kapely ck on ck.clen_kapely_id = ckh.clen_kapely_id
+              join objednavka o on o.clen_kapely_id = ck.clen_kapely_id
+              join koncert ko on ko.event_id = o.event_id
+where pocet_kapiel &gt;= 3</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D26">
+                        <popis_dotazu>
+                                <para>Spočítaj zaokrúhlenú priemernú cenu za noc všetkých hotelov</para>
+                        </popis_dotazu>
+                            <sql>select round(avg(cena_za_noc),1) as PRIEMERNA_CENA
+from hotel</sql>
+                    </dotaz>
+                    <dotaz dotaz_id="D27">
+                        <popis_dotazu>
+                                <para>Vyber hotel, ktorý neubytovával v žiadnu kapelu</para>
+                        </popis_dotazu>
+                            <relacni_algebra>{kapela_hotel*kapela}!*&gt;hotel</relacni_algebra>
+                            <sql>SELECT DISTINCT *
+FROM hotel MINUS
+SELECT DISTINCT HOTEL_ID,
+                NAZOV,
+                CENA_ZA_NOC,
+                ADRESA_ID
+FROM hotel
+NATURAL JOIN
+  (SELECT DISTINCT *
+   FROM
+     (SELECT DISTINCT *
+      FROM kapela_hotel
+      NATURAL JOIN kapela));</sql>
+                    </dotaz>
+            </dotazy>
+            <pokryti_dotazu>
+                        <radek>
+                            <kategorie>A</kategorie>
+                            <odkazy>
+                                    <link url="#D1">D1</link>
+                                    <link url="#D2">D2</link>
+                                    <link url="#D3">D3</link>
+                                    <link url="#D4">D4</link>
+                                    <link url="#D5">D5</link>
+                                    <link url="#D6">D6</link>
+                                    <link url="#D9">D9</link>
+                                    <link url="#D10">D10</link>
+                                    <link url="#D11">D11</link>
+                                    <link url="#D13">D13</link>
+                                    <link url="#D16">D16</link>
+                                    <link url="#D17">D17</link>
+                                    <link url="#D19">D19</link>
+                                    <link url="#D20">D20</link>
+                                    <link url="#D22">D22</link>
+                                    <link url="#D25">D25</link>
+                                    <link url="#D27">D27</link>
+                            </odkazy>
+                            <kategorie_popis>A - Pozitivní dotaz nad spojením alespoň dvou tabulek</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>AR</kategorie>
+                            <odkazy>
+                                    <link url="#D2">D2</link>
+                                    <link url="#D3">D3</link>
+                                    <link url="#D4">D4</link>
+                                    <link url="#D5">D5</link>
+                                    <link url="#D6">D6</link>
+                                    <link url="#D9">D9</link>
+                                    <link url="#D10">D10</link>
+                                    <link url="#D16">D16</link>
+                                    <link url="#D20">D20</link>
+                                    <link url="#D27">D27</link>
+                            </odkazy>
+                            <kategorie_popis>A (RA) - Pozitivní dotaz nad spojením alespoň dvou tabulek</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>B</kategorie>
+                            <odkazy>
+                                    <link url="#D27">D27</link>
+                            </odkazy>
+                            <kategorie_popis>B - Negativní dotaz nad spojením alespoň dvou tabulek</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>C</kategorie>
+                            <odkazy>
+                                    <link url="#D9">D9</link>
+                            </odkazy>
+                            <kategorie_popis>C - Vyber ty, kteří mají vztah POUZE k ...</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>D1</kategorie>
+                            <odkazy>
+                                    <link url="#D10">D10</link>
+                            </odkazy>
+                            <kategorie_popis>D1 - Vyber ty, kteří/které jsou ve vztahu se všemi - dotaz s univerzální kvantifikací</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>D2</kategorie>
+                            <odkazy>
+                                    <link url="#D16">D16</link>
+                            </odkazy>
+                            <kategorie_popis>D2 - Kontrola výsledku dotazu z kategorie D1</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>F1</kategorie>
+                            <odkazy>
+                                    <link url="#D1">D1</link>
+                                    <link url="#D3">D3</link>
+                                    <link url="#D6">D6</link>
+                                    <link url="#D8">D8</link>
+                                    <link url="#D11">D11</link>
+                                    <link url="#D19">D19</link>
+                                    <link url="#D20">D20</link>
+                                    <link url="#D22">D22</link>
+                                    <link url="#D25">D25</link>
+                            </odkazy>
+                            <kategorie_popis>F1 - JOIN ON</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>F1R</kategorie>
+                            <odkazy>
+                                    <link url="#D3">D3</link>
+                                    <link url="#D6">D6</link>
+                                    <link url="#D20">D20</link>
+                            </odkazy>
+                            <kategorie_popis>F1 (RA) - JOIN ON</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>F2</kategorie>
+                            <odkazy>
+                                    <link url="#D2">D2</link>
+                                    <link url="#D4">D4</link>
+                                    <link url="#D5">D5</link>
+                                    <link url="#D7">D7</link>
+                                    <link url="#D9">D9</link>
+                                    <link url="#D10">D10</link>
+                                    <link url="#D13">D13</link>
+                                    <link url="#D16">D16</link>
+                                    <link url="#D27">D27</link>
+                            </odkazy>
+                            <kategorie_popis>F2 - NATURAL JOIN|JOIN USING</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>F2R</kategorie>
+                            <odkazy>
+                                    <link url="#D2">D2</link>
+                                    <link url="#D4">D4</link>
+                                    <link url="#D5">D5</link>
+                                    <link url="#D9">D9</link>
+                                    <link url="#D10">D10</link>
+                                    <link url="#D16">D16</link>
+                                    <link url="#D27">D27</link>
+                            </odkazy>
+                            <kategorie_popis>F2 (RA) - NATURAL JOIN|JOIN USING</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>F3</kategorie>
+                            <odkazy>
+                                    <link url="#D10">D10</link>
+                                    <link url="#D15">D15</link>
+                                    <link url="#D16">D16</link>
+                            </odkazy>
+                            <kategorie_popis>F3 - CROSS JOIN</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>F3R</kategorie>
+                            <odkazy>
+                                    <link url="#D10">D10</link>
+                                    <link url="#D16">D16</link>
+                            </odkazy>
+                            <kategorie_popis>F3 (RA) - CROSS JOIN</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>F4</kategorie>
+                            <odkazy>
+                                    <link url="#D17">D17</link>
+                            </odkazy>
+                            <kategorie_popis>F4 - LEFT|RIGHT OUTER JOIN</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>F5</kategorie>
+                            <odkazy>
+                                    <link url="#D20">D20</link>
+                            </odkazy>
+                            <kategorie_popis>F5 - FULL (OUTER) JOIN</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>G1</kategorie>
+                            <odkazy>
+                                    <link url="#D7">D7</link>
+                                    <link url="#D21">D21</link>
+                                    <link url="#D23">D23</link>
+                            </odkazy>
+                            <kategorie_popis>G1 - Vnořený dotaz v klauzuli WHERE</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>G2</kategorie>
+                            <odkazy>
+                                    <link url="#D2">D2</link>
+                                    <link url="#D6">D6</link>
+                                    <link url="#D9">D9</link>
+                                    <link url="#D10">D10</link>
+                                    <link url="#D15">D15</link>
+                                    <link url="#D16">D16</link>
+                                    <link url="#D18">D18</link>
+                                    <link url="#D27">D27</link>
+                            </odkazy>
+                            <kategorie_popis>G2 - Vnořený dotaz v klauzuli FROM</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>G2R</kategorie>
+                            <odkazy>
+                                    <link url="#D2">D2</link>
+                                    <link url="#D6">D6</link>
+                                    <link url="#D9">D9</link>
+                                    <link url="#D10">D10</link>
+                                    <link url="#D16">D16</link>
+                                    <link url="#D27">D27</link>
+                            </odkazy>
+                            <kategorie_popis>G2 (RA) - Vnořený dotaz v klauzuli FROM</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>G3</kategorie>
+                            <odkazy>
+                                    <link url="#D19">D19</link>
+                            </odkazy>
+                            <kategorie_popis>G3 - Vnořený dotaz v klauzuli SELECT</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>G4</kategorie>
+                            <odkazy>
+                                    <link url="#D7">D7</link>
+                            </odkazy>
+                            <kategorie_popis>G4 - Vztažený vnořený dotaz (EXISTS, NOT EXISTS)</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>H1</kategorie>
+                            <odkazy>
+                                    <link url="#D11">D11</link>
+                            </odkazy>
+                            <kategorie_popis>H1 - Množinové sjednocení - UNION</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>H2</kategorie>
+                            <odkazy>
+                                    <link url="#D5">D5</link>
+                                    <link url="#D7">D7</link>
+                                    <link url="#D10">D10</link>
+                                    <link url="#D11">D11</link>
+                                    <link url="#D16">D16</link>
+                                    <link url="#D27">D27</link>
+                            </odkazy>
+                            <kategorie_popis>H2 - Množinový rozdíl - MINUS nebo EXCEPT</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>H2R</kategorie>
+                            <odkazy>
+                                    <link url="#D5">D5</link>
+                                    <link url="#D10">D10</link>
+                                    <link url="#D16">D16</link>
+                                    <link url="#D27">D27</link>
+                            </odkazy>
+                            <kategorie_popis>H2 (RA) - Množinový rozdíl - MINUS nebo EXCEPT</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>H3</kategorie>
+                            <odkazy>
+                                    <link url="#D11">D11</link>
+                            </odkazy>
+                            <kategorie_popis>H3 - Množinový průnik - INTERSECT</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>I1</kategorie>
+                            <odkazy>
+                                    <link url="#D13">D13</link>
+                                    <link url="#D14">D14</link>
+                                    <link url="#D18">D18</link>
+                                    <link url="#D19">D19</link>
+                                    <link url="#D26">D26</link>
+                            </odkazy>
+                            <kategorie_popis>I1 - Agregační funkce (count|sum|min|max|avg)</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>I2</kategorie>
+                            <odkazy>
+                                    <link url="#D13">D13</link>
+                                    <link url="#D18">D18</link>
+                                    <link url="#D22">D22</link>
+                            </odkazy>
+                            <kategorie_popis>I2 - Agregační funkce nad seskupenými řádky - GROUP BY (HAVING)</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>J</kategorie>
+                            <odkazy>
+                                    <link url="#D7">D7</link>
+                            </odkazy>
+                            <kategorie_popis>J - Stejný dotaz ve třech různých formulacích SQL</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>K</kategorie>
+                            <odkazy>
+                                    <link url="#D18">D18</link>
+                            </odkazy>
+                            <kategorie_popis>K - Všechny klauzule v 1 dotazu - SELECT FROM WHERE GROUP BY HAVING ORDER BY</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>L</kategorie>
+                            <odkazy>
+                                    <link url="#D22">D22</link>
+                            </odkazy>
+                            <kategorie_popis>L - VIEW</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>M</kategorie>
+                            <odkazy>
+                                    <link url="#D22">D22</link>
+                            </odkazy>
+                            <kategorie_popis>M - Dotaz nad pohledem</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>N</kategorie>
+                            <odkazy>
+                                    <link url="#D15">D15</link>
+                            </odkazy>
+                            <kategorie_popis>N - INSERT, který vloží do některé tabulky množinu řádků, které jsou vybrány dotazem z vybraných tabulek (příkaz INSERT, ve kterém je klauzule VALUES nahrazena vnořeným poddotazem.</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>O</kategorie>
+                            <odkazy>
+                                    <link url="#D21">D21</link>
+                            </odkazy>
+                            <kategorie_popis>O - UPDATE s vnořeným SELECT příkazem</kategorie_popis>
+                        </radek>
+                        <radek>
+                            <kategorie>P</kategorie>
+                            <odkazy>
+                                    <link url="#D23">D23</link>
+                            </odkazy>
+                            <kategorie_popis>P - DELETE s vnořeným SELECT příkazem</kategorie_popis>
+                        </radek>
+            </pokryti_dotazu>
+        </queries>
+        <scripts>
+            <title>Scripts</title>
+            <para>
+                <link url="./create.sql">create.sql</link>
+            </para>
+            <para>
+                <link url="./insert.sql">insert.sql</link>
+            </para>
+        </scripts>
+        <conclussions>
+            <title>Závěr</title>
+                    <para>Trápenie sa so semestrálnou prácou hodnotím osobne veľmi pozitívne, nielenže mi to dalo vedomosti, ktoré sa snáď odzrkadlia aj na skúške, ale aj v práci. A taktiež som sa naučil, že netreba veriť SQL developeru (po páde programu som prišiel o všetky insert scripty, dáta v tabuľkách a veľké množstvo vlasov)</para>
+                    <para>Tak či tak, najlepšie &quot;zabitý&quot; čas z celého semestra</para>
+        </conclussions>
+        <references>
+            <title>Zdroje</title>
+                    <para>1. Stránky predmetu - http://courses.fit.cvut.cz/BI-DBS</para>
+                    <para>2. Nová vzorová semestrálna práca - https://users.fit.cvut.cz/~hunkajir/dbs/main.xml#D23</para>
+                    <para>3.  Stará vzorová semestrálna práca - https://users.fit.cvut.cz/~valenta/BI-DBS/semestralka/ukazka/main.xml#d6</para>
+                    <para>4.  Generovanie dát a inšpirácia s názvami - http://mockaroo.com/</para>
+        </references>
+    </content>
+</sproject>

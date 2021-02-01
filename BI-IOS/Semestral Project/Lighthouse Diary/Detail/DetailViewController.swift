@@ -13,6 +13,7 @@ final class DetailViewController: UIViewController {
     @IBOutlet weak var lighthouseNameLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var typeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var firstUserPhotoImageView: UIImageView!
     @IBOutlet weak var secondUserPhotoImageView: UIImageView!
@@ -53,6 +54,20 @@ final class DetailViewController: UIViewController {
         }
         
         self.title = viewModel.lighthouse.name
+        switch viewModel.userData.type {
+        case "visited":
+            typeSegmentedControl.selectedSegmentIndex = 0
+            break
+        case "bucketlist":
+            typeSegmentedControl.selectedSegmentIndex = 1
+        default:
+            typeSegmentedControl.selectedSegmentIndex = -1
+            break
+        }
+        setSegmentControl(at: typeSegmentedControl.selectedSegmentIndex)
+        
+        let segmentedTapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapGestureSegment(_:)))
+        typeSegmentedControl.addGestureRecognizer(segmentedTapGesture)
     }
     
     override func viewDidLoad() {
@@ -81,6 +96,16 @@ final class DetailViewController: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         self.hideKeyboardWhenTappedAround()
+    }
+    
+    func setSegmentControl(at: Int) {
+        typeSegmentedControl.setImage(UIImage(systemName: "eye"), forSegmentAt: 0)
+        typeSegmentedControl.setImage(UIImage(systemName: "heart"), forSegmentAt: 1)
+        if at == 0 {
+            typeSegmentedControl.setImage(UIImage(systemName: "eye.fill"), forSegmentAt: 0)
+        } else if at == 1 {
+            typeSegmentedControl.setImage(UIImage(systemName: "heart.fill"), forSegmentAt: 1)
+        }
     }
     
     @objc func adjustForKeyboard(notification: Notification) {
@@ -170,6 +195,36 @@ final class DetailViewController: UIViewController {
                     name: self.viewModel.lighthouse.name))
         }
         self.present(vc!, animated: true)
+    }
+    
+    @IBAction func typeSegmentControlValueChanged(_ sender: UISegmentedControl) {
+        setSegmentControl(at: sender.selectedSegmentIndex)
+    }
+    
+    @objc func onTapGestureSegment(_ tapGesture: UITapGestureRecognizer) {
+        print("hm")
+        let point = tapGesture.location(in: typeSegmentedControl)
+        let segmentSize = typeSegmentedControl.bounds.size.width / CGFloat(typeSegmentedControl.numberOfSegments)
+        let touchedSegment = Int(point.x / segmentSize)
+
+        if typeSegmentedControl.selectedSegmentIndex != touchedSegment {
+            typeSegmentedControl.selectedSegmentIndex = touchedSegment
+            typeSegmentControlValueChanged(self.typeSegmentedControl)
+        } else {
+            confirmAlert(change: false, type: touchedSegment)
+        }
+    }
+    
+    func confirmAlert(change: Bool, type: Int) {
+        let alert = UIAlertController(title: "Are you sure you want to change it?", message: "All previous data will be lost.", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            self.typeSegmentedControl.selectedSegmentIndex = -1
+            self.typeSegmentControlValueChanged(self.typeSegmentedControl)
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+
+        self.present(alert, animated: true)
     }
 }
 

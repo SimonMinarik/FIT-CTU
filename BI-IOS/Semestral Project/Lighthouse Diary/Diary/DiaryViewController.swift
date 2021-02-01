@@ -60,9 +60,9 @@ final class DiaryViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = self.storyboard?.instantiateViewController(identifier: "detailVC") {
             if self.segmentedControl.selectedSegmentIndex == 0 {
-                return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: self.viewModel.visited[indexPath.row]))
+                return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: self.viewModel.visited[indexPath.row], userData: UserData(type: "visited")))
             } else {
-                return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: self.viewModel.bucketlist[indexPath.row]))
+                return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: self.viewModel.bucketlist[indexPath.row], userData: UserData(type: "bucketlist")))
             }
         }
         self.show(vc!, sender: self)

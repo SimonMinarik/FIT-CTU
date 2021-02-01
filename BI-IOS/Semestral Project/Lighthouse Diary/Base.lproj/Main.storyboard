@@ -213,13 +213,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="bucketlistSwitch" destination="gep-A3-ptO" id="oeI-Ji-0Le"/>
                         <outlet property="layersButton" destination="tPD-sv-zC7" id="I6b-88-oYT"/>
                         <outlet property="layersStackView" destination="FA8-ug-5K2" id="xSN-HS-dVh"/>
                         <outlet property="mapView" destination="2fE-eZ-L2a" id="Ft8-VS-yWa"/>
-                        <outlet property="notvisitedSwitch" destination="ngz-T1-9Ts" id="ltO-N0-1ZQ"/>
                         <outlet property="searchButton" destination="Rj0-b1-4Cx" id="SBc-Rx-DSB"/>
-                        <outlet property="visitedSwitch" destination="gn3-fT-8MT" id="Hmr-nE-D1A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4BI-Cs-ent" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -338,7 +335,7 @@
                                 <action selector="segmentedControlChanged:" destination="go7-FO-sGp" eventType="valueChanged" id="2RW-RI-O5O"/>
                             </connections>
                         </segmentedControl>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="dTQ-r2-Sdf">
+                        <barButtonItem key="rightBarButtonItem" id="dTQ-r2-Sdf">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Lgx-Sa-zpn">
                                 <rect key="frame" x="373" y="4.6666666666666679" width="35" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -528,12 +525,18 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5t5-v9-0zg">
-                                                <rect key="frame" x="275" y="127" width="149" height="32"/>
+                                                <rect key="frame" x="271" y="127" width="153" height="32"/>
                                                 <segments>
-                                                    <segment title="" image="eye" catalog="system"/>
-                                                    <segment title=""/>
-                                                    <segment title="" image="heart" catalog="system"/>
+                                                    <segment title="">
+                                                        <imageReference key="image" image="eye" catalog="system" symbolScale="large"/>
+                                                    </segment>
+                                                    <segment title="">
+                                                        <imageReference key="image" image="heart" catalog="system" symbolScale="large"/>
+                                                    </segment>
                                                 </segments>
+                                                <connections>
+                                                    <action selector="typeSegmentControlValueChanged:" destination="EPP-ay-Sau" eventType="valueChanged" id="rD8-07-Rds"/>
+                                                </connections>
                                             </segmentedControl>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visited: 23.8.2019" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bze-v7-L4N">
                                                 <rect key="frame" x="8" y="290.33333333333331" width="136.66666666666666" height="20.333333333333314"/>
@@ -543,6 +546,7 @@
                                             </label>
                                         </subviews>
                                         <viewLayoutGuide key="safeArea" id="y8z-U9-hyc"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="gWa-Ml-exh" firstAttribute="top" secondItem="y8z-U9-hyc" secondAttribute="top" constant="8" id="0eL-XC-Bim"/>
                                             <constraint firstItem="I6h-7e-fIO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gWa-Ml-exh" secondAttribute="trailing" constant="8" id="1lp-Qf-Nyu"/>
@@ -560,13 +564,13 @@
                                             <constraint firstItem="5t0-18-ES1" firstAttribute="top" secondItem="I6h-7e-fIO" secondAttribute="bottom" constant="8" symbolic="YES" id="bXI-7m-Jfn"/>
                                             <constraint firstItem="5t0-18-ES1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gWa-Ml-exh" secondAttribute="trailing" constant="8" id="beH-IP-wBB"/>
                                             <constraint firstItem="y8z-U9-hyc" firstAttribute="trailing" secondItem="5t0-18-ES1" secondAttribute="trailing" constant="8" id="elh-o7-Xzh"/>
+                                            <constraint firstItem="5t5-v9-0zg" firstAttribute="leading" secondItem="gWa-Ml-exh" secondAttribute="trailing" constant="113" id="fEI-kO-bqC"/>
                                             <constraint firstItem="bze-v7-L4N" firstAttribute="top" secondItem="s2r-ET-hlh" secondAttribute="bottom" constant="16" id="ge7-0G-dwE"/>
                                             <constraint firstItem="y8z-U9-hyc" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bze-v7-L4N" secondAttribute="trailing" symbolic="YES" id="h6T-Rx-7Bn"/>
                                             <constraint firstItem="rIF-Va-4hG" firstAttribute="top" secondItem="bze-v7-L4N" secondAttribute="bottom" constant="8" id="jPz-00-JXT"/>
                                             <constraint firstAttribute="trailing" secondItem="rNk-wv-hgX" secondAttribute="trailing" constant="8" id="lrl-PA-afG"/>
                                             <constraint firstItem="y8z-U9-hyc" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rIF-Va-4hG" secondAttribute="trailing" constant="8" id="o7q-3g-wU8"/>
                                             <constraint firstItem="5t5-v9-0zg" firstAttribute="bottom" secondItem="gWa-Ml-exh" secondAttribute="bottom" id="ojK-eN-cC3"/>
-                                            <constraint firstItem="5t5-v9-0zg" firstAttribute="leading" secondItem="gWa-Ml-exh" secondAttribute="trailing" constant="117" id="oqC-en-8Is"/>
                                             <constraint firstAttribute="trailing" secondItem="I6h-7e-fIO" secondAttribute="trailing" constant="8" id="qRB-VR-lSB"/>
                                         </constraints>
                                     </view>
@@ -607,6 +611,7 @@
                         <outlet property="thirdPhotoDeleteButton" destination="1Fe-Le-jFm" id="TEB-Ya-SZw"/>
                         <outlet property="thirdUserPhotoImageView" destination="fQr-mb-WFn" id="XaW-SZ-ZKx"/>
                         <outlet property="thirdUserPhotoView" destination="NZg-tl-gAS" id="Z41-re-R3U"/>
+                        <outlet property="typeSegmentedControl" destination="5t5-v9-0zg" id="XB0-dj-sXx"/>
                         <outlet property="userDescriptionTextView" destination="rNk-wv-hgX" id="fho-Yb-rXx"/>
                         <outlet property="userPhotosStackView" destination="rIF-Va-4hG" id="VHB-eN-zQ4"/>
                     </connections>

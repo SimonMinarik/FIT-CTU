@@ -78,22 +78,25 @@ final class MapViewController: UIViewController {
         
         mapView.delegate = self
         
-        for lighthouse in viewModel.lighthouses {
-            var type = ""
-            if viewModel.preferences.visited.contains(lighthouse.id) {
-                type = "visited"
-            } else if viewModel.preferences.bucketlist.contains(lighthouse.id) {
-                type = "bucketlist"
+        viewModel.viewModelDidChange = { [weak self] viewModel in
+            for lighthouse in viewModel.lighthouses {
+                var type = ""
+                if viewModel.preferences.visited.contains(lighthouse.id) {
+                    type = "visited"
+                } else if viewModel.preferences.bucketlist.contains(lighthouse.id) {
+                    type = "bucketlist"
+                }
+                let annotation = LighthouseAnnotation(
+                        name: lighthouse.name,
+                        location: lighthouse.location,
+                        coordinate: CLLocationCoordinate2D(latitude: lighthouse.lat, longitude: lighthouse.lon),
+                        image: lighthouse.image,
+                        id: lighthouse.id,
+                        type: type
+                )
+                print("added annotation")
+                self?.mapView.addAnnotation(annotation)
             }
-            let annotation = LighthouseAnnotation(
-                    name: lighthouse.name,
-                    location: lighthouse.location,
-                    coordinate: CLLocationCoordinate2D(latitude: lighthouse.lat, longitude: lighthouse.lon),
-                    image: lighthouse.image,
-                    id: lighthouse.id,
-                    type: type
-            )
-            self.mapView.addAnnotation(annotation)
         }
         mapView.register(LighthouseAnnotationView.self, forAnnotationViewWithReuseIdentifier: "LighthouseAnnotationView")
         

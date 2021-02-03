@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import CoreLocation
+import Firebase
 
 struct Lighthouse: Hashable {
     let id: Int
@@ -33,8 +35,7 @@ extension Lighthouse: Decodable {
         id = try container.decode(Int.self, forKey: .id)
         
         let imageString = try container.decode(String.self, forKey: .image)
-        let imageData = Data(base64Encoded: imageString) ?? Data()
-        image = UIImage(data: imageData)
+        image = imageString.toImage()
         
         name = try container.decode(String.self, forKey: .name)
         location = try container.decodeIfPresent(String.self, forKey: .location)

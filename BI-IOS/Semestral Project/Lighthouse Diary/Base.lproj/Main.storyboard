@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_6567.PNG" translatesAutoresizingMaskIntoConstraints="NO" id="rYC-cr-T8h">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blank-profile-picture-973460_640.png" translatesAutoresizingMaskIntoConstraints="NO" id="rYC-cr-T8h">
                                 <rect key="frame" x="114" y="44" width="200" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="Uzb-A0-2jT"/>
@@ -43,20 +43,41 @@
                                     <action selector="changeUsernameButtonTapped:" destination="dT6-Gm-Q0E" eventType="touchUpInside" id="NkI-4n-4Al"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nas-X4-kc2">
+                                <rect key="frame" x="274" y="204" width="40" height="40"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="6fr-u3-4ga"/>
+                                    <constraint firstAttribute="width" constant="40" id="E7o-ii-14y"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="camera" catalog="system" symbolScale="large"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="20"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="changeProfilePictureButtonTapped:" destination="dT6-Gm-Q0E" eventType="touchUpInside" id="UWe-4q-eKW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zhE-Kh-joE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="nas-X4-kc2" firstAttribute="bottom" secondItem="rYC-cr-T8h" secondAttribute="bottom" id="4vW-M9-BW2"/>
                             <constraint firstItem="nJK-5d-RfO" firstAttribute="top" secondItem="rYC-cr-T8h" secondAttribute="bottom" constant="8" symbolic="YES" id="RNf-ul-kNX"/>
                             <constraint firstItem="rYC-cr-T8h" firstAttribute="centerX" secondItem="zhE-Kh-joE" secondAttribute="centerX" id="fzm-9g-GUk"/>
                             <constraint firstItem="WIX-B6-hnE" firstAttribute="centerY" secondItem="nJK-5d-RfO" secondAttribute="centerY" id="mkI-l1-sJb"/>
                             <constraint firstItem="WIX-B6-hnE" firstAttribute="leading" secondItem="nJK-5d-RfO" secondAttribute="trailing" constant="8" id="tUu-p3-jpP"/>
                             <constraint firstItem="nJK-5d-RfO" firstAttribute="centerX" secondItem="rYC-cr-T8h" secondAttribute="centerX" id="x7P-8a-KER"/>
                             <constraint firstItem="rYC-cr-T8h" firstAttribute="top" secondItem="zhE-Kh-joE" secondAttribute="top" id="xLG-4D-pjn"/>
+                            <constraint firstItem="nas-X4-kc2" firstAttribute="trailing" secondItem="rYC-cr-T8h" secondAttribute="trailing" id="yW3-Q2-zk5"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="person" catalog="system" id="05r-FW-bPm"/>
                     <connections>
+                        <outlet property="profilePictureImageView" destination="rYC-cr-T8h" id="CSr-r3-Ppr"/>
                         <outlet property="usernameLabel" destination="nJK-5d-RfO" id="a4g-4j-lap"/>
                     </connections>
                 </viewController>
@@ -257,7 +278,7 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DiaryCell" id="7Q9-6o-Fzp" customClass="DiaryCell" customModule="Lighthouse_Diary" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="428" height="132.33332824707031"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7Q9-6o-Fzp" id="I8T-PW-bun">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7Q9-6o-Fzp" id="I8T-PW-bun">
                                             <rect key="frame" x="0.0" y="0.0" width="428" height="132.33332824707031"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -513,7 +534,7 @@
                                                     </view>
                                                 </subviews>
                                             </stackView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rNk-wv-hgX">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rNk-wv-hgX">
                                                 <rect key="frame" x="8" y="464" width="412" height="200"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
@@ -528,15 +549,12 @@
                                                 <rect key="frame" x="271" y="127" width="153" height="32"/>
                                                 <segments>
                                                     <segment title="">
-                                                        <imageReference key="image" image="eye" catalog="system" symbolScale="large"/>
+                                                        <imageReference key="image" image="eye" catalog="system" symbolScale="medium"/>
                                                     </segment>
                                                     <segment title="">
-                                                        <imageReference key="image" image="heart" catalog="system" symbolScale="large"/>
+                                                        <imageReference key="image" image="heart" catalog="system" symbolScale="medium"/>
                                                     </segment>
                                                 </segments>
-                                                <connections>
-                                                    <action selector="typeSegmentControlValueChanged:" destination="EPP-ay-Sau" eventType="valueChanged" id="rD8-07-Rds"/>
-                                                </connections>
                                             </segmentedControl>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visited: 23.8.2019" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bze-v7-L4N">
                                                 <rect key="frame" x="8" y="290.33333333333331" width="136.66666666666666" height="20.333333333333314"/>
@@ -614,6 +632,7 @@
                         <outlet property="typeSegmentedControl" destination="5t5-v9-0zg" id="XB0-dj-sXx"/>
                         <outlet property="userDescriptionTextView" destination="rNk-wv-hgX" id="fho-Yb-rXx"/>
                         <outlet property="userPhotosStackView" destination="rIF-Va-4hG" id="VHB-eN-zQ4"/>
+                        <outlet property="visitedLabel" destination="bze-v7-L4N" id="Z7S-fE-7z7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xRL-Ei-xO9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -684,8 +703,9 @@
     </scenes>
     <resources>
         <image name="612664395a40232133447d33247d38313233393434333331.jpeg" width="640" height="560"/>
-        <image name="IMG_6567.PNG" width="1125" height="2436"/>
+        <image name="blank-profile-picture-973460_640.png" width="640" height="640"/>
         <image name="book" catalog="system" width="128" height="102"/>
+        <image name="camera" catalog="system" width="128" height="94"/>
         <image name="eye" catalog="system" width="128" height="81"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="leuchtturm-busum.jpg" width="960" height="1280"/>

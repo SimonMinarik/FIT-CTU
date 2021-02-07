@@ -43,7 +43,6 @@ final class MapViewController: UIViewController {
     ] {
         didSet {
             changeAnnotations()
-            print("didSet")
         }
     }
     
@@ -69,8 +68,11 @@ final class MapViewController: UIViewController {
         locationManager.startUpdatingLocation()
         mapView.showsUserLocation = true
         
-        viewModel.loadPreferences()
         viewModel.loadLighthouses()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.loadPreferences()
     }
     
     override func viewDidLoad() {
@@ -79,25 +81,13 @@ final class MapViewController: UIViewController {
         mapView.delegate = self
         
         viewModel.viewModelDidChange = { [weak self] viewModel in
-            for lighthouse in viewModel.lighthouses {
-                var type = ""
-                if viewModel.preferences.visited.contains(lighthouse.id) {
-                    type = "visited"
-                } else if viewModel.preferences.bucketlist.contains(lighthouse.id) {
-                    type = "bucketlist"
-                }
-                let annotation = LighthouseAnnotation(
-                        name: lighthouse.name,
-                        location: lighthouse.location,
-                        coordinate: CLLocationCoordinate2D(latitude: lighthouse.lat, longitude: lighthouse.lon),
-                        image: lighthouse.image,
-                        id: lighthouse.id,
-                        type: type
-                )
-                print("added annotation")
-                self?.mapView.addAnnotation(annotation)
-            }
+            guard let self = self else { return }
+            let annotations = self.mapView.annotations.filter({ !($0 is MKUserLocation) })
+            self.mapView.removeAnnotations(annotations)
+            self.addAnnotations()
+            print("viewmodelchange")
         }
+        
         mapView.register(LighthouseAnnotationView.self, forAnnotationViewWithReuseIdentifier: "LighthouseAnnotationView")
         
         self.mapView.showAnnotations(self.mapView.annotations, animated: true)
@@ -126,6 +116,20 @@ final class MapViewController: UIViewController {
         self.showAnnotationType[""] = sender.isOn
     }
     
+    func addAnnotations() {
+        for lighthouse in viewModel.lighthouses {
+            let annotation = LighthouseAnnotation(
+                name: lighthouse.name,
+                location: lighthouse.location,
+                coordinate: CLLocationCoordinate2D(latitude: lighthouse.lat, longitude: lighthouse.lon),
+                image: lighthouse.image,
+                id: lighthouse.id,
+                type: self.checkType(for: lighthouse.id)
+            )
+            self.mapView.addAnnotation(annotation)
+        }
+    }
+    
     func changeAnnotations() {
         for annotation in mapView.annotations {
             if let annotation = annotation as? LighthouseAnnotation {
@@ -144,11 +148,22 @@ final class MapViewController: UIViewController {
     @IBAction func locationButtonTapped(_ sender: UIButton) {
         self.centerOnUser()
     }
+    
+    func checkType(for id: Int) -> String {
+        if viewModel.preferences.bucketlist.contains(id) {
+            return "bucketlist"
+        } else if viewModel.preferences.visited.contains(id) {
+            return "visited"
+        } else {
+            return ""
+        }
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? LighthouseAnnotation else { return nil }
+        annotation.type = checkType(for: annotation.id!)
         let lighthouseAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "LighthouseAnnotationView") as! LighthouseAnnotationView
         lighthouseAnnotationView.canShowCallout = true
         
@@ -156,6 +171,7 @@ extension MapViewController: MKMapViewDelegate {
         btn.setImage(UIImage(systemName: "car.circle"), for: .normal)
         lighthouseAnnotationView.rightCalloutAccessoryView = btn
         lighthouseAnnotationView.displayPriority = .required
+        
         lighthouseAnnotationView.isHidden = !showAnnotationType[annotation.type!]!
         return lighthouseAnnotationView
     }
@@ -178,7 +194,7 @@ extension MapViewController: MKMapViewDelegate {
         guard let annotation = (sender.view as? MKAnnotationView)?.annotation as? LighthouseAnnotation else { return }
         guard let lighthouse = viewModel.lighthouses.first(where: { $0.id == annotation.id }) else { return }
         let vc = self.storyboard?.instantiateViewController(identifier: "detailVC") {
-            return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: lighthouse, userData: UserData(type: annotation.type!)))
+            return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: lighthouse, userPreferences: self.viewModel.preferences, userLighthouseData: UserLighthouseData(type: annotation.type!)))
         }
         self.show(vc!, sender: self)
     }

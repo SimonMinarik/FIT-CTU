@@ -6,14 +6,19 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 protocol DetailViewModeling: AnyObject {
-    var username:String { get }
-    var lighthouse:Lighthouse { get set }
-    var userData:UserData { get set }
+    var username: String { get }
+    var lighthouse: Lighthouse { get set }
+    var userLighthouseData: UserLighthouseData { get set }
+    var userPreferences: Preferences { get set }
     var viewModelDidChange: (DetailViewModeling) -> Void { get set }
     
     func loadUserData()
+    func saveUserLighthouseData()
+    func saveUserPreferences()
+    func changeUserPreference(from: Int, to: Int)
 }
 
 final class DetailViewModel: DetailViewModeling {
@@ -21,21 +26,106 @@ final class DetailViewModel: DetailViewModeling {
         get { UserDefaults.standard.string(forKey: "username") ?? "username" }
     }
     var lighthouse: Lighthouse
-    var userData: UserData
+    var userLighthouseData: UserLighthouseData {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                print("userlighthouseData didSet")
+                self.viewModelDidChange(self)
+            }
+        }
+    }
+    
+    var userPreferences: Preferences
+        
     var viewModelDidChange: (DetailViewModeling) -> Void = { _ in }
     
-    private let networkService: NetworkServicing
-    
-    init(networkService: NetworkServicing = NetworkService(), lighthouse: Lighthouse, userData: UserData) {
-        self.networkService = networkService
+    private let db = Firestore.firestore()
+        
+    init(lighthouse: Lighthouse, userPreferences: Preferences, userLighthouseData: UserLighthouseData) {
         self.lighthouse = lighthouse
-        self.userData = userData
+        self.userPreferences = userPreferences
+        self.userLighthouseData = userLighthouseData
     }
     
     func loadUserData() {
-        self.userData.visited = "23.8.2019"
-        self.userData.photos = [UIImage(named: "612664395a40232133447d33247d38313233393434333331.jpeg")!.toString() ?? "", UIImage(named: "lighthouse-at-darsser-ort-with-museum-called-natureum-on-the-darss-peninsula-western-pomerania-lagoon-area-national-park-germany-R3PD9B.jpg")!.toString() ?? ""]
-        self.userData.description = "Very cool lighthouse, 10/10 would recommend"
+        if self.userLighthouseData.type == "visited" {
+            let docRef = db.collection("users").document(self.username).collection("lighthouses").document("\(self.lighthouse.id)")
+            docRef.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let result = Result {
+                        try document.data(as: UserLighthouseData.self)
+                    }
+                    switch result {
+                    case .success(let userLighthouseData):
+                        if let userLighthouseData = userLighthouseData {
+                            self.userLighthouseData = userLighthouseData
+                        } else {
+                            print("Document does not exist")
+                        }
+                    case .failure(let error):
+                        print("Error decoding preferences: \(error)")
+                    }
+                } else {
+                    print("Document does not exist")
+                    self.userLighthouseData = UserLighthouseData(type: "")
+                }
+            }
+        }
     }
     
+    func saveUserLighthouseData() {
+        do {
+            try db.collection("users").document(self.username).collection("lighthouses").document("\(self.lighthouse.id)").setData(from: userLighthouseData)
+        } catch let error {
+            print("Error writing userLighthouseData to Firestore: \(error)")
+        }
+    }
+    
+    func saveUserPreferences() {
+        do {
+            try db.collection("user_preferences").document(self.username).setData(from: userPreferences)
+        } catch let error {
+            print("Error writing userPrefference to Firestore: \(error)")
+        }
+    }
+    
+    func changeUserPreference(from: Int, to: Int) {
+        print("from: \(from) to: \(to)")
+        switch from {
+        case 0:
+            db.collection("users").document(self.username).collection("lighthouses").document("\(self.lighthouse.id)").delete() { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
+                }
+            }
+            if let index = userPreferences.visited.firstIndex(of: lighthouse.id) {
+                userPreferences.visited.remove(at: index)
+            }
+            break
+        case 1:
+            print("trying delete bucketlist item with id: \(lighthouse.id)")
+            if let index = userPreferences.bucketlist.firstIndex(of: lighthouse.id) {
+                userPreferences.bucketlist.remove(at: index)
+            }
+            break
+        default:
+            break
+        }
+        
+        switch to {
+        case 0:
+            saveUserLighthouseData()
+            userPreferences.visited.append(lighthouse.id)
+            break
+        case 1:
+            userPreferences.bucketlist.append(lighthouse.id)
+            break
+        default:
+            break
+        }
+        saveUserPreferences()
+    }
 }

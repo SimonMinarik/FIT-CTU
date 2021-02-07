@@ -14,7 +14,7 @@ final class LighthouseAnnotation: NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
     let image: UIImage?
     let id: Int?
-    let type: String?
+    var type: String?
     
     init(
         name: String?,

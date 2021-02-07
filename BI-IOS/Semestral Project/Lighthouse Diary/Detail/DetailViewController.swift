@@ -23,6 +23,7 @@ final class DetailViewController: UIViewController {
     @IBOutlet weak var secondUserPhotoView: UIView!
     @IBOutlet weak var thirdUserPhotoView: UIView!
     @IBOutlet weak var thirdPhotoDeleteButton: UIButton!
+    @IBOutlet weak var visitedLabel: UILabel!
     @IBOutlet weak var userPhotosStackView: UIStackView!
     @IBOutlet weak var userDescriptionTextView: UITextView!
     
@@ -42,29 +43,18 @@ final class DetailViewController: UIViewController {
         super.loadView()
         viewModel.loadUserData()
         
-        self.descriptionLabel.text = viewModel.lighthouse.description
-        self.locationButton.setTitle(viewModel.lighthouse.location, for: .normal)
-        self.lighthouseNameLabel.text = viewModel.lighthouse.name
-        self.lighthouseImageView.image = viewModel.lighthouse.image
-        if viewModel.userData.visited != "" {
-            self.userDescriptionTextView.text = viewModel.userData.description
-        } else {
-            self.userDescriptionTextView.isHidden = true
-            self.userPhotosStackView.isHidden = true
+        self.title = viewModel.lighthouse.name
+        descriptionLabel.text = viewModel.lighthouse.description
+        locationButton.setTitle(viewModel.lighthouse.location, for: .normal)
+        lighthouseNameLabel.text = viewModel.lighthouse.name
+        lighthouseImageView.image = viewModel.lighthouse.image
+        
+        self.viewModel.viewModelDidChange = { [weak self] viewModel in
+            guard let self = self else { return }
+            self.setUserObjects()
         }
         
-        self.title = viewModel.lighthouse.name
-        switch viewModel.userData.type {
-        case "visited":
-            typeSegmentedControl.selectedSegmentIndex = 0
-            break
-        case "bucketlist":
-            typeSegmentedControl.selectedSegmentIndex = 1
-        default:
-            typeSegmentedControl.selectedSegmentIndex = -1
-            break
-        }
-        setSegmentControl(at: typeSegmentedControl.selectedSegmentIndex)
+        setUserObjects()
         
         let segmentedTapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapGestureSegment(_:)))
         typeSegmentedControl.addGestureRecognizer(segmentedTapGesture)
@@ -72,7 +62,8 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveChanges))
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
         firstUserPhotoView.translatesAutoresizingMaskIntoConstraints = false
         secondUserPhotoView.translatesAutoresizingMaskIntoConstraints = false
         thirdUserPhotoView.translatesAutoresizingMaskIntoConstraints = false
@@ -87,6 +78,8 @@ final class DetailViewController: UIViewController {
         userDescriptionTextView.layer.borderColor = UIColor.lightGray.cgColor
         userDescriptionTextView.layer.cornerRadius = 4
         
+        userDescriptionTextView.delegate = self
+        
         lighthouseImageView.layer.borderWidth = 1
         lighthouseImageView.layer.borderColor = UIColor.lightGray.cgColor
         lighthouseImageView.layer.cornerRadius = lighthouseImageView.frame.width / 2
@@ -98,7 +91,84 @@ final class DetailViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
     }
     
+    @objc func saveChanges() {
+        viewModel.saveUserLighthouseData()
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+    }
+    
+    func setUserObjects() {
+        if viewModel.userLighthouseData.type == "visited" {
+            visitedLabel.isHidden = false
+            userDescriptionTextView.isHidden = false
+            userPhotosStackView.isHidden = false
+            
+            userDescriptionTextView.text = viewModel.userLighthouseData.description
+            visitedLabel.text = "Visited: \(viewModel.userPreferences.visited_dates["\(viewModel.lighthouse.id)"] ?? "")"
+            switch viewModel.userLighthouseData.photos?.count {
+            case 0:
+                firstUserPhotoView.isHidden = true
+                secondUserPhotoView.isHidden = true
+                
+                thirdUserPhotoImageView.image = UIImage()
+                addPhotoButton.isHidden = false
+                thirdPhotoDeleteButton.isHidden = true
+                break
+            case 1:
+                firstUserPhotoImageView.image = viewModel.userLighthouseData.photos![0].toImage()
+                secondUserPhotoView.isHidden = true
+                break
+            case 2:
+                firstUserPhotoImageView.image = viewModel.userLighthouseData.photos![0].toImage()
+                secondUserPhotoImageView.image = viewModel.userLighthouseData.photos![1].toImage()
+                break
+            case 3:
+                firstUserPhotoImageView.image = viewModel.userLighthouseData.photos![0].toImage()
+                secondUserPhotoImageView.image = viewModel.userLighthouseData.photos![1].toImage()
+                thirdUserPhotoImageView.image = viewModel.userLighthouseData.photos![2].toImage()
+                thirdPhotoDeleteButton.isHidden = false
+                addPhotoButton.isHidden = true
+                break
+            default:
+                break
+            }
+        } else {
+            visitedLabel.isHidden = true
+            userDescriptionTextView.isHidden = true
+            userPhotosStackView.isHidden = true
+        }
+        
+        switch viewModel.userLighthouseData.type {
+        case "visited":
+            typeSegmentedControl.selectedSegmentIndex = 0
+            break
+        case "bucketlist":
+            typeSegmentedControl.selectedSegmentIndex = 1
+        default:
+            typeSegmentedControl.selectedSegmentIndex = -1
+            break
+        }
+    }
+    
     func setSegmentControl(at: Int) {
+        switch at {
+        case -1:
+            viewModel.userLighthouseData = UserLighthouseData(type: "")
+            break
+        case 0:
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd.MM.YYYY"
+            let visited_date = dateFormatter.string(from: date)
+            viewModel.userLighthouseData = UserLighthouseData(type: "visited", photos: [], description: "")
+            viewModel.userPreferences.visited_dates["\(viewModel.lighthouse.id)"] = visited_date
+            break
+        case 1:
+            viewModel.userLighthouseData = UserLighthouseData(type: "bucketlist")
+            break
+        default:
+            break
+        }
+        
         typeSegmentedControl.setImage(UIImage(systemName: "eye"), forSegmentAt: 0)
         typeSegmentedControl.setImage(UIImage(systemName: "heart"), forSegmentAt: 1)
         if at == 0 {
@@ -106,6 +176,7 @@ final class DetailViewController: UIViewController {
         } else if at == 1 {
             typeSegmentedControl.setImage(UIImage(systemName: "heart.fill"), forSegmentAt: 1)
         }
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
     @objc func adjustForKeyboard(notification: Notification) {
@@ -120,8 +191,9 @@ final class DetailViewController: UIViewController {
             self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
         }
 
+        // Doesn't work properly with small (unscrollable) scroll view
         self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset
-        
+
         let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.height + scrollView.contentInset.bottom)
         scrollView.setContentOffset(bottomOffset, animated: true)
     }
@@ -134,37 +206,38 @@ final class DetailViewController: UIViewController {
     }
     
     func addPhoto(image: UIImage) {
-        viewModel.userData.photos?.append(image.toString() ?? "")
-        switch viewModel.userData.photos?.count {
+        viewModel.userLighthouseData.photos?.append(image.toString() ?? "")
+        switch viewModel.userLighthouseData.photos?.count {
         case 1:
             self.firstUserPhotoView.isHidden = false
-            self.firstUserPhotoImageView.image = viewModel.userData.photos?[0].toImage()
+            self.firstUserPhotoImageView.image = viewModel.userLighthouseData.photos?[0].toImage()
             break
         case 2:
             self.secondUserPhotoView.isHidden = false
-            self.secondUserPhotoImageView.image = viewModel.userData.photos?[1].toImage()
+            self.secondUserPhotoImageView.image = viewModel.userLighthouseData.photos?[1].toImage()
             break
         case 3:
-            self.thirdUserPhotoImageView.image = viewModel.userData.photos?[2].toImage()
+            self.thirdUserPhotoImageView.image = viewModel.userLighthouseData.photos?[2].toImage()
             self.thirdPhotoDeleteButton.isHidden = false
             self.addPhotoButton.isHidden = true
         default:
             fatalError("That shouldn't happen..")
         }
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
     func removePhoto(at: Int) {
-        viewModel.userData.photos?.remove(at: at)
-        switch viewModel.userData.photos?.count {
+        viewModel.userLighthouseData.photos?.remove(at: at)
+        switch viewModel.userLighthouseData.photos?.count {
         case 2:
-            self.firstUserPhotoImageView.image = viewModel.userData.photos?[0].toImage()
-            self.secondUserPhotoImageView.image = viewModel.userData.photos?[1].toImage()
+            self.firstUserPhotoImageView.image = viewModel.userLighthouseData.photos?[0].toImage()
+            self.secondUserPhotoImageView.image = viewModel.userLighthouseData.photos?[1].toImage()
             self.thirdUserPhotoImageView.image = UIImage()
             self.addPhotoButton.isHidden = false
             self.thirdPhotoDeleteButton.isHidden = true
             break
         case 1:
-            self.firstUserPhotoImageView.image = viewModel.userData.photos?[0].toImage()
+            self.firstUserPhotoImageView.image = viewModel.userLighthouseData.photos?[0].toImage()
             self.secondUserPhotoView.isHidden = true
             break
         case 0:
@@ -173,6 +246,7 @@ final class DetailViewController: UIViewController {
         default:
             fatalError("Well..")
         }
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
     @IBAction func firstPhotoDeleteButtonTapped(_ sender: UIButton) {
@@ -197,30 +271,40 @@ final class DetailViewController: UIViewController {
         self.present(vc!, animated: true)
     }
     
-    @IBAction func typeSegmentControlValueChanged(_ sender: UISegmentedControl) {
-        setSegmentControl(at: sender.selectedSegmentIndex)
-    }
-    
     @objc func onTapGestureSegment(_ tapGesture: UITapGestureRecognizer) {
-        print("hm")
         let point = tapGesture.location(in: typeSegmentedControl)
         let segmentSize = typeSegmentedControl.bounds.size.width / CGFloat(typeSegmentedControl.numberOfSegments)
         let touchedSegment = Int(point.x / segmentSize)
 
         if typeSegmentedControl.selectedSegmentIndex != touchedSegment {
-            typeSegmentedControl.selectedSegmentIndex = touchedSegment
-            typeSegmentControlValueChanged(self.typeSegmentedControl)
+            if typeSegmentedControl.selectedSegmentIndex == 0 {
+                confirmAlert(from: typeSegmentedControl.selectedSegmentIndex, to: touchedSegment, delete: false)
+            } else {
+                setSegmentControl(at: touchedSegment)
+                viewModel.changeUserPreference(from: typeSegmentedControl.selectedSegmentIndex, to: touchedSegment)
+                typeSegmentedControl.selectedSegmentIndex = touchedSegment
+            }
+        } else if touchedSegment == 0 {
+            confirmAlert(from: typeSegmentedControl.selectedSegmentIndex, to: -1, delete: true)
         } else {
-            confirmAlert(change: false, type: touchedSegment)
+            self.setSegmentControl(at: -1)
+            viewModel.changeUserPreference(from: typeSegmentedControl.selectedSegmentIndex, to: -1)
+            self.typeSegmentedControl.selectedSegmentIndex = -1
         }
     }
     
-    func confirmAlert(change: Bool, type: Int) {
-        let alert = UIAlertController(title: "Are you sure you want to change it?", message: "All previous data will be lost.", preferredStyle: .alert)
+    func confirmAlert(from: Int, to: Int, delete: Bool) {
+        let alert = UIAlertController(title: "Are you sure?", message: "All personal data will be lost.", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-            self.typeSegmentedControl.selectedSegmentIndex = -1
-            self.typeSegmentControlValueChanged(self.typeSegmentedControl)
+            if delete {
+                self.typeSegmentedControl.selectedSegmentIndex = -1
+                self.setSegmentControl(at: -1)
+            } else {
+                self.typeSegmentedControl.selectedSegmentIndex = 1
+                self.setSegmentControl(at: 1)
+            }
+            self.viewModel.changeUserPreference(from: from, to: to)
         }))
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
 
@@ -228,7 +312,7 @@ final class DetailViewController: UIViewController {
     }
 }
 
-extension DetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension DetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }
@@ -246,5 +330,16 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        switch (textView) {
+            case userDescriptionTextView:
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                self.viewModel.userLighthouseData.description = textView.text
+                break
+            default:
+                break
+        }
     }
 }

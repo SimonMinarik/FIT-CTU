@@ -10,23 +10,20 @@ import Foundation
 struct Preferences {
     var bucketlist:[Int]
     var visited:[Int]
+    var visited_dates:[String: String]
 }
 
 extension Preferences: Codable {
     enum CodingKeys: String, CodingKey {
         case bucketlist
         case visited
+        case visited_dates
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         bucketlist = try container.decode([Int].self, forKey: .bucketlist)
         visited = try container.decode([Int].self, forKey: .visited)
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(bucketlist, forKey: .bucketlist)
-        try container.encode(visited, forKey: .visited)
+        visited_dates = try container.decode([String: String].self, forKey: .visited_dates)
     }
 }

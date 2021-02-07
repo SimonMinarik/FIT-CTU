@@ -43,7 +43,7 @@ final class DiaryViewController: UIViewController, UITableViewDataSource, UITabl
         
         if (segmentedControl.selectedSegmentIndex == 0) {
             lighthouse = viewModel.visited[indexPath.row]
-            cell.visitedLabel.text = viewModel.visitedDates[lighthouse.id]
+            cell.visitedLabel.text = "Visited " +  viewModel.userPreferences.visited_dates[String(lighthouse.id)]!
         } else {
             lighthouse = viewModel.bucketlist[indexPath.row]
             cell.visitedLabel.text = ""
@@ -60,12 +60,17 @@ final class DiaryViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = self.storyboard?.instantiateViewController(identifier: "detailVC") {
             if self.segmentedControl.selectedSegmentIndex == 0 {
-                return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: self.viewModel.visited[indexPath.row], userData: UserData(type: "visited")))
+                return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: self.viewModel.visited[indexPath.row], userPreferences: self.viewModel.userPreferences, userLighthouseData: UserLighthouseData(type: "visited")))
             } else {
-                return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: self.viewModel.bucketlist[indexPath.row], userData: UserData(type: "bucketlist")))
+                return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: self.viewModel.bucketlist[indexPath.row], userPreferences: self.viewModel.userPreferences, userLighthouseData: UserLighthouseData(type: "bucketlist")))
             }
         }
         self.show(vc!, sender: self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.loadData()
     }
     
     override func viewDidLoad() {
@@ -74,9 +79,14 @@ final class DiaryViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.navigationBar.isTranslucent = true
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        viewModel.loadData()
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+                
+        viewModel.viewModelDidChange = { [weak self] viewModel in
+            guard let self = self else { return }
+            print("viewModelDidChange")
+            self.tableView.reloadData()
+        }
     }
     
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {

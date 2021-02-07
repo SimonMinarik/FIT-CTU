@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 protocol DiaryViewModeling: AnyObject {
     var username:String { get }
     var visited:[Lighthouse] { get set }
-    var visitedDates:[Int: String] { get set }
+    var userPreferences:Preferences { get set }
     var bucketlist:[Lighthouse] { get set }
     var viewModelDidChange: (DiaryViewModeling) -> Void { get set }
     
@@ -21,21 +22,118 @@ final class DiaryViewModel: DiaryViewModeling {
     var username: String {
         get { UserDefaults.standard.string(forKey: "username") ?? "username" }
     }
-    var visited: [Lighthouse] = []
-    var visitedDates: [Int : String] = [:]
-    var bucketlist: [Lighthouse] = []
+    
+    var userPreferences: Preferences = Preferences(bucketlist: [], visited: [], visited_dates: [:]) {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.loadLighthouses()
+            }
+        }
+    }
+    
+    var visited: [Lighthouse] = [] {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.viewModelDidChange(self)
+            }
+        }
+    }
+    var bucketlist: [Lighthouse] = [] {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.viewModelDidChange(self)
+            }
+        }
+    }
     
     var viewModelDidChange: (DiaryViewModeling) -> Void = { _ in }
     
-    private let networkService: NetworkServicing
-    
-    init(networkService: NetworkServicing = NetworkService()) {
-        self.networkService = networkService
-    }
+    private let db = Firestore.firestore()
     
     func loadData() {
-        self.visited = [Lighthouse(id: 1, name: "Lighthouse Arkona", image: UIImage(named: "612664395a40232133447d33247d38313233393434333331.jpeg")!, location: "Puttgarten, Germany", description: "Lorem ipsum..", lat: 54.679564, lon: 13.432574)]
-        self.visitedDates = [1: "23.8.2019"]
-        self.bucketlist = [Lighthouse(id: 2, name: "Lighthouse Busum", image: UIImage(named: "leuchtturm-busum.jpg")!, location: "Busum, Germany", description: "Lorem ipsum dolor..", lat: 54.126885, lon: 8.858477)]
+        print("started loadData")
+        let docRef3 = db.collection("user_preferences").document(username)
+        docRef3.getDocument { (document, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                let result = Result {
+                    try document?.data(as: Preferences.self)
+                }
+                switch result {
+                case .success(let preferences):
+                    if let preferences = preferences {
+                        self.userPreferences = preferences
+                        print("loaded userPreferences")
+                        print("loaded preferences: \(preferences)")
+                    } else {
+                        print("Document does not exist")
+                    }
+                case .failure(let error):
+                    print("Error decoding preferences: \(error)")
+                }
+            }
+        }
+    }
+    
+    func loadLighthouses() {
+        visited = []
+        bucketlist = []
+        if self.userPreferences.visited.count > 0 {
+            print("started loading visited")
+            let docRef = db.collection("lighthouses").whereField("id", in: self.userPreferences.visited)
+            docRef.getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let result = Result {
+                            try document.data(as: Lighthouse.self)
+                        }
+                        switch result {
+                        case .success(let lighthouse):
+                            if let lighthouse = lighthouse {
+                                self.visited.append(lighthouse)
+                                print("append visited")
+                            } else {
+                                print("Document does not exist")
+                            }
+                        case .failure(let error):
+                            print("Error decoding lighthouse: \(error)")
+                        }
+                    }
+                }
+            }
+        }
+        
+        if self.userPreferences.bucketlist.count > 0 {
+            print("started loading bucketlist")
+            let docRef2 = db.collection("lighthouses").whereField("id", in: self.userPreferences.bucketlist)
+            docRef2.getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let result = Result {
+                            try document.data(as: Lighthouse.self)
+                        }
+                        switch result {
+                        case .success(let lighthouse):
+                            if let lighthouse = lighthouse {
+                                self.bucketlist.append(lighthouse)
+                                print("append bucketlist")
+                            } else {
+                                print("Document does not exist")
+                            }
+                        case .failure(let error):
+                            print("Error decoding lighthouse: \(error)")
+                        }
+                    }
+                }
+            }
+        }
     }
 }

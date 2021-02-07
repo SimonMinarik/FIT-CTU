@@ -7,7 +7,6 @@
 
 import UIKit
 import CoreLocation
-import Firebase
 
 struct Lighthouse: Hashable {
     let id: Int

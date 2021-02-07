@@ -23,6 +23,7 @@ final class ProfileViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var profilePictureImageView: UIImageView!
     
     override func loadView() {
         super.loadView()
@@ -32,8 +33,16 @@ final class ProfileViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.loadProfilePicture()
+        
         viewModel.viewModelDidChange = { [weak self] viewModel in
-            self?.usernameLabel.text = viewModel.username
+            guard let self = self else { return }
+            self.usernameLabel.text = viewModel.username
+            if self.viewModel.profilePicture != "" {
+                self.profilePictureImageView.image = viewModel.profilePicture?.toImage()
+            } else {
+                self.profilePictureImageView.image = UIImage(named: "blank-profile-picture-973460_640.png")
+            }
         }
     }
     
@@ -59,4 +68,24 @@ final class ProfileViewController: UIViewController, UITextFieldDelegate {
         return range.location < 20
     }
     
+    @IBAction func changeProfilePictureButtonTapped(_ sender: UIButton) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        present(imagePicker, animated: true)
+    }
+}
+
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        if let imageData = image?.jpeg(.lowest) {
+            viewModel.profilePicture = imageData.base64EncodedString()
+        }
+        
+        picker.dismiss(animated: true)
+    }
 }

@@ -53,10 +53,11 @@ final class DiaryViewModel: DiaryViewModeling {
     
     private let db = Firestore.firestore()
     
+    // MARK: - Public methods
+    
     func loadData() {
-        print("started loadData")
-        let docRef3 = db.collection("user_preferences").document(username)
-        docRef3.getDocument { (document, err) in
+        let docRef = db.collection("user_preferences").document(username)
+        docRef.getDocument { (document, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -67,8 +68,6 @@ final class DiaryViewModel: DiaryViewModeling {
                 case .success(let preferences):
                     if let preferences = preferences {
                         self.userPreferences = preferences
-                        print("loaded userPreferences")
-                        print("loaded preferences: \(preferences)")
                     } else {
                         print("Document does not exist")
                     }
@@ -83,7 +82,6 @@ final class DiaryViewModel: DiaryViewModeling {
         visited = []
         bucketlist = []
         if self.userPreferences.visited.count > 0 {
-            print("started loading visited")
             let docRef = db.collection("lighthouses").whereField("id", in: self.userPreferences.visited)
             docRef.getDocuments() { (querySnapshot, err) in
                 if let err = err {
@@ -97,7 +95,6 @@ final class DiaryViewModel: DiaryViewModeling {
                         case .success(let lighthouse):
                             if let lighthouse = lighthouse {
                                 self.visited.append(lighthouse)
-                                print("append visited")
                             } else {
                                 print("Document does not exist")
                             }
@@ -110,7 +107,6 @@ final class DiaryViewModel: DiaryViewModeling {
         }
         
         if self.userPreferences.bucketlist.count > 0 {
-            print("started loading bucketlist")
             let docRef2 = db.collection("lighthouses").whereField("id", in: self.userPreferences.bucketlist)
             docRef2.getDocuments() { (querySnapshot, err) in
                 if let err = err {
@@ -124,7 +120,6 @@ final class DiaryViewModel: DiaryViewModeling {
                         case .success(let lighthouse):
                             if let lighthouse = lighthouse {
                                 self.bucketlist.append(lighthouse)
-                                print("append bucketlist")
                             } else {
                                 print("Document does not exist")
                             }

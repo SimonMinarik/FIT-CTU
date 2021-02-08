@@ -17,6 +17,8 @@ final class DetailMapViewModel: DetailMapViewModeling {
     let coordinate: CLLocationCoordinate2D
     let name: String
     
+    // MARK: - Initialization
+    
     init(
         coordinate: CLLocationCoordinate2D,
         name: String

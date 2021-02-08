@@ -40,6 +40,8 @@ final class MapViewModel: MapViewModeling {
     
     private let db = Firestore.firestore()
     
+    // MARK: - Public methods
+    
     func loadLighthouses() {
         db.collection("lighthouses").getDocuments() { (querySnapshot, err) in
             if let err = err {

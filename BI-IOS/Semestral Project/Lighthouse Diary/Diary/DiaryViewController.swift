@@ -13,6 +13,8 @@ final class DiaryViewController: UIViewController, UITableViewDataSource, UITabl
         
     private let viewModel: DiaryViewModeling
     
+    // MARK: - Initialization
+    
     init?(coder: NSCoder, viewModel: DiaryViewModeling) {
         self.viewModel = viewModel
         super.init(coder: coder)
@@ -23,6 +25,45 @@ final class DiaryViewController: UIViewController, UITableViewDataSource, UITabl
         self.viewModel = DiaryViewModel()
         super.init(coder: coder)
         //fatalError("You must create this view controller with a viewModel.")
+    }
+    
+    // MARK: - Life cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.loadData()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.isTranslucent = true
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+                
+        viewModel.viewModelDidChange = { [weak self] viewModel in
+            guard let self = self else { return }
+            self.tableView.reloadData()
+        }
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
+        self.tableView.reloadData()
+    }
+    
+    @IBAction func addButtonTapped(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(identifier: "AddVC") {
+            AddViewController(coder: $0, viewModel: AddViewModel(userPreferences: self.viewModel.userPreferences, type: self.segmentedControl.selectedSegmentIndex))
+        }
+        vc?.onDoneBlock = {
+            vc?.dismiss(animated: true)
+            self.viewModel.loadData()
+        }
+        present(vc!, animated: true)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -58,7 +99,7 @@ final class DiaryViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = self.storyboard?.instantiateViewController(identifier: "detailVC") {
+        let vc = self.storyboard?.instantiateViewController(identifier: "DetailVC") {
             if self.segmentedControl.selectedSegmentIndex == 0 {
                 return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: self.viewModel.visited[indexPath.row], userPreferences: self.viewModel.userPreferences, userLighthouseData: UserLighthouseData(type: "visited")))
             } else {
@@ -66,30 +107,5 @@ final class DiaryViewController: UIViewController, UITableViewDataSource, UITabl
             }
         }
         self.show(vc!, sender: self)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.loadData()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController!.navigationBar.shadowImage = UIImage()
-        self.navigationController!.navigationBar.isTranslucent = true
-        
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-                
-        viewModel.viewModelDidChange = { [weak self] viewModel in
-            guard let self = self else { return }
-            print("viewModelDidChange")
-            self.tableView.reloadData()
-        }
-    }
-    
-    @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
-        self.tableView.reloadData()
     }
 }

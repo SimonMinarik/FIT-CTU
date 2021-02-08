@@ -8,7 +8,12 @@
 import UIKit
 
 final class ProfileViewController: UIViewController, UITextFieldDelegate {
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var profilePictureImageView: UIImageView!
+    
     private let viewModel: ProfileViewModeling
+    
+    // MARK: - Initialization
     
     init?(coder: NSCoder, viewModel: ProfileViewModeling) {
         self.viewModel = viewModel
@@ -22,8 +27,7 @@ final class ProfileViewController: UIViewController, UITextFieldDelegate {
         //fatalError("You must create this view controller with a viewModel.")
     }
     
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var profilePictureImageView: UIImageView!
+    // MARK: - Life cycle
     
     override func loadView() {
         super.loadView()
@@ -46,6 +50,8 @@ final class ProfileViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // MARK: - Actions
+    
     @IBAction func changeUsernameButtonTapped(_ sender: UIButton) {
         let alert = UIAlertController(
             title: "Change username",
@@ -64,14 +70,14 @@ final class ProfileViewController: UIViewController, UITextFieldDelegate {
         self.present(alert, animated: true)
     }
     
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return range.location < 20
-    }
-    
     @IBAction func changeProfilePictureButtonTapped(_ sender: UIButton) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         present(imagePicker, animated: true)
+    }
+    
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return range.location < 20
     }
 }
 
@@ -82,8 +88,8 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as? UIImage
-        if let imageData = image?.jpeg(.lowest) {
-            viewModel.profilePicture = imageData.base64EncodedString()
+        if let resizedImage = resizeImage(with: image, scaledToFill: CGSize(width: profilePictureImageView.frame.width, height: profilePictureImageView.frame.height))?.jpegData(compressionQuality: 0) {
+            viewModel.profilePicture = resizedImage.base64EncodedString()
         }
         
         picker.dismiss(animated: true)

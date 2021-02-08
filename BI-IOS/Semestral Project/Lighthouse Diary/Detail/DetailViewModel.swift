@@ -19,6 +19,7 @@ protocol DetailViewModeling: AnyObject {
     func saveUserLighthouseData()
     func saveUserPreferences()
     func changeUserPreference(from: Int, to: Int)
+    func userPreferencesChanged(to: Int)
 }
 
 final class DetailViewModel: DetailViewModeling {
@@ -30,7 +31,6 @@ final class DetailViewModel: DetailViewModeling {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                print("userlighthouseData didSet")
                 self.viewModelDidChange(self)
             }
         }
@@ -41,12 +41,16 @@ final class DetailViewModel: DetailViewModeling {
     var viewModelDidChange: (DetailViewModeling) -> Void = { _ in }
     
     private let db = Firestore.firestore()
+    
+    // MARK: - Initialization
         
     init(lighthouse: Lighthouse, userPreferences: Preferences, userLighthouseData: UserLighthouseData) {
         self.lighthouse = lighthouse
         self.userPreferences = userPreferences
         self.userLighthouseData = userLighthouseData
     }
+    
+    // MARK: - Public methods
     
     func loadUserData() {
         if self.userLighthouseData.type == "visited" {
@@ -86,12 +90,13 @@ final class DetailViewModel: DetailViewModeling {
         do {
             try db.collection("user_preferences").document(self.username).setData(from: userPreferences)
         } catch let error {
-            print("Error writing userPrefference to Firestore: \(error)")
+            print("Error writing userPreference to Firestore: \(error)")
         }
     }
     
     func changeUserPreference(from: Int, to: Int) {
-        print("from: \(from) to: \(to)")
+        userPreferencesChanged(to: to)
+        
         switch from {
         case 0:
             db.collection("users").document(self.username).collection("lighthouses").document("\(self.lighthouse.id)").delete() { err in
@@ -106,7 +111,6 @@ final class DetailViewModel: DetailViewModeling {
             }
             break
         case 1:
-            print("trying delete bucketlist item with id: \(lighthouse.id)")
             if let index = userPreferences.bucketlist.firstIndex(of: lighthouse.id) {
                 userPreferences.bucketlist.remove(at: index)
             }
@@ -127,5 +131,26 @@ final class DetailViewModel: DetailViewModeling {
             break
         }
         saveUserPreferences()
+    }
+    
+    func userPreferencesChanged(to: Int) {
+        switch to {
+        case -1:
+            userLighthouseData = UserLighthouseData(type: "")
+            break
+        case 0:
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd.MM.YYYY"
+            let visited_date = dateFormatter.string(from: date)
+            userLighthouseData = UserLighthouseData(type: "visited", photos: [], description: "")
+            userPreferences.visited_dates["\(lighthouse.id)"] = visited_date
+            break
+        case 1:
+            userLighthouseData = UserLighthouseData(type: "bucketlist")
+            break
+        default:
+            break
+        }
     }
 }

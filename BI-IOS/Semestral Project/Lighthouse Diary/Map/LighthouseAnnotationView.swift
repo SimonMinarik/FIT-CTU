@@ -41,25 +41,4 @@ final class LighthouseAnnotationView: MKMarkerAnnotationView {
 
         print("button tapped")
     }
-//
-//    var lighthouseImage: UIImage? {
-//        get { lighthouseImageView.image }
-//        set { lighthouseImageView.image = newValue }
-//    }
-//
-//    var lighthouseType: String? {
-//        get { privateType }
-//        set { privateType = newValue }
-//    }
-//
-//    private weak var lighthouseImageView: UIImageView!
-//    private var privateType: String!
-//
-//    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-//        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-//            }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
 }

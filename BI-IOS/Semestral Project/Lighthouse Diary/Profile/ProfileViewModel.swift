@@ -46,6 +46,8 @@ final class ProfileViewModel: ProfileViewModeling {
     
     private let db = Firestore.firestore()
     
+    // MARK: - Public methods
+    
     func loadProfilePicture() {
         let docRef = db.collection("users").document(self.username)
 

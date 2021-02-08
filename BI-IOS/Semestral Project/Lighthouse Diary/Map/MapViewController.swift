@@ -24,6 +24,18 @@ final class MapViewController: UIViewController {
     
     private let viewModel: MapViewModeling
     
+    var showAnnotationType = [
+        "bucketlist": true,
+        "visited": true,
+        "": true
+    ] {
+        didSet {
+            changeAnnotations()
+        }
+    }
+    
+    //MARK: - Initialization
+    
     init?(coder: NSCoder, viewModel: MapViewModeling) {
         self.viewModel = viewModel
         super.init(coder: coder)
@@ -36,15 +48,7 @@ final class MapViewController: UIViewController {
         //fatalError("You must create this view controller with a viewModel.")
     }
     
-    var showAnnotationType = [
-        "bucketlist": true,
-        "visited": true,
-        "": true
-    ] {
-        didSet {
-            changeAnnotations()
-        }
-    }
+    //MARK: - Life cycle
     
     override func loadView() {
         super.loadView()
@@ -62,12 +66,6 @@ final class MapViewController: UIViewController {
         self.layersStackView.layer.cornerRadius = 4.0
         self.layersStackView.layer.masksToBounds = true
         
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = kCLDistanceFilterNone
-        locationManager.startUpdatingLocation()
-        mapView.showsUserLocation = true
-        
         viewModel.loadLighthouses()
     }
     
@@ -79,6 +77,9 @@ final class MapViewController: UIViewController {
         super.viewDidLoad()
         
         mapView.delegate = self
+        locationManager.delegate = self
+        
+        requestUserLocation()
         
         viewModel.viewModelDidChange = { [weak self] viewModel in
             guard let self = self else { return }
@@ -91,9 +92,9 @@ final class MapViewController: UIViewController {
         mapView.register(LighthouseAnnotationView.self, forAnnotationViewWithReuseIdentifier: "LighthouseAnnotationView")
         
         self.mapView.showAnnotations(self.mapView.annotations, animated: true)
-        
-        self.centerOnUser()
     }
+    
+    // MARK: - Actions
     
     @IBAction func layersButtonTapped(_ sender: UIButton) {
         self.layersStackView.isHidden = !self.layersStackView.isHidden
@@ -116,7 +117,28 @@ final class MapViewController: UIViewController {
         self.showAnnotationType[""] = sender.isOn
     }
     
-    func addAnnotations() {
+    @IBAction func locationButtonTapped(_ sender: UIButton) {
+        self.centerOnUser()
+    }
+    
+    // MARK: - Private helpers
+    
+    private func requestUserLocation() {
+        switch locationManager.authorizationStatus {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            print("I need location!")
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+            mapView.showsUserLocation = true
+            centerOnUser()
+        @unknown default:
+            print("I need location")
+        }
+    }
+    
+    private func addAnnotations() {
         for lighthouse in viewModel.lighthouses {
             let annotation = LighthouseAnnotation(
                 name: lighthouse.name,
@@ -130,7 +152,7 @@ final class MapViewController: UIViewController {
         }
     }
     
-    func changeAnnotations() {
+    private func changeAnnotations() {
         for annotation in mapView.annotations {
             if let annotation = annotation as? LighthouseAnnotation {
                 mapView.view(for: annotation)?.isHidden = !showAnnotationType[annotation.type!]!
@@ -138,18 +160,14 @@ final class MapViewController: UIViewController {
         }
     }
     
-    func centerOnUser() {
+    private func centerOnUser() {
         if let userLocation = locationManager.location?.coordinate {
             let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 20000, longitudinalMeters: 20000)
             mapView.setRegion(viewRegion, animated: true)
         }
     }
     
-    @IBAction func locationButtonTapped(_ sender: UIButton) {
-        self.centerOnUser()
-    }
-    
-    func checkType(for id: Int) -> String {
+    private func checkType(for id: Int) -> String {
         if viewModel.preferences.bucketlist.contains(id) {
             return "bucketlist"
         } else if viewModel.preferences.visited.contains(id) {
@@ -264,5 +282,26 @@ extension MapViewController: MKMapViewDelegate {
         alert.addAction(alertAction!)
 
         self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .notDetermined:
+            break
+        case .restricted, .denied:
+            print("I need location!")
+        case .authorizedAlways, .authorizedWhenInUse:
+            manager.startUpdatingLocation()
+            mapView.showsUserLocation = true
+            centerOnUser()
+        @unknown default:
+            print("I need location")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
     }
 }

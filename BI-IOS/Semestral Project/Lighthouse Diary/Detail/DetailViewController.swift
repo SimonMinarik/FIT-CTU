@@ -29,6 +29,8 @@ final class DetailViewController: UIViewController {
     
     private let viewModel: DetailViewModeling
     
+    // MARK: - Initialization
+    
     init?(coder: NSCoder, viewModel: DetailViewModeling) {
         self.viewModel = viewModel
         super.init(coder: coder)
@@ -38,6 +40,8 @@ final class DetailViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("You must create this view controller with a viewModel.")
     }
+    
+    // MARK: - Life cycle
         
     override func loadView() {
         super.loadView()
@@ -83,6 +87,8 @@ final class DetailViewController: UIViewController {
         lighthouseImageView.layer.borderWidth = 1
         lighthouseImageView.layer.borderColor = UIColor.lightGray.cgColor
         lighthouseImageView.layer.cornerRadius = lighthouseImageView.frame.width / 2
+        
+        setSegmentedControl(at: typeSegmentedControl.selectedSegmentIndex)
                         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -91,12 +97,45 @@ final class DetailViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
     }
     
-    @objc func saveChanges() {
+    // MARK: - Actions
+    
+    @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true)
+    }
+        
+    @IBAction func firstPhotoDeleteButtonTapped(_ sender: UIButton) {
+        removePhoto(at: 0)
+    }
+    
+    @IBAction func secondPhotoDeleteButtonTapped(_ sender: UIButton) {
+        removePhoto(at: 1)
+    }
+    
+    @IBAction func thirdPhotoDeleteButtonTapped(_ sender: UIButton) {
+        removePhoto(at: 2)
+    }
+    
+    @IBAction func locationButtonTapped(_ sender: UIButton) {
+        let vc = storyboard?.instantiateViewController(identifier: "DetailMapVC") { DetailMapViewController(
+                coder: $0,
+                viewModel: DetailMapViewModel(
+                    coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(self.viewModel.lighthouse.lat), longitude: CLLocationDegrees(self.viewModel.lighthouse.lon)),
+                    name: self.viewModel.lighthouse.name))
+        }
+        self.present(vc!, animated: true)
+    }
+    
+    // MARK: - Private helpers
+    
+    @objc private func saveChanges() {
         viewModel.saveUserLighthouseData()
         self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
-    func setUserObjects() {
+    private func setUserObjects() {
         if viewModel.userLighthouseData.type == "visited" {
             visitedLabel.isHidden = false
             userDescriptionTextView.isHidden = false
@@ -148,27 +187,8 @@ final class DetailViewController: UIViewController {
             break
         }
     }
-    
-    func setSegmentControl(at: Int) {
-        switch at {
-        case -1:
-            viewModel.userLighthouseData = UserLighthouseData(type: "")
-            break
-        case 0:
-            let date = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd.MM.YYYY"
-            let visited_date = dateFormatter.string(from: date)
-            viewModel.userLighthouseData = UserLighthouseData(type: "visited", photos: [], description: "")
-            viewModel.userPreferences.visited_dates["\(viewModel.lighthouse.id)"] = visited_date
-            break
-        case 1:
-            viewModel.userLighthouseData = UserLighthouseData(type: "bucketlist")
-            break
-        default:
-            break
-        }
         
+    private func setSegmentedControl(at: Int) {
         typeSegmentedControl.setImage(UIImage(systemName: "eye"), forSegmentAt: 0)
         typeSegmentedControl.setImage(UIImage(systemName: "heart"), forSegmentAt: 1)
         if at == 0 {
@@ -176,10 +196,9 @@ final class DetailViewController: UIViewController {
         } else if at == 1 {
             typeSegmentedControl.setImage(UIImage(systemName: "heart.fill"), forSegmentAt: 1)
         }
-        self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
-    @objc func adjustForKeyboard(notification: Notification) {
+    @objc private func adjustForKeyboard(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
 
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
@@ -198,15 +217,8 @@ final class DetailViewController: UIViewController {
         scrollView.setContentOffset(bottomOffset, animated: true)
     }
     
-    @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self
-        present(imagePicker, animated: true)
-    }
-    
-    func addPhoto(image: UIImage) {
-        viewModel.userLighthouseData.photos?.append(image.toString() ?? "")
+    private func addPhoto(image: String) {
+        viewModel.userLighthouseData.photos?.append(image)
         switch viewModel.userLighthouseData.photos?.count {
         case 1:
             self.firstUserPhotoView.isHidden = false
@@ -226,7 +238,7 @@ final class DetailViewController: UIViewController {
         self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
-    func removePhoto(at: Int) {
+    private func removePhoto(at: Int) {
         viewModel.userLighthouseData.photos?.remove(at: at)
         switch viewModel.userLighthouseData.photos?.count {
         case 2:
@@ -249,29 +261,7 @@ final class DetailViewController: UIViewController {
         self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
-    @IBAction func firstPhotoDeleteButtonTapped(_ sender: UIButton) {
-        removePhoto(at: 0)
-    }
-    
-    @IBAction func secondPhotoDeleteButtonTapped(_ sender: UIButton) {
-        removePhoto(at: 1)
-    }
-    
-    @IBAction func thirdPhotoDeleteButtonTapped(_ sender: UIButton) {
-        removePhoto(at: 2)
-    }
-    
-    @IBAction func locationButtonTapped(_ sender: UIButton) {
-        let vc = storyboard?.instantiateViewController(identifier: "DetailMapVC") { DetailMapViewController(
-                coder: $0,
-                viewModel: DetailMapViewModel(
-                    coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(self.viewModel.lighthouse.lat), longitude: CLLocationDegrees(self.viewModel.lighthouse.lon)),
-                    name: self.viewModel.lighthouse.name))
-        }
-        self.present(vc!, animated: true)
-    }
-    
-    @objc func onTapGestureSegment(_ tapGesture: UITapGestureRecognizer) {
+    @objc private func onTapGestureSegment(_ tapGesture: UITapGestureRecognizer) {
         let point = tapGesture.location(in: typeSegmentedControl)
         let segmentSize = typeSegmentedControl.bounds.size.width / CGFloat(typeSegmentedControl.numberOfSegments)
         let touchedSegment = Int(point.x / segmentSize)
@@ -280,29 +270,29 @@ final class DetailViewController: UIViewController {
             if typeSegmentedControl.selectedSegmentIndex == 0 {
                 confirmAlert(from: typeSegmentedControl.selectedSegmentIndex, to: touchedSegment, delete: false)
             } else {
-                setSegmentControl(at: touchedSegment)
+                setSegmentedControl(at: touchedSegment)
                 viewModel.changeUserPreference(from: typeSegmentedControl.selectedSegmentIndex, to: touchedSegment)
                 typeSegmentedControl.selectedSegmentIndex = touchedSegment
             }
         } else if touchedSegment == 0 {
             confirmAlert(from: typeSegmentedControl.selectedSegmentIndex, to: -1, delete: true)
         } else {
-            self.setSegmentControl(at: -1)
+            setSegmentedControl(at: -1)
             viewModel.changeUserPreference(from: typeSegmentedControl.selectedSegmentIndex, to: -1)
-            self.typeSegmentedControl.selectedSegmentIndex = -1
+            typeSegmentedControl.selectedSegmentIndex = -1
         }
     }
     
-    func confirmAlert(from: Int, to: Int, delete: Bool) {
+    private func confirmAlert(from: Int, to: Int, delete: Bool) {
         let alert = UIAlertController(title: "Are you sure?", message: "All personal data will be lost.", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             if delete {
                 self.typeSegmentedControl.selectedSegmentIndex = -1
-                self.setSegmentControl(at: -1)
+                self.setSegmentedControl(at: -1)
             } else {
                 self.typeSegmentedControl.selectedSegmentIndex = 1
-                self.setSegmentControl(at: 1)
+                self.setSegmentedControl(at: 1)
             }
             self.viewModel.changeUserPreference(from: from, to: to)
         }))
@@ -318,7 +308,10 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        addPhoto(image: (info[.originalImage]) as! UIImage)
+        let image = info[.originalImage] as? UIImage
+        if let resizedImage = resizeImage(with: image, scaledToFill: CGSize(width: firstUserPhotoImageView.frame.width, height: firstUserPhotoImageView.frame.height))?.jpegData(compressionQuality: 0) {
+            addPhoto(image: resizedImage.base64EncodedString())
+        }
         picker.dismiss(animated: true)
     }
     

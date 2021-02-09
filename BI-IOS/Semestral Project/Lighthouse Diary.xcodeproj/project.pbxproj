@@ -38,6 +38,8 @@
 		EC9F608225BB53670063F4F0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9F608125BB53670063F4F0 /* DetailViewController.swift */; };
 		ECCADD8C25C58FD90014675C /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCADD8B25C58FD90014675C /* Preferences.swift */; };
 		ECD8D94625C6C37A0099166E /* LighthouseAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD8D94525C6C37A0099166E /* LighthouseAnnotationView.swift */; };
+		ECDAD5B325D18AE8009F80E8 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDAD5B225D18AE8009F80E8 /* AddViewController.swift */; };
+		ECDAD5B725D19448009F80E8 /* AddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDAD5B625D19448009F80E8 /* AddViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,8 @@
 		EC9F608125BB53670063F4F0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		ECCADD8B25C58FD90014675C /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		ECD8D94525C6C37A0099166E /* LighthouseAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LighthouseAnnotationView.swift; sourceTree = "<group>"; };
+		ECDAD5B225D18AE8009F80E8 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		ECDAD5B625D19448009F80E8 /* AddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,7 @@
 		EC073F8F2562AF9D001F3731 /* Lighthouse Diary */ = {
 			isa = PBXGroup;
 			children = (
+				ECDAD5B125D18AC0009F80E8 /* Add */,
 				EC699E4025C5F11D00C0DA3B /* noun_Lighthouse_314521-2-2.png */,
 				EC073F902562AF9D001F3731 /* AppDelegate.swift */,
 				EC073F922562AF9D001F3731 /* SceneDelegate.swift */,
@@ -124,7 +129,7 @@
 				EC6AA32925C1C8A800F235B8 /* Detail */,
 				EC6AA34725C1F48E00F235B8 /* DetailMap */,
 				EC6AA32A25C1C8C200F235B8 /* Profile */,
-				EC6AA32E25C1C99F00F235B8 /* Model */,
+				EC6AA32E25C1C99F00F235B8 /* Models */,
 				EC0427B825C4A84200C8F6DE /* MainTabBarController.swift */,
 			);
 			path = "Lighthouse Diary";
@@ -169,14 +174,14 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		EC6AA32E25C1C99F00F235B8 /* Model */ = {
+		EC6AA32E25C1C99F00F235B8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				EC6AA32B25C1C99B00F235B8 /* Lighthouse.swift */,
 				ECCADD8B25C58FD90014675C /* Preferences.swift */,
 				EC699E3A25C5D6E900C0DA3B /* UserLighthouseData.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		EC6AA34725C1F48E00F235B8 /* DetailMap */ = {
@@ -186,6 +191,15 @@
 				EC6AA34425C1F48600F235B8 /* DetailMapViewModel.swift */,
 			);
 			path = DetailMap;
+			sourceTree = "<group>";
+		};
+		ECDAD5B125D18AC0009F80E8 /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				ECDAD5B225D18AE8009F80E8 /* AddViewController.swift */,
+				ECDAD5B625D19448009F80E8 /* AddViewModel.swift */,
+			);
+			path = Add;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,7 +295,9 @@
 				EC6AA33525C1F13C00F235B8 /* DiaryViewModel.swift in Sources */,
 				EC0427B925C4A84200C8F6DE /* MainTabBarController.swift in Sources */,
 				EC073FA92562C739001F3731 /* DiaryCell.swift in Sources */,
+				ECDAD5B725D19448009F80E8 /* AddViewModel.swift in Sources */,
 				ECCADD8C25C58FD90014675C /* Preferences.swift in Sources */,
+				ECDAD5B325D18AE8009F80E8 /* AddViewController.swift in Sources */,
 				EC6AA34125C1F44F00F235B8 /* DetailMapViewController.swift in Sources */,
 				EC0DB2D925BDC1A200D4C028 /* LighthouseAnnotation.swift in Sources */,
 				EC6AA33825C1F14B00F235B8 /* DetailViewModel.swift in Sources */,

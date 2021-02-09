@@ -211,7 +211,7 @@ extension MapViewController: MKMapViewDelegate {
     @objc func calloutTapped(_ sender:UITapGestureRecognizer){
         guard let annotation = (sender.view as? MKAnnotationView)?.annotation as? LighthouseAnnotation else { return }
         guard let lighthouse = viewModel.lighthouses.first(where: { $0.id == annotation.id }) else { return }
-        let vc = self.storyboard?.instantiateViewController(identifier: "detailVC") {
+        let vc = self.storyboard?.instantiateViewController(identifier: "DetailVC") {
             return DetailViewController(coder: $0, viewModel: DetailViewModel(lighthouse: lighthouse, userPreferences: self.viewModel.preferences, userLighthouseData: UserLighthouseData(type: annotation.type!)))
         }
         self.show(vc!, sender: self)

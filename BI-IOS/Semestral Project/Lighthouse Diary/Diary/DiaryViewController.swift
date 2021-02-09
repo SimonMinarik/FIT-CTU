@@ -59,6 +59,7 @@ final class DiaryViewController: UIViewController, UITableViewDataSource, UITabl
         let vc = self.storyboard?.instantiateViewController(identifier: "AddVC") {
             AddViewController(coder: $0, viewModel: AddViewModel(userPreferences: self.viewModel.userPreferences, type: self.segmentedControl.selectedSegmentIndex))
         }
+        
         vc?.onDoneBlock = {
             vc?.dismiss(animated: true)
             self.viewModel.loadData()

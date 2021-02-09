@@ -47,7 +47,13 @@ final class AddViewModel: AddViewModeling {
     // MARK: - Public methods
     
     func loadLighthouses() {
-        let docRef = db.collection("lighthouses").whereField("id", notIn: self.userPreferences.visited + self.userPreferences.bucketlist)
+        var docRef: AnyObject
+        if userPreferences.visited.isEmpty && userPreferences.bucketlist.isEmpty {
+            docRef = db.collection("lighthouses")
+        } else {
+            docRef = db.collection("lighthouses").whereField("id", notIn: self.userPreferences.visited + self.userPreferences.bucketlist)
+        }
+        
         docRef.getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")

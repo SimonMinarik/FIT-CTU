@@ -118,7 +118,8 @@ final class MapViewController: UIViewController {
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
-        self.centerOnUser()
+        requestUserLocation()
+        centerOnUser()
     }
     
     // MARK: - Private helpers
